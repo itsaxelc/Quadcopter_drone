@@ -1,83 +1,162 @@
 cmake_minimum_required(VERSION 3.22)
 
-#
-# This file is generated only once,
-# and is not re-generated if converter is called multiple times.
-#
-# User is free to modify the file as much as necessary
-#
+# ============================================================
+# Compiler settings
+# ============================================================
 
-# Setup compiler settings
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-
-# Define the build type
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
-# Set the project name
-set(CMAKE_PROJECT_NAME kernel_test_project)
+set(CMAKE_PROJECT_NAME Quadcopter_drone)
 
-# Include toolchain file
 include("cmake/gcc-arm-none-eabi.cmake")
 
-# Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
-# Enable CMake support for ASM and C languages
 enable_language(C ASM)
 
-# Core project settings
 project(${CMAKE_PROJECT_NAME})
-message("Build type: " ${CMAKE_BUILD_TYPE})
 
-# Create an executable object type
+message("Build type: ${CMAKE_BUILD_TYPE}")
+
+# ============================================================
+# Executable
+# ============================================================
+
 add_executable(${CMAKE_PROJECT_NAME})
 
-# Add STM32CubeMX generated sources
-add_subdirectory(cmake/stm32cubemx)
+# ============================================================
+# Source files
+# ============================================================
 
-# Link directories setup
-target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined library search paths
+file(GLOB_RECURSE CORE_SOURCES
+    Core/Src/*.c
+    Core/Src/*.s
+    Core/Src/*.S
 )
 
-# Add sources to executable
+file(GLOB_RECURSE INA219_SOURCES
+    Drivers/INA219/*.c
+)
+
+file(GLOB_RECURSE MPU6050_SOURCES
+    Drivers/MPU6050/*.c
+)
+
+file(GLOB_RECURSE HAL_SOURCES
+    Drivers/STM32L4xx_HAL_Driver/*.c
+)
+
+file(GLOB_RECURSE FREERTOS_SOURCES
+    FreeRTOS-KernelV11.2.0/tasks.c
+    FreeRTOS-KernelV11.2.0/queue.c
+    FreeRTOS-KernelV11.2.0/list.c
+    FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c
+    FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c
+)
+
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    Kernel/Src/scheduler.c
-    Kernel/Src/task.c
-    Kernel/Src/queue.c
-    Kernel/Src/semaphore.c
-    Kernel/Src/mutex.c
-    Kernel/Src/Notification.c
-    Kernel/Src/mailbox.c
-    Kernel/Src/watchdog.c
-    Kernel/Src/fault.c
-    Kernel/Src/kernel_assert.c
-    Kernel/Src/stack_guard.c
-    Kernel/Src/task_list.c
-    Kernel/Port/Cortex_M4/Src/port.c
-    Kernel/Port/Cortex_M4/Src/watchdog_port.c
-    Kernel/Port/Cortex_M4/Src/fault_port.c
+
+    # Application / BSP
+    ${CORE_SOURCES}
+
+    # Drivers
+    ${INA219_SOURCES}
+    ${MPU6050_SOURCES}
+    ${HAL_SOURCES}
+
+    # FreeRTOS
+    ${FREERTOS_SOURCES}
+
+    # Startup
+    startup_stm32l476xx.s
 )
 
-# Add include paths
+# ============================================================
+# Include directories
+# ============================================================
+
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    Kernel/Inc
-    Kernel/Port/Cortex_M4/Inc
+
+    # Application
+    Core/Inc
+
+    # CMSIS
+    Drivers/CMSIS/Include
+    Drivers/CMSIS/Device/ST/STM32L4xx/Include
+
+    # STM32 HAL
+    Drivers/STM32L4xx_HAL_Driver/Inc
+    Drivers/STM32L4xx_HAL_Driver/Inc/Legacy
+
+    # Sensors
+    Drivers/INA219
+    Drivers/MPU6050
+
+    # FreeRTOS
+    FreeRTOS-KernelV11.2.0/include
+    FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F
 )
 
-# Add project symbols (macros)
+# ============================================================
+# Preprocessor definitions
+# ============================================================
+
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined include paths
+
+    STM32L476xx
+
+    USE_HAL_DRIVER
+
+    $<$<CONFIG:Debug>:DEBUG>
 )
 
-# Add linked libraries
-target_link_libraries(${CMAKE_PROJECT_NAME}
-    stm32cubemx
+# ============================================================
+# Linker
+# ============================================================
 
-    # Add user defined libraries
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+
+    -T${CMAKE_SOURCE_DIR}/STM32L476RGTx_FLASH.ld
+
+    -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16
+
+    -Wl,--gc-sections
+
+    -Wl,-Map=${CMAKE_PROJECT_NAME}.map
+
+    --specs=nano.specs
+    --specs=nosys.specs
+)
+
+# ============================================================
+# Compiler options
+# ============================================================
+
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
+
+    -mcpu=cortex-m4
+    -mthumb
+
+    -mfloat-abi=hard
+    -mfpu=fpv4-sp-d16
+
+    -ffunction-sections
+    -fdata-sections
+
+    -Wall
+    -Wextra
+)
+
+# ============================================================
+# Libraries
+# ============================================================
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
+    m
 )

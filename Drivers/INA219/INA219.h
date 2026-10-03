@@ -76,11 +76,10 @@ typedef struct
 } INA219_t;
 
 enum BatteryState {Battery_START,Battery_OK, Battery_LOW}; // To help health check function sufficiently diagnose problems
-bool isFirst;
-
-uint16_t ina219_calibrationValue;
-int16_t ina219_currentDivider_mA;
-int16_t ina219_powerMultiplier_mW;
+extern bool     isFirst;
+extern uint16_t ina219_calibrationValue;
+extern uint16_t ina219_currentDivider_mA;
+extern float    ina219_powerMultiplier_mW;
 
 int INA219_GetDeltaTime_ms();
 uint8_t INA219_Init(INA219_t *ina219, I2C_HandleTypeDef *i2c, uint8_t Address);

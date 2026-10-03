@@ -18,6 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 #include "FreeRTOS.h"
 #include "INA219.h"
 #include "task.h"
@@ -25,10 +28,6 @@
 #include "queue.h"
 #include "MPU6050.h"
 #include<math.h>
-
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -167,6 +166,7 @@ TaskHandle_t MPU6050_task_handle;
 
 void receiver_rx_read_task(void *params){
   for(;;){
+    (void)params;
     xSemaphoreTake(MPU_to_receiver,pdMS_TO_TICKS(4));
     read_receiver();
     xSemaphoreGive(receiver_to_PID);
@@ -175,6 +175,7 @@ void receiver_rx_read_task(void *params){
 
 void battery_monitoring_task(void *params){
   for(;;){
+    (void)params;
     //Power Switch
     BatteryRemaining=battery_capacity_monitoring(BatteryDefault);
     if(BatteryRemaining<=30) HAL_GPIO_WritePin(battery_led_GPIO_Port,battery_led_Pin,GPIO_PIN_SET);//digitalWrite(5,HIGH);
@@ -183,7 +184,8 @@ void battery_monitoring_task(void *params){
 }
 
 void PID_stabilization_task(void *params){
-  for(;;){
+  while(1){
+    (void)params;
     // Facteur 0.15 pour convertir en °/s avec un max de +ou-75°/s
     xSemaphoreTake(receiver_to_PID,pdMS_TO_TICKS(4));
     DesiredRateRoll=0.15*(ReceiverValue[0]-1500);
@@ -215,6 +217,7 @@ void PID_stabilization_task(void *params){
 
 void motors_command_task(void *params){
   for(;;){
+    (void)params;
     xSemaphoreTake(PID_to_motors,pdMS_TO_TICKS(4));
     if(InputThrottle>1800) InputThrottle=1800;
 
@@ -228,14 +231,14 @@ void motors_command_task(void *params){
     if(Motor_rear_right_Input>2000) Motor_rear_right_Input=1999;
     if(Motor_rear_left_Input>2000) Motor_rear_left_Input=1999;
 
-// Keep the quadcopter running at minimal 18%
+  // Keep the quadcopter running at minimal 18%
     int ThrottleIdle=1180;
     if(Motor_front_left_Input<ThrottleIdle) Motor_front_left_Input=ThrottleIdle;
     if(Motor_front_right_Input<ThrottleIdle) Motor_front_right_Input=ThrottleIdle;
     if(Motor_rear_right_Input<ThrottleIdle) Motor_rear_right_Input=ThrottleIdle;
     if(Motor_rear_left_Input<ThrottleIdle) Motor_rear_left_Input=ThrottleIdle;
 
-// Make sure the motors can be turned off
+  // Make sure the motors can be turned off
     int ThrottleCutOff=1000;
     if(ReceiverValue[2]<1050)
     {
@@ -257,6 +260,7 @@ void motors_command_task(void *params){
 
 void MPU6050_task(void *params){
   for(;;){
+    (void)params;
     xSemaphoreTake(MPU6050_start,pdMS_TO_TICKS(4));
     gyro_signals();
     RateRoll-=RateCalibrationRoll;
