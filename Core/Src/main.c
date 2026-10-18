@@ -26,7 +26,7 @@
 #include "task.h"
 #include "semphr.h"
 #include "queue.h"
-#include "MPU6050.h"
+#include "mpu9250.h"
 #include<math.h>
 /* USER CODE END Includes */
 
@@ -58,12 +58,12 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 //Les variables FreeRTOS
-SemaphoreHandle_t MPU6050_start,MPU_to_receiver,receiver_to_PID,PID_to_motors;
+SemaphoreHandle_t MPU9250_start,MPU_to_receiver,receiver_to_PID,PID_to_motors;
 TaskHandle_t receiver_rx_read_task_handle;
 TaskHandle_t battery_monitoring_task_handle;
 TaskHandle_t PID_stabilization_task_handle;
 TaskHandle_t motors_command_task_handle;
-TaskHandle_t MPU6050_task_handle;
+TaskHandle_t MPU9250_task_handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -133,7 +133,9 @@ void read_receiver(void){
 }
 
 void gyro_signals(void) {
-	MPU6050_Read_Gyro(&RateRoll,&RatePitch,&RateYaw);
+  I2C_Status status;
+  status = MPU9250_GetGyroData(&RateRoll,&RatePitch,&RateYaw);
+  if(status != I2C_OK) return;
 }
 
 // PID equation
@@ -252,14 +254,14 @@ void motors_command_task(void *params){
     __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, (Motor_rear_right_Input*65535)/1024);
     __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, (Motor_rear_left_Input*65535)/1024);
 
-    xSemaphoreGive(MPU6050_start);
+    xSemaphoreGive(MPU9250_start);
   }
 }
 
-void MPU6050_task(void *params){
+void MPU9250_task(void *params){
   for(;;){
     (void)params;
-    xSemaphoreTake(MPU6050_start,pdMS_TO_TICKS(4));
+    xSemaphoreTake(MPU9250_start,pdMS_TO_TICKS(4));
     gyro_signals();
     RateRoll-=RateCalibrationRoll;
     RatePitch-=RateCalibrationPitch;
@@ -306,7 +308,7 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  MPU6050_init();
+  MPU9250_Init();
 
   HAL_NVIC_SetPriority(TIM1_CC_IRQn, 5, 0);
   HAL_NVIC_SetPriority(TIM2_IRQn,    5, 0);
@@ -341,11 +343,11 @@ int main(void)
   status = xTaskCreate(motors_command_task,"motors_command_task", 256, NULL, 3, &motors_command_task_handle);
   if(status != pdPASS) while (1);
 
-  status = xTaskCreate(MPU6050_task,"MPU6050_task", 256, NULL, 3, &MPU6050_task_handle);
+  status = xTaskCreate(MPU9250_task,"MPU9250_task", 256, NULL, 3, &MPU9250_task_handle);
   if(status != pdPASS) while (1);
 
-  MPU6050_start = xSemaphoreCreateBinary();
-  if(MPU6050_start == NULL) while (1);
+  MPU9250_start = xSemaphoreCreateBinary();
+  if(MPU9250_start == NULL) while (1);
 
   MPU_to_receiver = xSemaphoreCreateBinary();
   if(MPU_to_receiver == NULL) while (1);
@@ -354,7 +356,7 @@ int main(void)
   if(receiver_to_PID == NULL) while (1);
 
   PID_to_motors = xSemaphoreCreateBinary();
-  if(PID_to_motors == NULL) while (1);
+  if(PID_to_motors == NULL) {while (1);}
   {
     /* code */
   }

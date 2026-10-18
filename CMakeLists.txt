@@ -44,8 +44,12 @@ file(GLOB_RECURSE INA219_SOURCES
     Drivers/INA219/*.c
 )
 
-file(GLOB_RECURSE MPU6050_SOURCES
-    Drivers/MPU6050/*.c
+file(GLOB_RECURSE MPU9250_SOURCES
+    Drivers/MPU9250/*.c
+)
+
+file(GLOB_RECURSE I2C_SOURCES
+    Drivers/I2C/*.c
 )
 
 file(GLOB_RECURSE HAL_SOURCES
@@ -67,8 +71,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 
     # Drivers
     ${INA219_SOURCES}
-    ${MPU6050_SOURCES}
+    ${MPU9250_SOURCES}
     ${HAL_SOURCES}
+    ${I2C_SOURCES}
 
     # FreeRTOS
     ${FREERTOS_SOURCES}
@@ -96,7 +101,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
     # Sensors
     Drivers/INA219
-    Drivers/MPU6050
+    Drivers/MPU9250
+    Drivers/I2C
 
     # FreeRTOS
     FreeRTOS-KernelV11.2.0/include
@@ -152,6 +158,8 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
     -Wall
     -Wextra
 )
+
+add_compile_options(-w)
 
 # ============================================================
 # Libraries

@@ -36,37 +36,37 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 123,
+				"line" : 129,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 160,
+				"line" : 168,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 141,
+				"line" : 147,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 110,
+				"line" : 116,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 84,
+				"line" : 89,
 				"parent" : 0
 			},
 			{
 				"command" : 6,
 				"file" : 0,
-				"line" : 63,
+				"line" : 67,
 				"parent" : 0
 			}
 		]
@@ -160,7 +160,11 @@
 				},
 				{
 					"backtrace" : 6,
-					"path" : "D:/Quadcopter_Drone_code/Drivers/MPU6050"
+					"path" : "D:/Quadcopter_Drone_code/Drivers/MPU9250"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "D:/Quadcopter_Drone_code/Drivers/I2C"
 				},
 				{
 					"backtrace" : 6,
@@ -214,7 +218,11 @@
 				29,
 				30,
 				31,
-				32
+				32,
+				33,
+				34,
+				35,
+				36
 			]
 		},
 		{
@@ -299,7 +307,11 @@
 				},
 				{
 					"backtrace" : 6,
-					"path" : "D:/Quadcopter_Drone_code/Drivers/MPU6050"
+					"path" : "D:/Quadcopter_Drone_code/Drivers/MPU9250"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "D:/Quadcopter_Drone_code/Drivers/I2C"
 				},
 				{
 					"backtrace" : 6,
@@ -313,7 +325,7 @@
 			"language" : "ASM",
 			"sourceIndexes" : 
 			[
-				33
+				37
 			]
 		}
 	],
@@ -435,14 +447,18 @@
 				29,
 				30,
 				31,
-				32
+				32,
+				33,
+				34,
+				35,
+				36
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				33
+				37
 			]
 		}
 	],
@@ -535,7 +551,17 @@
 				7
 			],
 			"compileGroupIndex" : 0,
-			"path" : "Drivers/MPU6050/MPU6050.c",
+			"path" : "Drivers/MPU9250/ak8963.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"backtraces" : 
+			[
+				7
+			],
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/MPU9250/mpu9250.c",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -726,6 +752,36 @@
 			],
 			"compileGroupIndex" : 0,
 			"path" : "Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart_ex.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"backtraces" : 
+			[
+				7
+			],
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/I2C/i2c1.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"backtraces" : 
+			[
+				7
+			],
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/I2C/i2c2.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 7,
+			"backtraces" : 
+			[
+				7
+			],
+			"compileGroupIndex" : 0,
+			"path" : "Drivers/I2C/i2c3.c",
 			"sourceGroupIndex" : 0
 		},
 		{
