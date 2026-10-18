@@ -57,7 +57,13 @@ TIM_HandleTypeDef htim4;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+//Les variables FreeRTOS
+SemaphoreHandle_t MPU6050_start,MPU_to_receiver,receiver_to_PID,PID_to_motors;
+TaskHandle_t receiver_rx_read_task_handle;
+TaskHandle_t battery_monitoring_task_handle;
+TaskHandle_t PID_stabilization_task_handle;
+TaskHandle_t motors_command_task_handle;
+TaskHandle_t MPU6050_task_handle;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -155,14 +161,6 @@ void reset_pid(void){
   PrevErrorRateRoll=0; PrevErrorRatePitch=0; PrevErrorRateYaw=0;
   PrevItermRateRoll=0; PrevItermRatePitch=0; PrevItermRateYaw=0;
 }
-
-//Les variables FreeRTOS
-SemaphoreHandle_t MPU6050_start,MPU_to_receiver,receiver_to_PID,PID_to_motors;
-TaskHandle_t receiver_rx_read_task_handle;
-TaskHandle_t battery_monitoring_task_handle;
-TaskHandle_t PID_stabilization_task_handle;
-TaskHandle_t motors_command_task_handle;
-TaskHandle_t MPU6050_task_handle;
 
 void receiver_rx_read_task(void *params){
   for(;;){
@@ -279,10 +277,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -311,8 +306,58 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
+  MPU6050_init();
+
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(TIM2_IRQn,    5, 0);
+  HAL_NVIC_SetPriority(TIM3_IRQn,    5, 0);
+  HAL_NVIC_SetPriority(TIM4_IRQn,    5, 0);
+
+  HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_1);
+
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
   my_ina219.ina219_i2c = &hi2c2;
   my_ina219.Address = 0x40;
+
+  // Tasks and semaphores creation
+
+  BaseType_t status;
+
+  status = xTaskCreate(receiver_rx_read_task,"receiver_rx_read_task", 256, NULL, 3, &receiver_rx_read_task_handle);
+  if(status != pdPASS) while (1);
+
+  status = xTaskCreate(battery_monitoring_task,"battery_monitoring_task", 256, NULL, 3, &battery_monitoring_task_handle);
+  if(status != pdPASS) while (1);
+
+  status = xTaskCreate(PID_stabilization_task,"PID_stabilization_task", 256, NULL, 3, &PID_stabilization_task_handle);
+  if(status != pdPASS) while (1);
+
+  status = xTaskCreate(motors_command_task,"motors_command_task", 256, NULL, 3, &motors_command_task_handle);
+  if(status != pdPASS) while (1);
+
+  status = xTaskCreate(MPU6050_task,"MPU6050_task", 256, NULL, 3, &MPU6050_task_handle);
+  if(status != pdPASS) while (1);
+
+  MPU6050_start = xSemaphoreCreateBinary();
+  if(MPU6050_start == NULL) while (1);
+
+  MPU_to_receiver = xSemaphoreCreateBinary();
+  if(MPU_to_receiver == NULL) while (1);
+
+  receiver_to_PID = xSemaphoreCreateBinary();
+  if(receiver_to_PID == NULL) while (1);
+
+  PID_to_motors = xSemaphoreCreateBinary();
+  if(PID_to_motors == NULL) while (1);
+  {
+    /* code */
+  }
   
   /* USER CODE END 2 */
 

@@ -1,4 +1,5 @@
 #include "MPU6050.h"
+#include<stdint.h>
 #define MPU6050_ADDR 0xD0
 
 #define SMPLRT_DIV_REG 0x19

@@ -38,7 +38,6 @@
 933	1609	8127688048736078	CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj	560ec4b82bca9e07
 1208	2613	8127714548218899	CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj	c1c620a86503f286
 157	1454	8127690047373567	CMakeFiles/Quadcopter_drone.dir/Drivers/MPU6050/MPU6050.c.obj	955e6d61e1e42452
-13	2230	8127714536258565	CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj	e2b9d058504bf463
-2614	7025	8127714562265285	Quadcopter_drone.elf	31cc4892633d2aa3
 8	1211	8127716329831637	CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj	e2b9d058504bf463
 1212	4979	8127716341869551	Quadcopter_drone.elf	31cc4892633d2aa3
+13	1606	8128271656522915	CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj	e2b9d058504bf463
