@@ -1,3 +1,0 @@
-D:/Quadcopter_Drone_code/build/Debug/CMakeFiles/Quadcopter_drone.dir
-D:/Quadcopter_Drone_code/build/Debug/CMakeFiles/edit_cache.dir
-D:/Quadcopter_Drone_code/build/Debug/CMakeFiles/rebuild_cache.dir
