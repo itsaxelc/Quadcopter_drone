@@ -24,7 +24,6 @@
 #include "FreeRTOS.h"
 #include "INA219.h"
 #include "task.h"
-#include "semphr.h"
 #include "queue.h"
 #include "mpu9250.h"
 #include<math.h>
@@ -37,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define MPU9250_TIMEOUT_MS 20U
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -58,12 +57,15 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 //Les variables FreeRTOS
-SemaphoreHandle_t MPU9250_start,MPU_to_receiver,receiver_to_PID,PID_to_motors;
 TaskHandle_t receiver_rx_read_task_handle;
 TaskHandle_t battery_monitoring_task_handle;
 TaskHandle_t PID_stabilization_task_handle;
 TaskHandle_t motors_command_task_handle;
 TaskHandle_t MPU9250_task_handle;
+
+volatile uint8_t MPU9250_DataValid = 0;
+volatile uint32_t MPU9250_ConsecutiveErrors = 0;
+volatile uint32_t MPU9250_LastValidTick = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -87,8 +89,10 @@ float RatePitch, RateRoll, RateYaw;
 float RateCalibrationPitch, RateCalibrationRoll, RateCalibrationYaw;
 int RateCalibrationNumber;
 
-float ReceiverValue[]={0,0,0,0};
-float pulse_ms[4]={0.0};
+//float ReceiverValue[]={0,0,0,0};
+//float pulse_ms[4]={0.0};
+volatile float ReceiverValue[4] = {1500.0f, 1500.0f, 1000.0f, 1500.0f};
+volatile float pulse_us[4] = {1500.0f, 1500.0f, 1000.0f, 1500.0f};
 
 int BatteryRemaining;
 int BatteryDefault=2200;
@@ -125,17 +129,71 @@ long map(int valeur,int a,int b,int c,int d){
 	return c+(valeur-a)*(d-c)/(b-a);
 }
 
-void read_receiver(void){
-	ReceiverValue[0]=pulse_ms[1];		//Roll
-	ReceiverValue[1]=pulse_ms[2];		//Pitch
-	ReceiverValue[2]=pulse_ms[0];		//Throttle
-	ReceiverValue[3]=pulse_ms[3];		//Yaw
+static float constrain_float(float value, float min, float max)
+{
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
 }
 
-void gyro_signals(void) {
+static void mix_and_limit_motors(float throttle, float roll, float pitch, float yaw, float motor[4])
+{
+  /* Corrections différentielles de chaque moteur */
+  motor[0] = -roll - pitch - yaw;  // Avant gauche
+  motor[1] = -roll + pitch + yaw;  // Avant droit
+  motor[2] =  roll + pitch - yaw;  // Arrière droit
+  motor[3] =  roll - pitch + yaw;  // Arrière gauche
+
+  float min_correction = motor[0];
+  float max_correction = motor[0];
+
+  for (int i = 1; i < 4; i++)
+  {
+    if (motor[i] < min_correction) min_correction = motor[i];
+    if (motor[i] > max_correction) max_correction = motor[i];
+  }
+
+  /* Réduire les corrections seulement si nécessaire */
+  float span = max_correction - min_correction;
+
+  if (span > 1000.0f)
+  {
+    float scale = 1000.0f / span;
+    for (int i = 0; i < 4; i++) motor[i] *= scale;
+  }
+
+  /* Recalculer les bornes des corrections */
+  min_correction = motor[0];
+  max_correction = motor[0];
+
+  for (int i = 1; i < 4; i++)
+  {
+      if (motor[i] < min_correction) min_correction = motor[i];
+      if (motor[i] > max_correction) max_correction = motor[i];
+  }
+
+  /* Déterminer le throttle admissible */
+  float min_throttle = 1000.0f - min_correction;
+  float max_throttle = 2000.0f - max_correction;
+
+  throttle = constrain_float(throttle, min_throttle, max_throttle);
+
+  /* Commandes finales des quatre moteurs */
+  for (int i = 0; i < 4; i++) motor[i] += throttle;
+}
+
+void read_receiver(void){
+	ReceiverValue[0]=pulse_us[1];		//Roll
+	ReceiverValue[1]=pulse_us[2];		//Pitch
+	ReceiverValue[2]=pulse_us[0];		//Throttle
+	ReceiverValue[3]=pulse_us[3];		//Yaw
+}
+
+I2C_Status gyro_signals(void) {
   I2C_Status status;
   status = MPU9250_GetGyroData(&RateRoll,&RatePitch,&RateYaw);
-  if(status != I2C_OK) return;
+  if(status != I2C_OK) return status;
+  else return I2C_OK;
 }
 
 // PID equation
@@ -167,9 +225,7 @@ void reset_pid(void){
 void receiver_rx_read_task(void *params){
   for(;;){
     (void)params;
-    xSemaphoreTake(MPU_to_receiver,pdMS_TO_TICKS(4));
     read_receiver();
-    xSemaphoreGive(receiver_to_PID);
   }
 }
 
@@ -183,90 +239,140 @@ void battery_monitoring_task(void *params){
   }
 }
 
-void PID_stabilization_task(void *params){
-  while(1){
+void PID_stabilization_task(void *params)
+{
     (void)params;
-    // Facteur 0.15 pour convertir en °/s avec un max de +ou-75°/s
-    xSemaphoreTake(receiver_to_PID,pdMS_TO_TICKS(4));
-    DesiredRateRoll=0.15*(ReceiverValue[0]-1500);
-    DesiredRatePitch=0.15*(ReceiverValue[1]-1500);
-    InputThrottle=ReceiverValue[2];
-    DesiredRateYaw=0.15*(ReceiverValue[3]-1500);
+    TickType_t last_wake_time = xTaskGetTickCount();
+    TickType_t timeout_ticks = pdMS_TO_TICKS(MPU9250_TIMEOUT_MS);
+    for (;;)
+    {
+      TickType_t now = xTaskGetTickCount();
 
-    ErrorRateRoll=DesiredRateRoll-RateRoll;
-    ErrorRatePitch=DesiredRatePitch-RatePitch;
-    ErrorRateYaw=DesiredRateYaw-RateYaw;
+      /* 1. Vérifier la disponibilité des mesures */
+      if ((MPU9250_DataValid == 0U) && ((TickType_t)(now - MPU9250_LastValidTick) >= timeout_ticks))
+      {
+        /*
+          * Perte prolongée du gyroscope.
+          * Ne pas calculer de nouvelles corrections PID.
+          * Signaler ce défaut au superviseur de sécurité.
+          */
 
-    pid_equation(ErrorRateRoll,PRateRoll,IRateRoll,DRateRoll,PrevErrorRateRoll,PrevItermRateRoll);
-    InputRoll=PIDReturn[0];
-    PrevErrorRateRoll=PIDReturn[1];
-    PrevItermRateRoll=PIDReturn[2];
+        vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(4));
+        continue;
+      }
 
-    pid_equation(ErrorRatePitch,PRatePitch,IRatePitch,DRatePitch,PrevErrorRatePitch,PrevItermRatePitch);
-    InputPitch=PIDReturn[0];
-    PrevErrorRatePitch=PIDReturn[1];
-    PrevItermRatePitch=PIDReturn[2];
+      if (MPU9250_DataValid == 0U)
+      {
+        /*
+          * Échec ponctuel :
+          * ne pas recalculer le PID sur des mesures périmées.
+          * Les dernières corrections restent inchangées.
+          */
 
-    pid_equation(ErrorRateYaw,PRateYaw,IRateYaw,DRateYaw,PrevErrorRateYaw,PrevItermRateYaw);
-    InputYaw=PIDReturn[0];
-    PrevErrorRateYaw=PIDReturn[1];
-    PrevItermRateYaw=PIDReturn[2];
-    xSemaphoreGive(PID_to_motors);
-  }
+        vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(4));
+        continue;
+      }
+      /* Consignes de vitesse angulaire */
+      DesiredRateRoll  = 0.15f * (ReceiverValue[0] - 1500.0f);
+      DesiredRatePitch = 0.15f * (ReceiverValue[1] - 1500.0f);
+      DesiredRateYaw   = 0.15f * (ReceiverValue[3] - 1500.0f);
+
+      /* Commande collective */
+      InputThrottle = ReceiverValue[2];
+      if (InputThrottle < 1050.0f)
+      {
+        /* Réinitialiser les états internes des PID */
+        reset_pid();
+        /* Annuler les corrections d'attitude */
+        InputRoll  = 0.0f;
+        InputPitch = 0.0f;
+        InputYaw   = 0.0f;
+      }
+      else
+      {
+        /* Calcul des erreurs */
+        ErrorRateRoll  = DesiredRateRoll  - RateRoll;
+        ErrorRatePitch = DesiredRatePitch - RatePitch;
+        ErrorRateYaw   = DesiredRateYaw   - RateYaw;
+
+        /* PID Roll */
+        pid_equation(ErrorRateRoll, PRateRoll, IRateRoll, DRateRoll, PrevErrorRateRoll, PrevItermRateRoll);
+        InputRoll = PIDReturn[0];
+        PrevErrorRateRoll = PIDReturn[1];
+        PrevItermRateRoll = PIDReturn[2];
+
+        /* PID Pitch */
+        pid_equation(ErrorRatePitch, PRatePitch, IRatePitch, DRatePitch, PrevErrorRatePitch, PrevItermRatePitch);
+        InputPitch = PIDReturn[0];
+        PrevErrorRatePitch = PIDReturn[1];
+        PrevItermRatePitch = PIDReturn[2];
+
+        /* PID Yaw */
+        pid_equation(ErrorRateYaw, PRateYaw, IRateYaw, DRateYaw, PrevErrorRateYaw, PrevItermRateYaw);
+        InputYaw = PIDReturn[0];
+        PrevErrorRateYaw = PIDReturn[1];
+        PrevItermRateYaw = PIDReturn[2];
+      }
+      /* Période nominale : 4 ms, soit 250 Hz */
+      vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(4));
+    }
 }
 
 void motors_command_task(void *params){
+  (void)params;
+
+  float motor[4];
   for(;;){
-    (void)params;
-    xSemaphoreTake(PID_to_motors,pdMS_TO_TICKS(4));
-    if(InputThrottle>1800) InputThrottle=1800;
-
-    Motor_front_left_Input=1.024*(InputThrottle-InputRoll-InputPitch-InputYaw);
-    Motor_front_right_Input=1.024*(InputThrottle-InputRoll+InputPitch+InputYaw);
-    Motor_rear_right_Input=1.024*(InputThrottle+InputRoll+InputPitch-InputYaw);
-    Motor_rear_left_Input=1.024*(InputThrottle+InputRoll-InputPitch+InputYaw);
-
-    if(Motor_front_left_Input>2000) Motor_front_left_Input=1999;
-    if(Motor_front_right_Input>2000) Motor_front_right_Input=1999;
-    if(Motor_rear_right_Input>2000) Motor_rear_right_Input=1999;
-    if(Motor_rear_left_Input>2000) Motor_rear_left_Input=1999;
-
-  // Keep the quadcopter running at minimal 18%
-    int ThrottleIdle=1180;
-    if(Motor_front_left_Input<ThrottleIdle) Motor_front_left_Input=ThrottleIdle;
-    if(Motor_front_right_Input<ThrottleIdle) Motor_front_right_Input=ThrottleIdle;
-    if(Motor_rear_right_Input<ThrottleIdle) Motor_rear_right_Input=ThrottleIdle;
-    if(Motor_rear_left_Input<ThrottleIdle) Motor_rear_left_Input=ThrottleIdle;
-
-  // Make sure the motors can be turned off
-    int ThrottleCutOff=1000;
-    if(ReceiverValue[2]<1050)
+    /* Sécurité : throttle minimal */
+    if (!RC_IsValid() || ReceiverValue[2] < 1050)
     {
-      Motor_front_left_Input=ThrottleCutOff;
-      Motor_front_right_Input=ThrottleCutOff;
-      Motor_rear_right_Input=ThrottleCutOff;
-      Motor_rear_left_Input=ThrottleCutOff;
-      reset_pid();
+      InputThrottle = 1000.0f;
+      Motor_front_left_Input= 1000.0f;
+      Motor_front_right_Input= 1000.0f;
+      Motor_rear_right_Input = 1000.0f;
+      Motor_rear_left_Input= 1000.0f;
+    }
+    else
+    {
+      /* Mixage et gestion de la saturation */
+      mix_and_limit_motors(InputThrottle, InputRoll, InputPitch, InputYaw, motor);
+
+      Motor_front_left_Input = motor[0];
+      Motor_front_right_Input = motor[1];
+      Motor_rear_right_Input = motor[2];
+      Motor_rear_left_Input = motor[3];
     }
 
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (Motor_front_left_Input*65535)/1024);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, (Motor_front_right_Input*65535)/1024);
-    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, (Motor_rear_right_Input*65535)/1024);
-    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, (Motor_rear_left_Input*65535)/1024);
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, Motor_front_left_Input);
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, Motor_front_right_Input);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, Motor_rear_right_Input);
+    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, Motor_rear_left_Input);
 
-    xSemaphoreGive(MPU9250_start);
+    vTaskDelay(pdMS_TO_TICKS(2));
   }
 }
 
 void MPU9250_task(void *params){
+  (void)params;
   for(;;){
-    (void)params;
-    xSemaphoreTake(MPU9250_start,pdMS_TO_TICKS(4));
-    gyro_signals();
-    RateRoll-=RateCalibrationRoll;
-    RatePitch-=RateCalibrationPitch;
-    RateYaw-=RateCalibrationYaw;
-    xSemaphoreGive(MPU_to_receiver);
+    I2C_Status status = gyro_signals();
+    if (status == I2C_OK)
+    {
+      RateRoll -= RateCalibrationRoll;
+      RatePitch -= RateCalibrationPitch;
+      RateYaw -= RateCalibrationYaw;
+
+      MPU9250_LastValidTick = xTaskGetTickCount();
+      MPU9250_ConsecutiveErrors = 0;
+      MPU9250_DataValid = 1;
+    }
+    else
+    {
+      MPU9250_DataValid = 0;
+      MPU9250_ConsecutiveErrors++;
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(4));
   }
 }
 /* USER CODE END 0 */
@@ -332,31 +438,19 @@ int main(void)
   BaseType_t status;
 
   status = xTaskCreate(receiver_rx_read_task,"receiver_rx_read_task", 256, NULL, 3, &receiver_rx_read_task_handle);
-  if(status != pdPASS) while (1);
+  if(status != pdPASS) {while (1);}
 
   status = xTaskCreate(battery_monitoring_task,"battery_monitoring_task", 256, NULL, 3, &battery_monitoring_task_handle);
-  if(status != pdPASS) while (1);
+  if(status != pdPASS) {while (1);}
 
   status = xTaskCreate(PID_stabilization_task,"PID_stabilization_task", 256, NULL, 3, &PID_stabilization_task_handle);
-  if(status != pdPASS) while (1);
+  if(status != pdPASS) {while (1);}
 
   status = xTaskCreate(motors_command_task,"motors_command_task", 256, NULL, 3, &motors_command_task_handle);
-  if(status != pdPASS) while (1);
+  if(status != pdPASS) {while (1);}
 
   status = xTaskCreate(MPU9250_task,"MPU9250_task", 256, NULL, 3, &MPU9250_task_handle);
-  if(status != pdPASS) while (1);
-
-  MPU9250_start = xSemaphoreCreateBinary();
-  if(MPU9250_start == NULL) while (1);
-
-  MPU_to_receiver = xSemaphoreCreateBinary();
-  if(MPU_to_receiver == NULL) while (1);
-
-  receiver_to_PID = xSemaphoreCreateBinary();
-  if(receiver_to_PID == NULL) while (1);
-
-  PID_to_motors = xSemaphoreCreateBinary();
-  if(PID_to_motors == NULL) {while (1);}
+  if(status != pdPASS) {while (1);}
   {
     /* code */
   }
@@ -541,7 +635,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 79;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 65535;
+  htim1.Init.Period = 19999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -569,7 +663,7 @@ static void MX_TIM1_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 1000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -623,7 +717,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 79;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 65535;
+  htim2.Init.Period = 19999;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_IC_Init(&htim2) != HAL_OK)
@@ -649,7 +743,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 1000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
@@ -685,7 +779,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 79;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 65535;
+  htim3.Init.Period = 19999;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_IC_Init(&htim3) != HAL_OK)
@@ -711,7 +805,7 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 1000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
@@ -747,7 +841,7 @@ static void MX_TIM4_Init(void)
   htim4.Instance = TIM4;
   htim4.Init.Prescaler = 79;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 65535;
+  htim4.Init.Period = 19999;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_IC_Init(&htim4) != HAL_OK)
@@ -773,7 +867,7 @@ static void MX_TIM4_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 1000;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
@@ -872,13 +966,17 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+#define RC_TIMEOUT_MS 100U
+static volatile TickType_t RC_LastUpdateTick[4] = {0};
 
-uint32_t t_rising[4]={0};
-uint32_t t_falling[4]={0};
-uint8_t edge[4]={0};
+static uint32_t t_rising[4] = {0};
+static uint32_t t_falling[4] = {0};
+static uint8_t edge[4] = {0};
 
-void test(uint32_t *t_rising, uint32_t *t_falling, uint8_t *edge, float* pulse,TIM_HandleTypeDef *htim, uint32_t channel){
-	if(*edge == 0)
+void test(uint32_t *t_rising, uint32_t *t_falling, uint8_t *edge, volatile float* pulse,TIM_HandleTypeDef *htim, uint32_t channel){
+	uint32_t captured;
+
+  if(*edge == 0)
 	{
 		*t_rising = HAL_TIM_ReadCapturedValue(htim, channel);
 
@@ -887,33 +985,64 @@ void test(uint32_t *t_rising, uint32_t *t_falling, uint8_t *edge, float* pulse,T
 		*edge = 1;
 	}
 	else
-	{
-		*t_falling = HAL_TIM_ReadCapturedValue(htim, channel);
+  {
+    /* Front descendant : fin de l'impulsion */
+    *t_falling = HAL_TIM_ReadCapturedValue(htim, channel);
 
-		*pulse = (*t_falling - *t_rising)/1000.0;
+    uint32_t arr = __HAL_TIM_GET_AUTORELOAD(htim);
 
-        __HAL_TIM_SET_CAPTUREPOLARITY(htim, channel, TIM_INPUTCHANNELPOLARITY_RISING);
-        *edge = 0;
+    /* Calcul de la largeur en ticks, avec gestion du débordement */
+    if (*t_falling >= *t_rising)
+    {
+      captured = *t_falling - *t_rising;
     }
+    else
+    {
+      captured = (arr + 1U - *t_rising) + *t_falling;
+    }
+
+    /*
+      1 MHz counter means 1 tick = 1 us.
+    */
+    *pulse = (float)captured;
+    RC_LastUpdateTick[htim->Instance == TIM1 ? 0 : htim->Instance == TIM2 ? 1 : htim->Instance == TIM3 ? 2 : 3] = xTaskGetTickCountFromISR();
+
+    /* Revenir au front montant pour la prochaine impulsion */
+    __HAL_TIM_SET_CAPTUREPOLARITY(htim, channel, TIM_INPUTCHANNELPOLARITY_RISING);
+
+    *edge = 0U;
+  }
+}
+
+static uint8_t RC_IsValid(void)
+{
+  TickType_t now = xTaskGetTickCount();
+  TickType_t timeout = pdMS_TO_TICKS(RC_TIMEOUT_MS);
+
+  for (uint8_t i = 0; i < 4; i++)
+  {
+      if ((TickType_t)(now - RC_LastUpdateTick[i]) >= timeout) return 0;
+  }
+  return 1;
 }
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
     if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim1)
     {
-    	test(&t_rising[0],&t_falling[0],&edge[0],&pulse_ms[0],htim,TIM_CHANNEL_1);
+    	test(&t_rising[0],&t_falling[0],&edge[0],&pulse_us[0],htim,TIM_CHANNEL_1);
     }
     if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim2)
     {
-       	test(&t_rising[1],&t_falling[1],&edge[1],&pulse_ms[1],htim,TIM_CHANNEL_1);
+       	test(&t_rising[1],&t_falling[1],&edge[1],&pulse_us[1],htim,TIM_CHANNEL_1);
     }
     if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim3)
     {
-    	test(&t_rising[2],&t_falling[2],&edge[2],&pulse_ms[2],htim,TIM_CHANNEL_1);
+    	test(&t_rising[2],&t_falling[2],&edge[2],&pulse_us[2],htim,TIM_CHANNEL_1);
     }
     if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim4)
     {
-    	test(&t_rising[3],&t_falling[3],&edge[3],&pulse_ms[3],htim,TIM_CHANNEL_1);
+    	test(&t_rising[3],&t_falling[3],&edge[3],&pulse_us[3],htim,TIM_CHANNEL_1);
     }
 }
 

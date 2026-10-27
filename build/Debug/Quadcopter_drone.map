@@ -353,7 +353,6 @@ Discarded input sections
  .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text          0x00000000        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .data          0x00000000        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .bss           0x00000000        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
@@ -3961,6 +3960,10 @@ Discarded input sections
  .bss           0x00000000        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
  .text.vListInsertEnd
                 0x00000000       0x46 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .text.vListInsert
+                0x00000000       0x70 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .text.uxListRemove
+                0x00000000       0x52 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
  .debug_macro   0x00000000      0xaea CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
  .debug_macro   0x00000000       0x2a CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
  .debug_macro   0x00000000       0x22 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
@@ -4184,6 +4187,12 @@ Discarded input sections
  .bss           0x00000000        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .bss.xQueueRegistry
                 0x00000000       0x40 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.xQueueGenericReset
+                0x00000000      0x124 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.xQueueGenericCreate
+                0x00000000       0x9e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.prvInitialiseNewQueue
+                0x00000000       0x46 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.prvInitialiseMutex
                 0x00000000       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueCreateMutex
@@ -4194,12 +4203,16 @@ Discarded input sections
                 0x00000000       0x6e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueCreateCountingSemaphore
                 0x00000000       0x5e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.xQueueGenericSend
+                0x00000000      0x204 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueGenericSendFromISR
                 0x00000000      0x16c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueGiveFromISR
                 0x00000000      0x150 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueReceive
                 0x00000000      0x1c4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.xQueueSemaphoreTake
+                0x00000000      0x200 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueuePeek
                 0x00000000      0x1c8 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueReceiveFromISR
@@ -4224,10 +4237,20 @@ Discarded input sections
                 0x00000000       0x16 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.uxQueueGetQueueLength
                 0x00000000       0x16 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.prvGetHighestPriorityOfWaitToReceiveList
+                0x00000000       0x2e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.prvCopyDataToQueue
+                0x00000000       0xd4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.prvCopyDataFromQueue
                 0x00000000       0x4c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.prvUnlockQueue
+                0x00000000       0xa4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.prvIsQueueEmpty
+                0x00000000       0x2c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueIsQueueEmptyFromISR
                 0x00000000       0x48 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .text.prvIsQueueFull
+                0x00000000       0x30 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.xQueueIsQueueFullFromISR
                 0x00000000       0x4c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.vQueueAddToRegistry
@@ -4236,6 +4259,13 @@ Discarded input sections
                 0x00000000       0x68 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .text.vQueueUnregisterQueue
                 0x00000000       0x70 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_info    0x00000000     0x1835 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_abbrev  0x00000000      0x322 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_aranges
+                0x00000000      0x138 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_rnglists
+                0x00000000       0xf2 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_macro   0x00000000      0x225 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .debug_macro   0x00000000      0xaea CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .debug_macro   0x00000000       0x2a CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .debug_macro   0x00000000       0x22 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
@@ -4273,6 +4303,12 @@ Discarded input sections
  .debug_macro   0x00000000       0xc3 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .debug_macro   0x00000000      0x14f CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .debug_macro   0x00000000       0x80 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_line    0x00000000     0x1421 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_str     0x00000000    0x12fb0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .comment       0x00000000       0x46 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .debug_frame   0x00000000      0x55c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+ .ARM.attributes
+                0x00000000       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
  .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .group         0x00000000        0xc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
@@ -4369,12 +4405,22 @@ Discarded input sections
                 0x00000000       0x54 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.xTaskGetApplicationTaskTagFromISR
                 0x00000000       0x78 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.vTaskPlaceOnEventList
+                0x00000000       0x4c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.vTaskPlaceOnUnorderedEventList
                 0x00000000       0xb0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.xTaskRemoveFromEventList
+                0x00000000      0x1b0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.vTaskRemoveFromUnorderedEventList
                 0x00000000      0x188 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.vTaskSetTimeOutState
                 0x00000000       0x50 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.vTaskInternalSetTimeOutState
+                0x00000000       0x2c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.xTaskCheckForTimeOut
+                0x00000000       0xd0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.vTaskMissedYield
+                0x00000000       0x18 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.uxTaskGetTaskNumber
                 0x00000000       0x2a CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.vTaskSetTaskNumber
@@ -4397,8 +4443,18 @@ Discarded input sections
                 0x00000000       0x1c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.xTaskGetCurrentTaskHandleForCore
                 0x00000000       0x30 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.xTaskGetSchedulerState
+                0x00000000       0x3c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.xTaskPriorityInherit
+                0x00000000      0x140 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.xTaskPriorityDisinherit
+                0x00000000      0x150 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.vTaskPriorityDisinheritAfterTimeout
+                0x00000000      0x178 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.uxTaskResetEventItemValue
                 0x00000000       0x30 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.pvTaskIncrementMutexHeldCount
+                0x00000000       0x2c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.ulTaskGenericNotifyTake
                 0x00000000      0x104 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.xTaskGenericNotifyWait
@@ -4413,6 +4469,8 @@ Discarded input sections
                 0x00000000       0x94 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.ulTaskGenericNotifyValueClear
                 0x00000000       0x98 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .text.prvAddCurrentTaskToDelayedList
+                0x00000000      0x104 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.vTaskResetState
                 0x00000000       0xa0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .debug_macro   0x00000000      0xaea CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
@@ -4489,6 +4547,10 @@ Discarded input sections
  .text          0x00000000        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
+ .text.memcpy   0x00000000       0x1c C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
+ .debug_frame   0x00000000       0x28 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
+ .ARM.attributes
+                0x00000000       0x34 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
  .text          0x00000000        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
  .data          0x00000000        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
@@ -4583,7 +4645,7 @@ LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/.
                 0x08000000                g_pfnVectors
                 0x08000188                        . = ALIGN (0x8)
 
-.text           0x08000188     0xa120
+.text           0x08000188     0x8e70
                 0x08000188                        . = ALIGN (0x8)
  *(.text)
  .text          0x08000188      0x378 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
@@ -4648,962 +4710,887 @@ LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/.
                 0x08000d9c       0x54 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
                 0x08000d9c                reset_pid
  .text.receiver_rx_read_task
-                0x08000df0       0x34 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08000df0       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
                 0x08000df0                receiver_rx_read_task
  .text.battery_monitoring_task
-                0x08000e24       0x44 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x08000e24                battery_monitoring_task
+                0x08000e00       0x44 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08000e00                battery_monitoring_task
+ *fill*         0x08000e44        0x4 
  .text.PID_stabilization_task
-                0x08000e68      0x29c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x08000e68                PID_stabilization_task
- *fill*         0x08001104        0x4 
+                0x08000e48      0x27c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08000e48                PID_stabilization_task
+ *fill*         0x080010c4        0x4 
  .text.motors_command_task
-                0x08001108      0x3d8 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x08001108                motors_command_task
+                0x080010c8      0x358 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x080010c8                motors_command_task
  .text.MPU9250_task
-                0x080014e0       0x8c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x080014e0                MPU9250_task
- .text.main     0x0800156c      0x228 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x0800156c                main
+                0x08001420       0x6c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001420                MPU9250_task
+ .text.main     0x0800148c      0x1a8 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x0800148c                main
  .text.SystemClock_Config
-                0x08001794       0xa2 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x08001794                SystemClock_Config
- *fill*         0x08001836        0x2 
+                0x08001634       0xa2 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001634                SystemClock_Config
+ *fill*         0x080016d6        0x2 
  .text.MX_I2C2_Init
-                0x08001838       0x80 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x080016d8       0x80 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_I2C3_Init
-                0x080018b8       0x80 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001758       0x80 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_TIM1_Init
-                0x08001938      0x164 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x080017d8      0x168 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_TIM2_Init
-                0x08001a9c       0xf8 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001940       0xfc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_TIM3_Init
-                0x08001b94       0xfc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001a3c       0xfc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_TIM4_Init
-                0x08001c90       0xfc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001b38       0xfc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_USART2_UART_Init
-                0x08001d8c       0x60 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001c34       0x60 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .text.MX_GPIO_Init
-                0x08001dec       0xf4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .text.test     0x08001ee0      0x1c8 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x08001ee0                test
+                0x08001c94       0xf4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .text.test     0x08001d88      0x1dc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001d88                test
  .text.HAL_TIM_IC_CaptureCallback
-                0x080020a8       0xf0 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x080020a8                HAL_TIM_IC_CaptureCallback
+                0x08001f64       0xf0 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08001f64                HAL_TIM_IC_CaptureCallback
  .text.HAL_TIM_PeriodElapsedCallback
-                0x08002198       0x24 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x08002198                HAL_TIM_PeriodElapsedCallback
+                0x08002054       0x24 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08002054                HAL_TIM_PeriodElapsedCallback
  .text.Error_Handler
-                0x080021bc        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x080021bc                Error_Handler
+                0x08002078        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x08002078                Error_Handler
  .text.HAL_MspInit
-                0x080021c8       0x44 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
-                0x080021c8                HAL_MspInit
+                0x08002084       0x44 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+                0x08002084                HAL_MspInit
  .text.HAL_I2C_MspInit
-                0x0800220c      0x148 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
-                0x0800220c                HAL_I2C_MspInit
+                0x080020c8      0x148 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+                0x080020c8                HAL_I2C_MspInit
  .text.HAL_TIM_IC_MspInit
-                0x08002354      0x1ec CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
-                0x08002354                HAL_TIM_IC_MspInit
+                0x08002210      0x1ec CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+                0x08002210                HAL_TIM_IC_MspInit
  .text.HAL_TIM_MspPostInit
-                0x08002540      0x14c CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
-                0x08002540                HAL_TIM_MspPostInit
+                0x080023fc      0x14c CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+                0x080023fc                HAL_TIM_MspPostInit
  .text.HAL_UART_MspInit
-                0x0800268c       0xb8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
-                0x0800268c                HAL_UART_MspInit
+                0x08002548       0xb8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+                0x08002548                HAL_UART_MspInit
  .text.HAL_InitTick
-                0x08002744       0xf4 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
-                0x08002744                HAL_InitTick
+                0x08002600       0xf4 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+                0x08002600                HAL_InitTick
  .text.NMI_Handler
-                0x08002838        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002838                NMI_Handler
+                0x080026f4        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x080026f4                NMI_Handler
  .text.HardFault_Handler
-                0x08002840        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002840                HardFault_Handler
+                0x080026fc        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x080026fc                HardFault_Handler
  .text.MemManage_Handler
-                0x08002848        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002848                MemManage_Handler
+                0x08002704        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x08002704                MemManage_Handler
  .text.BusFault_Handler
-                0x08002850        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002850                BusFault_Handler
+                0x0800270c        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x0800270c                BusFault_Handler
  .text.UsageFault_Handler
-                0x08002858        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002858                UsageFault_Handler
+                0x08002714        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x08002714                UsageFault_Handler
  .text.SysTick_Handler
-                0x08002860        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002860                SysTick_Handler
+                0x0800271c        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x0800271c                SysTick_Handler
  .text.TIM1_CC_IRQHandler
-                0x0800286c       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x0800286c                TIM1_CC_IRQHandler
+                0x08002728       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x08002728                TIM1_CC_IRQHandler
  .text.TIM2_IRQHandler
-                0x08002880       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002880                TIM2_IRQHandler
+                0x0800273c       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x0800273c                TIM2_IRQHandler
  .text.TIM3_IRQHandler
-                0x08002894       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x08002894                TIM3_IRQHandler
+                0x08002750       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x08002750                TIM3_IRQHandler
  .text.TIM4_IRQHandler
-                0x080028a8       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x080028a8                TIM4_IRQHandler
+                0x08002764       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x08002764                TIM4_IRQHandler
  .text.TIM6_DAC_IRQHandler
-                0x080028bc       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
-                0x080028bc                TIM6_DAC_IRQHandler
+                0x08002778       0x14 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x08002778                TIM6_DAC_IRQHandler
  .text.SystemInit
-                0x080028d0       0x20 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
-                0x080028d0                SystemInit
- .text.Read16   0x080028f0       0x46 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
-                0x080028f0                Read16
+                0x0800278c       0x20 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+                0x0800278c                SystemInit
+ .text.Read16   0x080027ac       0x46 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+                0x080027ac                Read16
  .text.INA219_ReadCurrent_raw
-                0x08002936       0x20 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
-                0x08002936                INA219_ReadCurrent_raw
- *fill*         0x08002956        0x2 
+                0x080027f2       0x20 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+                0x080027f2                INA219_ReadCurrent_raw
+ *fill*         0x08002812        0x2 
  .text.INA219_ReadCurrent
-                0x08002958       0x2c CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
-                0x08002958                INA219_ReadCurrent
+                0x08002814       0x2c CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+                0x08002814                INA219_ReadCurrent
  .text.AK8963_GetRawData
-                0x08002984       0xb2 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
- *fill*         0x08002a36        0x2 
+                0x08002840       0xb2 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ *fill*         0x080028f2        0x2 
  .text.AK8963_GetData
-                0x08002a38      0x164 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
-                0x08002a38                AK8963_GetData
+                0x080028f4      0x164 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+                0x080028f4                AK8963_GetData
  .text.AK8963_ReadRegister
-                0x08002b9c       0x30 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+                0x08002a58       0x30 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
  .text.MPU9250_ReadWhoAmI
-                0x08002bcc       0x32 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
-                0x08002bcc                MPU9250_ReadWhoAmI
+                0x08002a88       0x32 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+                0x08002a88                MPU9250_ReadWhoAmI
  .text.MPU9250_WriteRegister
-                0x08002bfe       0x30 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+                0x08002aba       0x30 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
  .text.MPU9250_Init
-                0x08002c2e      0x124 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
-                0x08002c2e                MPU9250_Init
+                0x08002aea      0x124 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+                0x08002aea                MPU9250_Init
  .text.MPU9250_GetRawData
-                0x08002d52       0xc4 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- *fill*         0x08002e16        0x2 
+                0x08002c0e       0xc4 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ *fill*         0x08002cd2        0x2 
  .text.MPU9250_GetData
-                0x08002e18      0x150 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
-                0x08002e18                MPU9250_GetData
+                0x08002cd4      0x150 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+                0x08002cd4                MPU9250_GetData
  .text.MPU9250_GetGyroData
-                0x08002f68       0x5c CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
-                0x08002f68                MPU9250_GetGyroData
+                0x08002e24       0x5c CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+                0x08002e24                MPU9250_GetGyroData
  .text.HAL_Init
-                0x08002fc4       0x40 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
-                0x08002fc4                HAL_Init
+                0x08002e80       0x40 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x08002e80                HAL_Init
  .text.HAL_IncTick
-                0x08003004       0x24 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
-                0x08003004                HAL_IncTick
+                0x08002ec0       0x24 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x08002ec0                HAL_IncTick
  .text.HAL_GetTick
-                0x08003028       0x14 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
-                0x08003028                HAL_GetTick
+                0x08002ee4       0x14 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x08002ee4                HAL_GetTick
  .text.__NVIC_SetPriorityGrouping
-                0x0800303c       0x48 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x08002ef8       0x48 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
  .text.__NVIC_GetPriorityGrouping
-                0x08003084       0x1c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x08002f40       0x1c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
  .text.__NVIC_EnableIRQ
-                0x080030a0       0x38 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x08002f5c       0x38 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
  .text.__NVIC_SetPriority
-                0x080030d8       0x54 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x08002f94       0x54 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
  .text.NVIC_EncodePriority
-                0x0800312c       0x6e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x08002fe8       0x6e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
  .text.HAL_NVIC_SetPriorityGrouping
-                0x0800319a       0x16 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
-                0x0800319a                HAL_NVIC_SetPriorityGrouping
+                0x08003056       0x16 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x08003056                HAL_NVIC_SetPriorityGrouping
  .text.HAL_NVIC_SetPriority
-                0x080031b0       0x38 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
-                0x080031b0                HAL_NVIC_SetPriority
+                0x0800306c       0x38 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x0800306c                HAL_NVIC_SetPriority
  .text.HAL_NVIC_EnableIRQ
-                0x080031e8       0x1c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
-                0x080031e8                HAL_NVIC_EnableIRQ
+                0x080030a4       0x1c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x080030a4                HAL_NVIC_EnableIRQ
  .text.HAL_GPIO_Init
-                0x08003204      0x350 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
-                0x08003204                HAL_GPIO_Init
+                0x080030c0      0x350 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+                0x080030c0                HAL_GPIO_Init
  .text.HAL_GPIO_WritePin
-                0x08003554       0x2e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
-                0x08003554                HAL_GPIO_WritePin
+                0x08003410       0x2e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+                0x08003410                HAL_GPIO_WritePin
  .text.HAL_I2C_Init
-                0x08003582      0x136 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
-                0x08003582                HAL_I2C_Init
+                0x0800343e      0x136 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x0800343e                HAL_I2C_Init
  .text.HAL_I2C_Mem_Read
-                0x080036b8      0x234 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
-                0x080036b8                HAL_I2C_Mem_Read
+                0x08003574      0x234 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x08003574                HAL_I2C_Mem_Read
  .text.I2C_RequestMemoryRead
-                0x080038ec       0xa8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x080037a8       0xa8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.I2C_Flush_TXDR
-                0x08003994       0x46 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x08003850       0x46 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.I2C_WaitOnFlagUntilTimeout
-                0x080039da       0xb2 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x08003896       0xb2 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.I2C_WaitOnTXISFlagUntilTimeout
-                0x08003a8c       0x8e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x08003948       0x8e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.I2C_WaitOnSTOPFlagUntilTimeout
-                0x08003b1a       0x86 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x080039d6       0x86 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.I2C_IsErrorOccurred
-                0x08003ba0      0x1c0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x08003a5c      0x1c0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.I2C_TransferConfig
-                0x08003d60       0x60 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x08003c1c       0x60 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .text.HAL_I2CEx_ConfigAnalogFilter
-                0x08003dc0       0x94 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
-                0x08003dc0                HAL_I2CEx_ConfigAnalogFilter
+                0x08003c7c       0x94 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+                0x08003c7c                HAL_I2CEx_ConfigAnalogFilter
  .text.HAL_I2CEx_ConfigDigitalFilter
-                0x08003e54       0x96 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
-                0x08003e54                HAL_I2CEx_ConfigDigitalFilter
- *fill*         0x08003eea        0x2 
+                0x08003d10       0x96 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+                0x08003d10                HAL_I2CEx_ConfigDigitalFilter
+ *fill*         0x08003da6        0x2 
  .text.HAL_PWREx_GetVoltageRange
-                0x08003eec       0x18 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
-                0x08003eec                HAL_PWREx_GetVoltageRange
+                0x08003da8       0x18 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+                0x08003da8                HAL_PWREx_GetVoltageRange
  .text.HAL_PWREx_ControlVoltageScaling
-                0x08003f04       0xa8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
-                0x08003f04                HAL_PWREx_ControlVoltageScaling
+                0x08003dc0       0xa8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+                0x08003dc0                HAL_PWREx_ControlVoltageScaling
  .text.HAL_RCC_OscConfig
-                0x08003fac      0x7b8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08003fac                HAL_RCC_OscConfig
+                0x08003e68      0x7b8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08003e68                HAL_RCC_OscConfig
  .text.HAL_RCC_ClockConfig
-                0x08004764      0x200 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08004764                HAL_RCC_ClockConfig
+                0x08004620      0x200 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08004620                HAL_RCC_ClockConfig
  .text.HAL_RCC_GetSysClockFreq
-                0x08004964      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08004964                HAL_RCC_GetSysClockFreq
+                0x08004820      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08004820                HAL_RCC_GetSysClockFreq
  .text.HAL_RCC_GetHCLKFreq
-                0x08004a78       0x14 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08004a78                HAL_RCC_GetHCLKFreq
+                0x08004934       0x14 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08004934                HAL_RCC_GetHCLKFreq
  .text.HAL_RCC_GetPCLK1Freq
-                0x08004a8c       0x2c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08004a8c                HAL_RCC_GetPCLK1Freq
+                0x08004948       0x2c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08004948                HAL_RCC_GetPCLK1Freq
  .text.HAL_RCC_GetPCLK2Freq
-                0x08004ab8       0x2c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08004ab8                HAL_RCC_GetPCLK2Freq
+                0x08004974       0x2c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08004974                HAL_RCC_GetPCLK2Freq
  .text.HAL_RCC_GetClockConfig
-                0x08004ae4       0x60 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
-                0x08004ae4                HAL_RCC_GetClockConfig
+                0x080049a0       0x60 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x080049a0                HAL_RCC_GetClockConfig
  .text.RCC_SetFlashLatencyFromMSIRange
-                0x08004b44       0xc0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x08004a00       0xc0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
  .text.HAL_RCCEx_PeriphCLKConfig
-                0x08004c04      0x5d4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
-                0x08004c04                HAL_RCCEx_PeriphCLKConfig
+                0x08004ac0      0x5d4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+                0x08004ac0                HAL_RCCEx_PeriphCLKConfig
  .text.RCCEx_PLLSAI1_Config
-                0x080051d8      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+                0x08005094      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
  .text.RCCEx_PLLSAI2_Config
-                0x080053c0      0x1bc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+                0x0800527c      0x1bc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
  .text.HAL_TIM_Base_Init
-                0x0800557c       0xae CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x0800557c                HAL_TIM_Base_Init
+                0x08005438       0xae CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005438                HAL_TIM_Base_Init
  .text.HAL_TIM_Base_MspInit
-                0x0800562a       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x0800562a                HAL_TIM_Base_MspInit
+                0x080054e6       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080054e6                HAL_TIM_Base_MspInit
  .text.HAL_TIM_Base_Start_IT
-                0x0800563c       0xe0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x0800563c                HAL_TIM_Base_Start_IT
+                0x080054f8       0xe0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080054f8                HAL_TIM_Base_Start_IT
  .text.HAL_TIM_PWM_Init
-                0x0800571c       0xae CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x0800571c                HAL_TIM_PWM_Init
+                0x080055d8       0xae CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080055d8                HAL_TIM_PWM_Init
  .text.HAL_TIM_PWM_MspInit
-                0x080057ca       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080057ca                HAL_TIM_PWM_MspInit
+                0x08005686       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005686                HAL_TIM_PWM_MspInit
  .text.HAL_TIM_PWM_Start
-                0x080057dc      0x20c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080057dc                HAL_TIM_PWM_Start
+                0x08005698      0x20c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005698                HAL_TIM_PWM_Start
  .text.HAL_TIM_IC_Init
-                0x080059e8       0xae CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080059e8                HAL_TIM_IC_Init
- *fill*         0x08005a96        0x2 
+                0x080058a4       0xae CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080058a4                HAL_TIM_IC_Init
+ *fill*         0x08005952        0x2 
  .text.HAL_TIM_IC_Start_IT
-                0x08005a98      0x274 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08005a98                HAL_TIM_IC_Start_IT
+                0x08005954      0x274 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005954                HAL_TIM_IC_Start_IT
  .text.HAL_TIM_IRQHandler
-                0x08005d0c      0x20e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08005d0c                HAL_TIM_IRQHandler
+                0x08005bc8      0x20e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005bc8                HAL_TIM_IRQHandler
  .text.HAL_TIM_IC_ConfigChannel
-                0x08005f1a      0x138 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08005f1a                HAL_TIM_IC_ConfigChannel
+                0x08005dd6      0x138 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005dd6                HAL_TIM_IC_ConfigChannel
  .text.HAL_TIM_PWM_ConfigChannel
-                0x08006052      0x20e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08006052                HAL_TIM_PWM_ConfigChannel
+                0x08005f0e      0x20e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08005f0e                HAL_TIM_PWM_ConfigChannel
  .text.HAL_TIM_ReadCapturedValue
-                0x08006260       0x6a CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08006260                HAL_TIM_ReadCapturedValue
+                0x0800611c       0x6a CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x0800611c                HAL_TIM_ReadCapturedValue
  .text.HAL_TIM_OC_DelayElapsedCallback
-                0x080062ca       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080062ca                HAL_TIM_OC_DelayElapsedCallback
+                0x08006186       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006186                HAL_TIM_OC_DelayElapsedCallback
  .text.HAL_TIM_PWM_PulseFinishedCallback
-                0x080062dc       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080062dc                HAL_TIM_PWM_PulseFinishedCallback
+                0x08006198       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006198                HAL_TIM_PWM_PulseFinishedCallback
  .text.HAL_TIM_TriggerCallback
-                0x080062ee       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080062ee                HAL_TIM_TriggerCallback
+                0x080061aa       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080061aa                HAL_TIM_TriggerCallback
  .text.TIM_Base_SetConfig
-                0x08006300      0x13c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08006300                TIM_Base_SetConfig
+                0x080061bc      0x13c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080061bc                TIM_Base_SetConfig
  .text.TIM_OC1_SetConfig
-                0x0800643c      0x124 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080062f8      0x124 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_OC2_SetConfig
-                0x08006560      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08006560                TIM_OC2_SetConfig
+                0x0800641c      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x0800641c                TIM_OC2_SetConfig
  .text.TIM_OC3_SetConfig
-                0x08006674      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006530      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_OC4_SetConfig
-                0x08006788       0xd0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006644       0xd0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_OC5_SetConfig
-                0x08006858       0xc8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006714       0xc8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_OC6_SetConfig
-                0x08006920       0xc8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080067dc       0xc8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_TI1_SetConfig
-                0x080069e8      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x080069e8                TIM_TI1_SetConfig
+                0x080068a4      0x114 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080068a4                TIM_TI1_SetConfig
  .text.TIM_TI2_SetConfig
-                0x08006afc       0x9c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x080069b8       0x9c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_TI3_SetConfig
-                0x08006b98       0x9c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006a54       0x9c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_TI4_SetConfig
-                0x08006c34       0x78 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006af0       0x78 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .text.TIM_CCxChannelCmd
-                0x08006cac       0x48 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
-                0x08006cac                TIM_CCxChannelCmd
+                0x08006b68       0x48 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x08006b68                TIM_CCxChannelCmd
  .text.HAL_TIMEx_MasterConfigSynchronization
-                0x08006cf4      0x10c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
-                0x08006cf4                HAL_TIMEx_MasterConfigSynchronization
+                0x08006bb0      0x10c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+                0x08006bb0                HAL_TIMEx_MasterConfigSynchronization
  .text.HAL_TIMEx_ConfigBreakDeadTime
-                0x08006e00       0xfc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
-                0x08006e00                HAL_TIMEx_ConfigBreakDeadTime
+                0x08006cbc       0xfc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+                0x08006cbc                HAL_TIMEx_ConfigBreakDeadTime
  .text.HAL_TIMEx_CommutCallback
-                0x08006efc       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
-                0x08006efc                HAL_TIMEx_CommutCallback
+                0x08006db8       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+                0x08006db8                HAL_TIMEx_CommutCallback
  .text.HAL_TIMEx_BreakCallback
-                0x08006f0e       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
-                0x08006f0e                HAL_TIMEx_BreakCallback
+                0x08006dca       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+                0x08006dca                HAL_TIMEx_BreakCallback
  .text.HAL_TIMEx_Break2Callback
-                0x08006f20       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
-                0x08006f20                HAL_TIMEx_Break2Callback
+                0x08006ddc       0x12 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+                0x08006ddc                HAL_TIMEx_Break2Callback
  .text.HAL_UART_Init
-                0x08006f32       0x9c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
-                0x08006f32                HAL_UART_Init
- *fill*         0x08006fce        0x2 
+                0x08006dee       0x9c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x08006dee                HAL_UART_Init
+ *fill*         0x08006e8a        0x2 
  .text.UART_SetConfig
-                0x08006fd0      0x518 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
-                0x08006fd0                UART_SetConfig
+                0x08006e8c      0x518 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x08006e8c                UART_SetConfig
  .text.UART_AdvFeatureConfig
-                0x080074e8      0x142 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
-                0x080074e8                UART_AdvFeatureConfig
+                0x080073a4      0x142 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x080073a4                UART_AdvFeatureConfig
  .text.UART_CheckIdleState
-                0x0800762a      0x150 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
-                0x0800762a                UART_CheckIdleState
+                0x080074e6      0x150 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x080074e6                UART_CheckIdleState
  .text.UART_WaitOnFlagUntilTimeout
-                0x0800777a       0xda CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
-                0x0800777a                UART_WaitOnFlagUntilTimeout
+                0x08007636       0xda CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x08007636                UART_WaitOnFlagUntilTimeout
  .text.UART_EndRxTransfer
-                0x08007854       0xc6 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x08007710       0xc6 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
  .text.I2C1_CheckErrors
-                0x0800791a       0x30 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
- *fill*         0x0800794a        0x2 
+                0x080077d6       0x30 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+ *fill*         0x08007806        0x2 
  .text.I2C1_AbortTransfer
-                0x0800794c       0x6c CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x08007808       0x6c CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .text.I2C1_WaitForTXIS
-                0x080079b8       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x08007874       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .text.I2C1_WaitForSTOP
-                0x08007a10       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x080078cc       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .text.I2C1_WaitForBusFree
-                0x08007a68       0x3c CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x08007924       0x3c CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .text.I2C1_WaitForRXNE
-                0x08007aa4       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x08007960       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .text.I2C1_WaitForTC
-                0x08007afc       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x080079b8       0x58 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .text.I2C1_Write
-                0x08007b54       0xb0 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
-                0x08007b54                I2C1_Write
+                0x08007a10       0xb0 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x08007a10                I2C1_Write
  .text.I2C1_WriteRead
-                0x08007c04      0x120 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
-                0x08007c04                I2C1_WriteRead
+                0x08007ac0      0x120 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x08007ac0                I2C1_WriteRead
  .text.vListInitialise
-                0x08007d24       0x3e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
-                0x08007d24                vListInitialise
+                0x08007be0       0x3e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+                0x08007be0                vListInitialise
  .text.vListInitialiseItem
-                0x08007d62       0x18 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
-                0x08007d62                vListInitialiseItem
- .text.vListInsert
-                0x08007d7a       0x70 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
-                0x08007d7a                vListInsert
- .text.uxListRemove
-                0x08007dea       0x52 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
-                0x08007dea                uxListRemove
+                0x08007c1e       0x18 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+                0x08007c1e                vListInitialiseItem
+ *fill*         0x08007c36        0x2 
  .text.pxPortInitialiseStack
-                0x08007e3c       0x68 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
-                0x08007e3c                pxPortInitialiseStack
+                0x08007c38       0x68 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x08007c38                pxPortInitialiseStack
  .text.prvTaskExitError
-                0x08007ea4       0x58 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x08007ca0       0x58 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
  .text.SVC_Handler
-                0x08007efc       0x24 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
-                0x08007efc                SVC_Handler
+                0x08007cf8       0x24 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x08007cf8                SVC_Handler
  .text.vPortEnterCritical
-                0x08007f20       0x60 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
-                0x08007f20                vPortEnterCritical
+                0x08007d1c       0x60 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x08007d1c                vPortEnterCritical
  .text.vPortExitCritical
-                0x08007f80       0x54 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
-                0x08007f80                vPortExitCritical
+                0x08007d7c       0x54 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x08007d7c                vPortExitCritical
  .text.PendSV_Handler
-                0x08007fd4       0x60 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
-                0x08007fd4                PendSV_Handler
+                0x08007dd0       0x60 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x08007dd0                PendSV_Handler
  .text.pvPortMalloc
-                0x08008034      0x270 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
-                0x08008034                pvPortMalloc
+                0x08007e30      0x270 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x08007e30                pvPortMalloc
  .text.vPortFree
-                0x080082a4       0xec CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
-                0x080082a4                vPortFree
+                0x080080a0       0xec CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x080080a0                vPortFree
  .text.prvHeapInit
-                0x08008390       0xb4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x0800818c       0xb4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .text.prvInsertBlockIntoFreeList
-                0x08008444       0xf4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .text.xQueueGenericReset
-                0x08008538      0x124 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
-                0x08008538                xQueueGenericReset
- .text.xQueueGenericCreate
-                0x0800865c       0x9e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
-                0x0800865c                xQueueGenericCreate
- .text.prvInitialiseNewQueue
-                0x080086fa       0x46 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .text.xQueueGenericSend
-                0x08008740      0x204 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
-                0x08008740                xQueueGenericSend
- .text.xQueueSemaphoreTake
-                0x08008944      0x200 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
-                0x08008944                xQueueSemaphoreTake
- .text.prvGetHighestPriorityOfWaitToReceiveList
-                0x08008b44       0x2e CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .text.prvCopyDataToQueue
-                0x08008b72       0xd4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .text.prvUnlockQueue
-                0x08008c46       0xa4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .text.prvIsQueueEmpty
-                0x08008cea       0x2c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .text.prvIsQueueFull
-                0x08008d16       0x30 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+                0x08008240       0xf4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .text.prvCreateTask
-                0x08008d46       0x78 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008334       0x78 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.xTaskCreate
-                0x08008dbe       0x46 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08008dbe                xTaskCreate
+                0x080083ac       0x46 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x080083ac                xTaskCreate
  .text.prvInitialiseNewTask
-                0x08008e04      0x120 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x080083f2      0x120 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ *fill*         0x08008512        0x2 
  .text.prvAddNewTaskToReadyList
-                0x08008f24      0x130 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008514      0x130 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.vTaskSuspendAll
-                0x08009054       0x1c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009054                vTaskSuspendAll
+                0x08008644       0x1c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008644                vTaskSuspendAll
  .text.xTaskResumeAll
-                0x08009070      0x210 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009070                xTaskResumeAll
+                0x08008660      0x210 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008660                xTaskResumeAll
  .text.xTaskIncrementTick
-                0x08009280      0x234 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009280                xTaskIncrementTick
+                0x08008870      0x234 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008870                xTaskIncrementTick
  .text.xTaskCallApplicationTaskHook
-                0x080094b4       0x44 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080094b4                xTaskCallApplicationTaskHook
+                0x08008aa4       0x44 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008aa4                xTaskCallApplicationTaskHook
  .text.vTaskSwitchContext
-                0x080094f8       0xd0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080094f8                vTaskSwitchContext
- .text.vTaskPlaceOnEventList
-                0x080095c8       0x4c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080095c8                vTaskPlaceOnEventList
- .text.xTaskRemoveFromEventList
-                0x08009614      0x1b0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009614                xTaskRemoveFromEventList
- .text.vTaskInternalSetTimeOutState
-                0x080097c4       0x2c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080097c4                vTaskInternalSetTimeOutState
- .text.xTaskCheckForTimeOut
-                0x080097f0       0xd0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080097f0                xTaskCheckForTimeOut
- .text.vTaskMissedYield
-                0x080098c0       0x18 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080098c0                vTaskMissedYield
+                0x08008ae8       0xd0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008ae8                vTaskSwitchContext
  .text.prvInitialiseTaskLists
-                0x080098d8       0x80 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008bb8       0x80 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.prvResetNextTaskUnblockTime
-                0x08009958       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .text.xTaskGetSchedulerState
-                0x0800998c       0x3c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x0800998c                xTaskGetSchedulerState
- .text.xTaskPriorityInherit
-                0x080099c8      0x140 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x080099c8                xTaskPriorityInherit
- .text.xTaskPriorityDisinherit
-                0x08009b08      0x150 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009b08                xTaskPriorityDisinherit
- .text.vTaskPriorityDisinheritAfterTimeout
-                0x08009c58      0x178 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009c58                vTaskPriorityDisinheritAfterTimeout
- .text.pvTaskIncrementMutexHeldCount
-                0x08009dd0       0x2c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x08009dd0                pvTaskIncrementMutexHeldCount
- .text.prvAddCurrentTaskToDelayedList
-                0x08009dfc      0x104 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x08008c38       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .text.Reset_Handler
-                0x08009f00       0x50 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
-                0x08009f00                Reset_Handler
+                0x08008c6c       0x50 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+                0x08008c6c                Reset_Handler
  .text.Default_Handler
-                0x08009f50        0x2 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
-                0x08009f50                RTC_Alarm_IRQHandler
-                0x08009f50                EXTI2_IRQHandler
-                0x08009f50                TIM8_TRG_COM_IRQHandler
-                0x08009f50                TIM8_CC_IRQHandler
-                0x08009f50                DebugMon_Handler
-                0x08009f50                TSC_IRQHandler
-                0x08009f50                TAMP_STAMP_IRQHandler
-                0x08009f50                EXTI3_IRQHandler
-                0x08009f50                LPTIM2_IRQHandler
-                0x08009f50                DFSDM1_FLT1_IRQHandler
-                0x08009f50                I2C3_ER_IRQHandler
-                0x08009f50                DFSDM1_FLT2_IRQHandler
-                0x08009f50                EXTI0_IRQHandler
-                0x08009f50                I2C2_EV_IRQHandler
-                0x08009f50                CAN1_RX0_IRQHandler
-                0x08009f50                FPU_IRQHandler
-                0x08009f50                TIM1_UP_TIM16_IRQHandler
-                0x08009f50                ADC1_2_IRQHandler
-                0x08009f50                SPI1_IRQHandler
-                0x08009f50                TIM8_UP_IRQHandler
-                0x08009f50                DMA2_Channel2_IRQHandler
-                0x08009f50                DMA1_Channel4_IRQHandler
-                0x08009f50                SAI2_IRQHandler
-                0x08009f50                DFSDM1_FLT3_IRQHandler
-                0x08009f50                USART3_IRQHandler
-                0x08009f50                DMA1_Channel7_IRQHandler
-                0x08009f50                CAN1_RX1_IRQHandler
-                0x08009f50                LCD_IRQHandler
-                0x08009f50                UART5_IRQHandler
-                0x08009f50                ADC3_IRQHandler
-                0x08009f50                DMA2_Channel1_IRQHandler
-                0x08009f50                QUADSPI_IRQHandler
-                0x08009f50                I2C1_EV_IRQHandler
-                0x08009f50                DMA1_Channel6_IRQHandler
-                0x08009f50                UART4_IRQHandler
-                0x08009f50                DMA2_Channel4_IRQHandler
-                0x08009f50                RCC_IRQHandler
-                0x08009f50                DMA1_Channel1_IRQHandler
-                0x08009f50                Default_Handler
-                0x08009f50                DMA2_Channel7_IRQHandler
-                0x08009f50                EXTI15_10_IRQHandler
-                0x08009f50                TIM7_IRQHandler
-                0x08009f50                SDMMC1_IRQHandler
-                0x08009f50                TIM5_IRQHandler
-                0x08009f50                I2C3_EV_IRQHandler
-                0x08009f50                EXTI9_5_IRQHandler
-                0x08009f50                RTC_WKUP_IRQHandler
-                0x08009f50                PVD_PVM_IRQHandler
-                0x08009f50                SPI2_IRQHandler
-                0x08009f50                CAN1_TX_IRQHandler
-                0x08009f50                DMA2_Channel5_IRQHandler
-                0x08009f50                DMA1_Channel5_IRQHandler
-                0x08009f50                EXTI4_IRQHandler
-                0x08009f50                RNG_IRQHandler
-                0x08009f50                TIM1_TRG_COM_TIM17_IRQHandler
-                0x08009f50                DMA1_Channel3_IRQHandler
-                0x08009f50                COMP_IRQHandler
-                0x08009f50                WWDG_IRQHandler
-                0x08009f50                LPUART1_IRQHandler
-                0x08009f50                DMA2_Channel6_IRQHandler
-                0x08009f50                EXTI1_IRQHandler
-                0x08009f50                USART2_IRQHandler
-                0x08009f50                DFSDM1_FLT0_IRQHandler
-                0x08009f50                I2C2_ER_IRQHandler
-                0x08009f50                DMA1_Channel2_IRQHandler
-                0x08009f50                TIM8_BRK_IRQHandler
-                0x08009f50                CAN1_SCE_IRQHandler
-                0x08009f50                FLASH_IRQHandler
-                0x08009f50                USART1_IRQHandler
-                0x08009f50                OTG_FS_IRQHandler
-                0x08009f50                SPI3_IRQHandler
-                0x08009f50                I2C1_ER_IRQHandler
-                0x08009f50                FMC_IRQHandler
-                0x08009f50                SWPMI1_IRQHandler
-                0x08009f50                LPTIM1_IRQHandler
-                0x08009f50                SAI1_IRQHandler
-                0x08009f50                DMA2_Channel3_IRQHandler
-                0x08009f50                TIM1_BRK_TIM15_IRQHandler
- *fill*         0x08009f52        0x2 
+                0x08008cbc        0x2 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+                0x08008cbc                RTC_Alarm_IRQHandler
+                0x08008cbc                EXTI2_IRQHandler
+                0x08008cbc                TIM8_TRG_COM_IRQHandler
+                0x08008cbc                TIM8_CC_IRQHandler
+                0x08008cbc                DebugMon_Handler
+                0x08008cbc                TSC_IRQHandler
+                0x08008cbc                TAMP_STAMP_IRQHandler
+                0x08008cbc                EXTI3_IRQHandler
+                0x08008cbc                LPTIM2_IRQHandler
+                0x08008cbc                DFSDM1_FLT1_IRQHandler
+                0x08008cbc                I2C3_ER_IRQHandler
+                0x08008cbc                DFSDM1_FLT2_IRQHandler
+                0x08008cbc                EXTI0_IRQHandler
+                0x08008cbc                I2C2_EV_IRQHandler
+                0x08008cbc                CAN1_RX0_IRQHandler
+                0x08008cbc                FPU_IRQHandler
+                0x08008cbc                TIM1_UP_TIM16_IRQHandler
+                0x08008cbc                ADC1_2_IRQHandler
+                0x08008cbc                SPI1_IRQHandler
+                0x08008cbc                TIM8_UP_IRQHandler
+                0x08008cbc                DMA2_Channel2_IRQHandler
+                0x08008cbc                DMA1_Channel4_IRQHandler
+                0x08008cbc                SAI2_IRQHandler
+                0x08008cbc                DFSDM1_FLT3_IRQHandler
+                0x08008cbc                USART3_IRQHandler
+                0x08008cbc                DMA1_Channel7_IRQHandler
+                0x08008cbc                CAN1_RX1_IRQHandler
+                0x08008cbc                LCD_IRQHandler
+                0x08008cbc                UART5_IRQHandler
+                0x08008cbc                ADC3_IRQHandler
+                0x08008cbc                DMA2_Channel1_IRQHandler
+                0x08008cbc                QUADSPI_IRQHandler
+                0x08008cbc                I2C1_EV_IRQHandler
+                0x08008cbc                DMA1_Channel6_IRQHandler
+                0x08008cbc                UART4_IRQHandler
+                0x08008cbc                DMA2_Channel4_IRQHandler
+                0x08008cbc                RCC_IRQHandler
+                0x08008cbc                DMA1_Channel1_IRQHandler
+                0x08008cbc                Default_Handler
+                0x08008cbc                DMA2_Channel7_IRQHandler
+                0x08008cbc                EXTI15_10_IRQHandler
+                0x08008cbc                TIM7_IRQHandler
+                0x08008cbc                SDMMC1_IRQHandler
+                0x08008cbc                TIM5_IRQHandler
+                0x08008cbc                I2C3_EV_IRQHandler
+                0x08008cbc                EXTI9_5_IRQHandler
+                0x08008cbc                RTC_WKUP_IRQHandler
+                0x08008cbc                PVD_PVM_IRQHandler
+                0x08008cbc                SPI2_IRQHandler
+                0x08008cbc                CAN1_TX_IRQHandler
+                0x08008cbc                DMA2_Channel5_IRQHandler
+                0x08008cbc                DMA1_Channel5_IRQHandler
+                0x08008cbc                EXTI4_IRQHandler
+                0x08008cbc                RNG_IRQHandler
+                0x08008cbc                TIM1_TRG_COM_TIM17_IRQHandler
+                0x08008cbc                DMA1_Channel3_IRQHandler
+                0x08008cbc                COMP_IRQHandler
+                0x08008cbc                WWDG_IRQHandler
+                0x08008cbc                LPUART1_IRQHandler
+                0x08008cbc                DMA2_Channel6_IRQHandler
+                0x08008cbc                EXTI1_IRQHandler
+                0x08008cbc                USART2_IRQHandler
+                0x08008cbc                DFSDM1_FLT0_IRQHandler
+                0x08008cbc                I2C2_ER_IRQHandler
+                0x08008cbc                DMA1_Channel2_IRQHandler
+                0x08008cbc                TIM8_BRK_IRQHandler
+                0x08008cbc                CAN1_SCE_IRQHandler
+                0x08008cbc                FLASH_IRQHandler
+                0x08008cbc                USART1_IRQHandler
+                0x08008cbc                OTG_FS_IRQHandler
+                0x08008cbc                SPI3_IRQHandler
+                0x08008cbc                I2C1_ER_IRQHandler
+                0x08008cbc                FMC_IRQHandler
+                0x08008cbc                SWPMI1_IRQHandler
+                0x08008cbc                LPTIM1_IRQHandler
+                0x08008cbc                SAI1_IRQHandler
+                0x08008cbc                DMA2_Channel3_IRQHandler
+                0x08008cbc                TIM1_BRK_TIM15_IRQHandler
+ *fill*         0x08008cbe        0x2 
  .text.__udivmoddi4
-                0x08009f54      0x320 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x08009f54                __udivmoddi4
- .text.memcpy   0x0800a274       0x1c C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
-                0x0800a274                memcpy
+                0x08008cc0      0x320 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x08008cc0                __udivmoddi4
  *(.glue_7)
- .glue_7        0x0800a290        0x0 linker stubs
+ .glue_7        0x08008fe0        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0800a290        0x0 linker stubs
+ .glue_7t       0x08008fe0        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0800a290        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x08008fe0        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x0800a290        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crti.o
-                0x0800a290                _init
- .init          0x0800a294        0x8 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x08008fe0        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crti.o
+                0x08008fe0                _init
+ .init          0x08008fe4        0x8 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x0800a29c        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crti.o
-                0x0800a29c                _fini
- .fini          0x0800a2a0        0x8 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtn.o
-                0x0800a2a8                        . = ALIGN (0x8)
-                0x0800a2a8                        _etext = .
+ .fini          0x08008fec        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crti.o
+                0x08008fec                _fini
+ .fini          0x08008ff0        0x8 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtn.o
+                0x08008ff8                        . = ALIGN (0x8)
+                0x08008ff8                        _etext = .
 
-.vfp11_veneer   0x0800a2a8        0x0
- .vfp11_veneer  0x0800a2a8        0x0 linker stubs
+.vfp11_veneer   0x08008ff8        0x0
+ .vfp11_veneer  0x08008ff8        0x0 linker stubs
 
-.v4_bx          0x0800a2a8        0x0
- .v4_bx         0x0800a2a8        0x0 linker stubs
+.v4_bx          0x08008ff8        0x0
+ .v4_bx         0x08008ff8        0x0 linker stubs
 
-.iplt           0x0800a2a8        0x0
- .iplt          0x0800a2a8        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08008ff8        0x0
+ .iplt          0x08008ff8        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x0800a2a8       0xb8
-                0x0800a2a8                        . = ALIGN (0x8)
+.rodata         0x08008ff8       0xb8
+                0x08008ff8                        . = ALIGN (0x8)
  *(.rodata)
- .rodata        0x0800a2a8       0x69 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .rodata        0x08008ff8       0x69 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  *(.rodata*)
- *fill*         0x0800a311        0x3 
+ *fill*         0x08009061        0x3 
  .rodata.AHBPrescTable
-                0x0800a314       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
-                0x0800a314                AHBPrescTable
+                0x08009064       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+                0x08009064                AHBPrescTable
  .rodata.APBPrescTable
-                0x0800a324        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
-                0x0800a324                APBPrescTable
+                0x08009074        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+                0x08009074                APBPrescTable
  .rodata.MSIRangeTable
-                0x0800a32c       0x30 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
-                0x0800a32c                MSIRangeTable
-                0x0800a360                        . = ALIGN (0x8)
- *fill*         0x0800a35c        0x4 
+                0x0800907c       0x30 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+                0x0800907c                MSIRangeTable
+                0x080090b0                        . = ALIGN (0x8)
+ *fill*         0x080090ac        0x4 
 
-.ARM.extab      0x0800a360        0x0
-                0x0800a360                        . = ALIGN (0x8)
+.ARM.extab      0x080090b0        0x0
+                0x080090b0                        . = ALIGN (0x8)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0800a360                        . = ALIGN (0x8)
+                0x080090b0                        . = ALIGN (0x8)
 
-.ARM            0x0800a360        0x8
-                0x0800a360                        . = ALIGN (0x8)
-                0x0800a360                        __exidx_start = .
+.ARM            0x080090b0        0x8
+                0x080090b0                        . = ALIGN (0x8)
+                0x080090b0                        __exidx_start = .
  *(.ARM.exidx*)
  .ARM.exidx.text.__udivmoddi4
-                0x0800a360        0x8 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
-                0x0800a368                        __exidx_end = .
-                0x0800a368                        . = ALIGN (0x8)
+                0x080090b0        0x8 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x080090b8                        __exidx_end = .
+                0x080090b8                        . = ALIGN (0x8)
 
-.rel.dyn        0x0800a368        0x0
- .rel.iplt      0x0800a368        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x080090b8        0x0
+ .rel.iplt      0x080090b8        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.preinit_array  0x0800a368        0x0
-                0x0800a368                        . = ALIGN (0x8)
-                0x0800a368                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x080090b8        0x0
+                0x080090b8                        . = ALIGN (0x8)
+                0x080090b8                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0800a368                        PROVIDE (__preinit_array_end = .)
-                0x0800a368                        . = ALIGN (0x8)
+                0x080090b8                        PROVIDE (__preinit_array_end = .)
+                0x080090b8                        . = ALIGN (0x8)
 
-.init_array     0x0800a368        0x8
-                0x0800a368                        . = ALIGN (0x8)
-                0x0800a368                        PROVIDE (__init_array_start = .)
+.init_array     0x080090b8        0x8
+                0x080090b8                        . = ALIGN (0x8)
+                0x080090b8                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0800a368        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x0800a36c                        PROVIDE (__init_array_end = .)
-                0x0800a370                        . = ALIGN (0x8)
- *fill*         0x0800a36c        0x4 
+ .init_array    0x080090b8        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x080090bc                        PROVIDE (__init_array_end = .)
+                0x080090c0                        . = ALIGN (0x8)
+ *fill*         0x080090bc        0x4 
 
-.fini_array     0x0800a370        0x8
-                0x0800a370                        . = ALIGN (0x8)
+.fini_array     0x080090c0        0x8
+                0x080090c0                        . = ALIGN (0x8)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0800a370        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x080090c0        0x4 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0800a378                        . = ALIGN (0x8)
- *fill*         0x0800a374        0x4 
-                0x0800a378                        _sidata = LOADADDR (.data)
+                0x080090c8                        . = ALIGN (0x8)
+ *fill*         0x080090c4        0x4 
+                0x080090c8                        _sidata = LOADADDR (.data)
 
-.data           0x20000000       0x38 load address 0x0800a378
+.data           0x20000000       0x58 load address 0x080090c8
                 0x20000000                        . = ALIGN (0x8)
                 0x20000000                        _sdata = .
  *(.data)
  *(.data*)
+ .data.ReceiverValue
+                0x20000000       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000000                ReceiverValue
+ .data.pulse_us
+                0x20000010       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000010                pulse_us
  .data.BatteryDefault
-                0x20000000        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000000                BatteryDefault
- .data.PRateRoll
-                0x20000004        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000004                PRateRoll
- .data.PRatePitch
-                0x20000008        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000008                PRatePitch
- .data.PRateYaw
-                0x2000000c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000000c                PRateYaw
- .data.IRateRoll
-                0x20000010        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000010                IRateRoll
- .data.IRatePitch
-                0x20000014        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000014                IRatePitch
- .data.IRateYaw
-                0x20000018        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000018                IRateYaw
- .data.DRateRoll
-                0x2000001c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000001c                DRateRoll
- .data.DRatePitch
                 0x20000020        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000020                DRatePitch
+                0x20000020                BatteryDefault
+ .data.PRateRoll
+                0x20000024        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000024                PRateRoll
+ .data.PRatePitch
+                0x20000028        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000028                PRatePitch
+ .data.PRateYaw
+                0x2000002c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000002c                PRateYaw
+ .data.IRateRoll
+                0x20000030        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000030                IRateRoll
+ .data.IRatePitch
+                0x20000034        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000034                IRatePitch
+ .data.IRateYaw
+                0x20000038        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000038                IRateYaw
+ .data.DRateRoll
+                0x2000003c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000003c                DRateRoll
+ .data.DRatePitch
+                0x20000040        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000040                DRatePitch
  .data.SystemCoreClock
-                0x20000024        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
-                0x20000024                SystemCoreClock
+                0x20000044        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+                0x20000044                SystemCoreClock
  .data.uwTickPrio
-                0x20000028        0x4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
-                0x20000028                uwTickPrio
+                0x20000048        0x4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x20000048                uwTickPrio
  .data.uwTickFreq
-                0x2000002c        0x1 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
-                0x2000002c                uwTickFreq
- *fill*         0x2000002d        0x3 
+                0x2000004c        0x1 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x2000004c                uwTickFreq
+ *fill*         0x2000004d        0x3 
  .data.uxCriticalNesting
-                0x20000030        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
-                0x20000038                        . = ALIGN (0x8)
- *fill*         0x20000034        0x4 
-                0x20000038                        _edata = .
+                0x20000050        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x20000058                        . = ALIGN (0x8)
+ *fill*         0x20000054        0x4 
+                0x20000058                        _edata = .
 
 .tm_clone_table
-                0x20000038        0x0 load address 0x0800a3b0
+                0x20000058        0x0 load address 0x08009120
  .tm_clone_table
-                0x20000038        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x20000058        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
  .tm_clone_table
-                0x20000038        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
+                0x20000058        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
 
-.igot.plt       0x20000038        0x0 load address 0x0800a3b0
- .igot.plt      0x20000038        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x20000038                        . = ALIGN (0x4)
+.igot.plt       0x20000058        0x0 load address 0x08009120
+ .igot.plt      0x20000058        0x0 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x20000058                        . = ALIGN (0x4)
 
-.bss            0x20000038     0x8574 load address 0x0800a3b0
-                0x20000038                        _sbss = .
-                0x20000038                        __bss_start__ = _sbss
+.bss            0x20000058     0x8544 load address 0x08009120
+                0x20000058                        _sbss = .
+                0x20000058                        __bss_start__ = _sbss
  *(.bss)
  *(.bss*)
  .bss.completed.1
-                0x20000038        0x1 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
- *fill*         0x20000039        0x3 
- .bss.object.0  0x2000003c       0x18 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
- .bss.hi2c2     0x20000054       0x54 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000054                hi2c2
- .bss.hi2c3     0x200000a8       0x54 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200000a8                hi2c3
- .bss.htim1     0x200000fc       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200000fc                htim1
- .bss.htim2     0x20000148       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000148                htim2
- .bss.htim3     0x20000194       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000194                htim3
- .bss.htim4     0x200001e0       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200001e0                htim4
- .bss.huart2    0x2000022c       0x88 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000022c                huart2
- .bss.MPU9250_start
-                0x200002b4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002b4                MPU9250_start
- .bss.MPU_to_receiver
-                0x200002b8        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002b8                MPU_to_receiver
- .bss.receiver_to_PID
-                0x200002bc        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002bc                receiver_to_PID
- .bss.PID_to_motors
-                0x200002c0        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002c0                PID_to_motors
+                0x20000058        0x1 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ *fill*         0x20000059        0x3 
+ .bss.object.0  0x2000005c       0x18 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .bss.hi2c2     0x20000074       0x54 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000074                hi2c2
+ .bss.hi2c3     0x200000c8       0x54 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200000c8                hi2c3
+ .bss.htim1     0x2000011c       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000011c                htim1
+ .bss.htim2     0x20000168       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000168                htim2
+ .bss.htim3     0x200001b4       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200001b4                htim3
+ .bss.htim4     0x20000200       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000200                htim4
+ .bss.huart2    0x2000024c       0x88 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000024c                huart2
  .bss.receiver_rx_read_task_handle
-                0x200002c4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002c4                receiver_rx_read_task_handle
- .bss.battery_monitoring_task_handle
-                0x200002c8        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002c8                battery_monitoring_task_handle
- .bss.PID_stabilization_task_handle
-                0x200002cc        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002cc                PID_stabilization_task_handle
- .bss.motors_command_task_handle
-                0x200002d0        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002d0                motors_command_task_handle
- .bss.MPU9250_task_handle
                 0x200002d4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002d4                MPU9250_task_handle
- .bss.my_ina219
-                0x200002d8        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002d8                my_ina219
- .bss.RatePitch
+                0x200002d4                receiver_rx_read_task_handle
+ .bss.battery_monitoring_task_handle
+                0x200002d8        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002d8                battery_monitoring_task_handle
+ .bss.PID_stabilization_task_handle
+                0x200002dc        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002dc                PID_stabilization_task_handle
+ .bss.motors_command_task_handle
                 0x200002e0        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002e0                RatePitch
- .bss.RateRoll  0x200002e4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002e4                RateRoll
- .bss.RateYaw   0x200002e8        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002e8                RateYaw
- .bss.RateCalibrationPitch
-                0x200002ec        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002ec                RateCalibrationPitch
- .bss.RateCalibrationRoll
+                0x200002e0                motors_command_task_handle
+ .bss.MPU9250_task_handle
+                0x200002e4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002e4                MPU9250_task_handle
+ .bss.my_ina219
+                0x200002e8        0x8 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002e8                my_ina219
+ .bss.RatePitch
                 0x200002f0        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002f0                RateCalibrationRoll
+                0x200002f0                RatePitch
+ .bss.RateRoll  0x200002f4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002f4                RateRoll
+ .bss.RateYaw   0x200002f8        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002f8                RateYaw
+ .bss.RateCalibrationPitch
+                0x200002fc        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x200002fc                RateCalibrationPitch
+ .bss.RateCalibrationRoll
+                0x20000300        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000300                RateCalibrationRoll
  .bss.RateCalibrationYaw
-                0x200002f4        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002f4                RateCalibrationYaw
- .bss.ReceiverValue
-                0x200002f8       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200002f8                ReceiverValue
- .bss.pulse_ms  0x20000308       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000308                pulse_ms
+                0x20000304        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000304                RateCalibrationYaw
  .bss.BatteryRemaining
-                0x20000318        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000318                BatteryRemaining
+                0x20000308        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000308                BatteryRemaining
  .bss.Qconsommee
-                0x2000031c        0x2 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000031c                Qconsommee
- *fill*         0x2000031e        0x2 
- .bss.t_now     0x20000320        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000320                t_now
- .bss.t_prev    0x20000324        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000324                t_prev
+                0x2000030c        0x2 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000030c                Qconsommee
+ *fill*         0x2000030e        0x2 
+ .bss.t_now     0x20000310        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000310                t_now
+ .bss.t_prev    0x20000314        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000314                t_prev
  .bss.DesiredRateRoll
-                0x20000328        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000328                DesiredRateRoll
+                0x20000318        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000318                DesiredRateRoll
  .bss.DesiredRatePitch
-                0x2000032c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000032c                DesiredRatePitch
+                0x2000031c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000031c                DesiredRatePitch
  .bss.DesiredRateYaw
-                0x20000330        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000330                DesiredRateYaw
+                0x20000320        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000320                DesiredRateYaw
  .bss.ErrorRateRoll
-                0x20000334        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000334                ErrorRateRoll
+                0x20000324        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000324                ErrorRateRoll
  .bss.ErrorRatePitch
-                0x20000338        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000338                ErrorRatePitch
+                0x20000328        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000328                ErrorRatePitch
  .bss.ErrorRateYaw
-                0x2000033c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000033c                ErrorRateYaw
+                0x2000032c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000032c                ErrorRateYaw
  .bss.InputRoll
-                0x20000340        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000340                InputRoll
+                0x20000330        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000330                InputRoll
  .bss.InputPitch
-                0x20000344        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000344                InputPitch
- .bss.InputYaw  0x20000348        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000348                InputYaw
+                0x20000334        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000334                InputPitch
+ .bss.InputYaw  0x20000338        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000338                InputYaw
  .bss.InputThrottle
-                0x2000034c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000034c                InputThrottle
+                0x2000033c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000033c                InputThrottle
  .bss.PrevErrorRateRoll
-                0x20000350        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000350                PrevErrorRateRoll
+                0x20000340        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000340                PrevErrorRateRoll
  .bss.PrevErrorRatePitch
-                0x20000354        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000354                PrevErrorRatePitch
+                0x20000344        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000344                PrevErrorRatePitch
  .bss.PrevErrorRateYaw
-                0x20000358        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000358                PrevErrorRateYaw
+                0x20000348        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000348                PrevErrorRateYaw
  .bss.PrevItermRateRoll
-                0x2000035c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000035c                PrevItermRateRoll
+                0x2000034c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000034c                PrevItermRateRoll
  .bss.PrevItermRatePitch
-                0x20000360        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000360                PrevItermRatePitch
+                0x20000350        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000350                PrevItermRatePitch
  .bss.PrevItermRateYaw
-                0x20000364        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000364                PrevItermRateYaw
+                0x20000354        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000354                PrevItermRateYaw
  .bss.PIDReturn
-                0x20000368        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000368                PIDReturn
- .bss.DRateYaw  0x20000374        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000374                DRateYaw
+                0x20000358        0xc CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000358                PIDReturn
+ .bss.DRateYaw  0x20000364        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000364                DRateYaw
  .bss.Motor_front_left_Input
-                0x20000378        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000378                Motor_front_left_Input
+                0x20000368        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000368                Motor_front_left_Input
  .bss.Motor_front_right_Input
-                0x2000037c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x2000037c                Motor_front_right_Input
+                0x2000036c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x2000036c                Motor_front_right_Input
  .bss.Motor_rear_right_Input
-                0x20000380        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000380                Motor_rear_right_Input
+                0x20000370        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000370                Motor_rear_right_Input
  .bss.Motor_rear_left_Input
-                0x20000384        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000384                Motor_rear_left_Input
- .bss.t_rising  0x20000388       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000388                t_rising
+                0x20000374        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x20000374                Motor_rear_left_Input
+ .bss.t_rising  0x20000378       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .bss.t_falling
-                0x20000398       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x20000398                t_falling
- .bss.edge      0x200003a8        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                0x200003a8                edge
- .bss.SOC.0     0x200003ac        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .bss.htim6     0x200003b0       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
-                0x200003b0                htim6
+                0x20000388       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .bss.edge      0x20000398        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .bss.SOC.0     0x2000039c        0x4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .bss.htim6     0x200003a0       0x4c CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+                0x200003a0                htim6
  .bss.ina219_currentDivider_mA
-                0x200003fc        0x2 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
-                0x200003fc                ina219_currentDivider_mA
- *fill*         0x200003fe        0x2 
+                0x200003ec        0x2 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+                0x200003ec                ina219_currentDivider_mA
+ *fill*         0x200003ee        0x2 
  .bss.sensitivity
-                0x20000400        0x3 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
-                0x20000400                sensitivity
- *fill*         0x20000403        0x1 
- .bss.uwTick    0x20000404        0x4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
-                0x20000404                uwTick
- .bss.ucHeap    0x20000408     0x8000 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .bss.xStart    0x20008408        0x8 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .bss.pxEnd     0x20008410        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x200003f0        0x3 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+                0x200003f0                sensitivity
+ *fill*         0x200003f3        0x1 
+ .bss.uwTick    0x200003f4        0x4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x200003f4                uwTick
+ .bss.ucHeap    0x200003f8     0x8000 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .bss.xStart    0x200083f8        0x8 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .bss.pxEnd     0x20008400        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .bss.xFreeBytesRemaining
-                0x20008414        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x20008404        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .bss.xMinimumEverFreeBytesRemaining
-                0x20008418        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x20008408        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .bss.xNumberOfSuccessfulAllocations
-                0x2000841c        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x2000840c        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .bss.xNumberOfSuccessfulFrees
-                0x20008420        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x20008410        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .bss.pxCurrentTCB
-                0x20008424        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
-                0x20008424                pxCurrentTCB
+                0x20008414        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008414                pxCurrentTCB
  .bss.pxReadyTasksLists
-                0x20008428       0xf0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008418       0xf0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xDelayedTaskList1
-                0x20008518       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008508       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xDelayedTaskList2
-                0x2000852c       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x2000851c       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.pxDelayedTaskList
-                0x20008540        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008530        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.pxOverflowDelayedTaskList
-                0x20008544        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008534        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xPendingReadyList
-                0x20008548       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008538       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xTasksWaitingTermination
-                0x2000855c       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x2000854c       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xSuspendedTaskList
-                0x20008570       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008560       0x14 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.uxCurrentNumberOfTasks
-                0x20008584        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008574        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xTickCount
-                0x20008588        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008578        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.uxTopReadyPriority
-                0x2000858c        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x2000857c        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xSchedulerRunning
-                0x20008590        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008580        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xPendedTicks
-                0x20008594        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008584        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xYieldPendings
-                0x20008598        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008588        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xNumOfOverflows
-                0x2000859c        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x2000858c        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.uxTaskNumber
-                0x200085a0        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008590        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.xNextTaskUnblockTime
-                0x200085a4        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008594        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .bss.uxSchedulerSuspended
-                0x200085a8        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x20008598        0x4 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  *(COMMON)
-                0x200085ac                        . = ALIGN (0x4)
-                0x200085ac                        _ebss = .
-                0x200085ac                        __bss_end__ = _ebss
+                0x2000859c                        . = ALIGN (0x4)
+                0x2000859c                        _ebss = .
+                0x2000859c                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x200085ac      0x604 load address 0x0800a3b0
-                0x200085b0                        . = ALIGN (0x8)
- *fill*         0x200085ac        0x4 
+                0x2000859c      0x604 load address 0x08009120
+                0x200085a0                        . = ALIGN (0x8)
+ *fill*         0x2000859c        0x4 
                 [!provide]                        PROVIDE (end = .)
-                0x200085b0                        PROVIDE (_end = .)
-                0x200087b0                        . = (. + _Min_Heap_Size)
- *fill*         0x200085b0      0x200 
-                0x20008bb0                        . = (. + _Min_Stack_Size)
- *fill*         0x200087b0      0x400 
-                0x20008bb0                        . = ALIGN (0x8)
+                0x200085a0                        PROVIDE (_end = .)
+                0x200087a0                        . = (. + _Min_Heap_Size)
+ *fill*         0x200085a0      0x200 
+                0x20008ba0                        . = (. + _Min_Stack_Size)
+ *fill*         0x200087a0      0x400 
+                0x20008ba0                        . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -5668,38 +5655,34 @@ LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/.
  .ARM.attributes
                 0x00000536       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .ARM.attributes
-                0x0000056a       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+                0x0000056a       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .ARM.attributes
-                0x0000059e       0x34 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+                0x0000059e       0x21 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
  .ARM.attributes
-                0x000005d2       0x21 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+                0x000005bf       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x000005f3       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+                0x000005e1       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x00000615       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+                0x00000603       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
  .ARM.attributes
-                0x00000637       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
+                0x00000625       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
  .ARM.attributes
-                0x00000659       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+                0x00000647       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
  .ARM.attributes
-                0x0000067b       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+                0x00000669       0x34 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
  .ARM.attributes
-                0x0000069d       0x34 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
+                0x0000069d       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x000006d1       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_dvmd_tls.o)
+                0x000006bf       0x34 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
  .ARM.attributes
-                0x000006f3       0x34 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
- .ARM.attributes
-                0x00000727       0x34 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtend.o
- .ARM.attributes
-                0x0000075b       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtn.o
+                0x000006f3       0x22 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard/crtn.o
 OUTPUT(Quadcopter_drone.elf elf32-littlearm)
 LOAD linker stubs
 LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc.a
 LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_frame    0x00000000     0x68f8
+.debug_frame    0x00000000     0x6374
  .debug_frame   0x00000000       0x20 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-memset.o)
  .debug_frame   0x00000020       0x2c C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
  .debug_frame   0x0000004c      0x360 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
@@ -5725,73 +5708,69 @@ LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/.
  .debug_frame   0x000053b0       0xd8 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
  .debug_frame   0x00005488      0x1a8 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
  .debug_frame   0x00005630      0x194 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .debug_frame   0x000057c4      0x55c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .debug_frame   0x00005d20      0x9fc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_frame   0x0000671c       0xac C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x000067c8       0x50 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
- .debug_frame   0x00006818       0x24 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
- .debug_frame   0x0000683c       0x24 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
- .debug_frame   0x00006860       0x2c C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000688c       0x44 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
- .debug_frame   0x000068d0       0x28 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libg_nano.a(libc_a-memcpy-stub.o)
+ .debug_frame   0x000057c4      0x9fc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_frame   0x000061c0       0xac C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x0000626c       0x50 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x000062bc       0x24 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_fixunsdfsi.o)
+ .debug_frame   0x000062e0       0x24 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x00006304       0x2c C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00006330       0x44 C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/15.2.1/thumb/v7e-m+fp/hard\libgcc.a(_udivmoddi4.o)
 
-.debug_info     0x00000000    0x1b046
- .debug_info    0x00000000     0x244b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_info    0x0000244b     0x18af CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
- .debug_info    0x00003cfa      0xcca CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
- .debug_info    0x000049c4      0x77b CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
- .debug_info    0x0000513f      0x5e2 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
- .debug_info    0x00005721      0xd55 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
- .debug_info    0x00006476      0x3b2 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
- .debug_info    0x00006828      0x5a6 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- .debug_info    0x00006dce      0xc4d CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
- .debug_info    0x00007a1b      0xdad CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
- .debug_info    0x000087c8      0x79f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
- .debug_info    0x00008f67     0x20fc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
- .debug_info    0x0000b063      0x99f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
- .debug_info    0x0000ba02      0x9ca CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
- .debug_info    0x0000c3cc      0xc45 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
- .debug_info    0x0000d011      0xe58 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
- .debug_info    0x0000de69     0x2ade CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
- .debug_info    0x00010947     0x16e0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
- .debug_info    0x00012027     0x3b8e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
- .debug_info    0x00015bb5      0x498 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
- .debug_info    0x0001604d      0x2aa CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_info    0x000162f7      0x581 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
- .debug_info    0x00016878      0x5f6 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .debug_info    0x00016e6e     0x1835 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .debug_info    0x000186a3     0x2973 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_info    0x0001b016       0x30 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+.debug_info     0x00000000    0x19745
+ .debug_info    0x00000000     0x237f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_info    0x0000237f     0x18af CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+ .debug_info    0x00003c2e      0xcca CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+ .debug_info    0x000048f8      0x77b CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+ .debug_info    0x00005073      0x5e2 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+ .debug_info    0x00005655      0xd55 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+ .debug_info    0x000063aa      0x3b2 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ .debug_info    0x0000675c      0x5a6 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_info    0x00006d02      0xc4d CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+ .debug_info    0x0000794f      0xdad CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+ .debug_info    0x000086fc      0x79f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+ .debug_info    0x00008e9b     0x20fc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+ .debug_info    0x0000af97      0x99f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+ .debug_info    0x0000b936      0x9ca CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+ .debug_info    0x0000c300      0xc45 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+ .debug_info    0x0000cf45      0xe58 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+ .debug_info    0x0000dd9d     0x2ade CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+ .debug_info    0x0001087b     0x16e0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+ .debug_info    0x00011f5b     0x3b8e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+ .debug_info    0x00015ae9      0x498 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+ .debug_info    0x00015f81      0x2aa CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_info    0x0001622b      0x581 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_info    0x000167ac      0x5f6 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .debug_info    0x00016da2     0x2973 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_info    0x00019715       0x30 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
 
-.debug_abbrev   0x00000000     0x3978
- .debug_abbrev  0x00000000      0x3b3 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_abbrev  0x000003b3      0x239 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
- .debug_abbrev  0x000005ec      0x1fa CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
- .debug_abbrev  0x000007e6      0x199 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
- .debug_abbrev  0x0000097f      0x117 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
- .debug_abbrev  0x00000a96      0x2e5 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
- .debug_abbrev  0x00000d7b      0x17a CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
- .debug_abbrev  0x00000ef5      0x16d CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- .debug_abbrev  0x00001062      0x243 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
- .debug_abbrev  0x000012a5      0x31c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
- .debug_abbrev  0x000015c1      0x1d1 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
- .debug_abbrev  0x00001792      0x285 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
- .debug_abbrev  0x00001a17      0x1cb CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
- .debug_abbrev  0x00001be2      0x1f9 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
- .debug_abbrev  0x00001ddb      0x2dc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
- .debug_abbrev  0x000020b7      0x2a5 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
- .debug_abbrev  0x0000235c      0x289 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
- .debug_abbrev  0x000025e5      0x284 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
- .debug_abbrev  0x00002869      0x2f3 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
- .debug_abbrev  0x00002b5c      0x1a6 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
- .debug_abbrev  0x00002d02       0xee CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_abbrev  0x00002df0      0x248 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
- .debug_abbrev  0x00003038      0x25a CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .debug_abbrev  0x00003292      0x322 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .debug_abbrev  0x000035b4      0x3a0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_abbrev  0x00003954       0x24 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+.debug_abbrev   0x00000000     0x364e
+ .debug_abbrev  0x00000000      0x3ab CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_abbrev  0x000003ab      0x239 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+ .debug_abbrev  0x000005e4      0x1fa CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+ .debug_abbrev  0x000007de      0x199 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+ .debug_abbrev  0x00000977      0x117 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+ .debug_abbrev  0x00000a8e      0x2e5 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+ .debug_abbrev  0x00000d73      0x17a CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ .debug_abbrev  0x00000eed      0x16d CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_abbrev  0x0000105a      0x243 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+ .debug_abbrev  0x0000129d      0x31c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+ .debug_abbrev  0x000015b9      0x1d1 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+ .debug_abbrev  0x0000178a      0x285 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+ .debug_abbrev  0x00001a0f      0x1cb CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+ .debug_abbrev  0x00001bda      0x1f9 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+ .debug_abbrev  0x00001dd3      0x2dc CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+ .debug_abbrev  0x000020af      0x2a5 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+ .debug_abbrev  0x00002354      0x289 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+ .debug_abbrev  0x000025dd      0x284 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+ .debug_abbrev  0x00002861      0x2f3 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+ .debug_abbrev  0x00002b54      0x1a6 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+ .debug_abbrev  0x00002cfa       0xee CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_abbrev  0x00002de8      0x248 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_abbrev  0x00003030      0x25a CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .debug_abbrev  0x0000328a      0x3a0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_abbrev  0x0000362a       0x24 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
 
-.debug_aranges  0x00000000     0x1890
+.debug_aranges  0x00000000     0x1758
  .debug_aranges
                 0x00000000       0xe0 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .debug_aranges
@@ -5839,253 +5818,244 @@ LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/.
  .debug_aranges
                 0x00001480       0x70 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .debug_aranges
-                0x000014f0      0x138 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+                0x000014f0      0x240 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .debug_aranges
-                0x00001628      0x240 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_aranges
-                0x00001868       0x28 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+                0x00001730       0x28 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
 
 .debug_rnglists
-                0x00000000     0x134c
+                0x00000000     0x1259
  .debug_rnglists
-                0x00000000       0xb3 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                0x00000000       0xb2 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
  .debug_rnglists
-                0x000000b3       0x42 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+                0x000000b2       0x42 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
  .debug_rnglists
-                0x000000f5       0x20 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+                0x000000f4       0x20 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
  .debug_rnglists
-                0x00000115       0x4f CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+                0x00000114       0x4f CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
  .debug_rnglists
-                0x00000164       0x1a CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+                0x00000163       0x1a CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
  .debug_rnglists
-                0x0000017e       0x95 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+                0x0000017d       0x95 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
  .debug_rnglists
-                0x00000213       0x34 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+                0x00000212       0x34 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
  .debug_rnglists
-                0x00000247       0x4c CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+                0x00000246       0x4c CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
  .debug_rnglists
-                0x00000293       0xdf CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+                0x00000292       0xdf CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
  .debug_rnglists
-                0x00000372       0xd9 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+                0x00000371       0xd9 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
  .debug_rnglists
-                0x0000044b       0x3f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+                0x0000044a       0x3f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
  .debug_rnglists
-                0x0000048a      0x228 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+                0x00000489      0x228 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
  .debug_rnglists
-                0x000006b2       0x35 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+                0x000006b1       0x35 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
  .debug_rnglists
-                0x000006e7      0x109 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+                0x000006e6      0x109 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
  .debug_rnglists
-                0x000007f0       0x6d CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+                0x000007ef       0x6d CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
  .debug_rnglists
-                0x0000085d       0x95 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+                0x0000085c       0x95 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
  .debug_rnglists
-                0x000008f2      0x32b CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+                0x000008f1      0x32b CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
  .debug_rnglists
-                0x00000c1d      0x139 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+                0x00000c1c      0x139 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
  .debug_rnglists
-                0x00000d56      0x1da CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+                0x00000d55      0x1da CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
  .debug_rnglists
-                0x00000f30       0x5a CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+                0x00000f2f       0x5a CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
  .debug_rnglists
-                0x00000f8a       0x2b CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+                0x00000f89       0x2b CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
  .debug_rnglists
-                0x00000fb5       0x5d CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+                0x00000fb4       0x5d CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
  .debug_rnglists
-                0x00001012       0x54 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+                0x00001011       0x54 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
  .debug_rnglists
-                0x00001066       0xf2 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
+                0x00001065      0x1db CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
  .debug_rnglists
-                0x00001158      0x1db CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_rnglists
-                0x00001333       0x19 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+                0x00001240       0x19 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
 
-.debug_macro    0x00000000    0x2a7fe
- .debug_macro   0x00000000      0x360 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00000360      0xaea CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00000e4a      0x1ad CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00000ff7       0x2e CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00001025       0x28 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0000104d       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0000106f       0x8e CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000010fd       0x51 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0000114e      0x103 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00001251       0x6a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000012bb      0x1df CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0000149a       0x1c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000014b6       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000014d8       0xfb CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000015d3     0x1011 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000025e4      0x11f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00002703    0x1a192 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0001c895       0x6d CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0001c902     0x38fb CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000201fd      0x190 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002038d       0x5c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000203e9     0x159e CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00021987      0x5a5 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00021f2c      0x1b9 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000220e5      0x18b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00022270      0x2c4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00022534      0x27a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000227ae      0x23d CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000229eb      0x241 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00022c2c      0x37c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00022fa8       0xd6 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002307e      0x22c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000232aa       0x61 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002330b       0xa5 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000233b0      0x122 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000234d2      0x3ef CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000238c1      0xa98 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00024359      0x1e6 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002453f      0x5cf CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00024b0e       0x44 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00024b52      0x330 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00024e82       0xf4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00024f76       0x16 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00024f8c      0x127 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000250b3       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000250d5      0x182 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00025257       0xee CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00025345       0x3a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002537f       0x1f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002539e       0x12 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000253b0     0x10da CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002648a       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000264ac      0x112 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000265be       0xc3 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026681      0x14f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000267d0       0x80 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026850       0x77 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000268c7      0x19c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026a63      0x18a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026bed       0x7b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026c68       0x2a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026c92       0x3c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026cce       0x34 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00026d02      0x364 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00027066       0x16 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002707c       0x4a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000270c6       0x34 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000270fa       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x0002710a       0x58 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00027162      0x1e5 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x00027347      0x19b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_macro   0x000274e2      0x1f7 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
- .debug_macro   0x000276d9      0x1e8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
- .debug_macro   0x000278c1      0x201 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
- .debug_macro   0x00027ac2      0x1e8 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
- .debug_macro   0x00027caa      0x20f CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
- .debug_macro   0x00027eb9       0x84 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
- .debug_macro   0x00027f3d       0x9a CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
- .debug_macro   0x00027fd7       0x99 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- .debug_macro   0x00028070      0x196 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- .debug_macro   0x00028206       0xa0 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- .debug_macro   0x000282a6      0x236 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
- .debug_macro   0x000284dc      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
- .debug_macro   0x000286c4      0x1ef CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
- .debug_macro   0x000288b3      0x2b4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
- .debug_macro   0x00028b67      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
- .debug_macro   0x00028d4f      0x20c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
- .debug_macro   0x00028f5b      0x22a CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
- .debug_macro   0x00029185      0x21e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
- .debug_macro   0x000293a3      0x1e9 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
- .debug_macro   0x0002958c      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
- .debug_macro   0x00029774      0x213 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
- .debug_macro   0x00029987       0x78 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
- .debug_macro   0x000299ff      0x193 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_macro   0x00029b92      0x11c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_macro   0x00029cae       0x9b CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_macro   0x00029d49      0x127 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_macro   0x00029e70      0x1cf CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
- .debug_macro   0x0002a03f      0x223 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .debug_macro   0x0002a262       0x16 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .debug_macro   0x0002a278      0x225 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .debug_macro   0x0002a49d      0x2b2 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_macro   0x0002a74f       0x98 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_macro   0x0002a7e7       0x17 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+.debug_macro    0x00000000    0x2a54f
+ .debug_macro   0x00000000      0x34d CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0000034d      0xaea CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00000e37      0x1ad CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00000fe4       0x2e CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00001012       0x28 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0000103a       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0000105c       0x8e CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000010ea       0x51 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0000113b      0x103 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0000123e       0x6a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000012a8      0x1df CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00001487       0x1c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000014a3       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000014c5       0xfb CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000015c0     0x1011 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000025d1      0x11f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000026f0    0x1a192 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0001c882       0x6d CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0001c8ef     0x38fb CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000201ea      0x190 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002037a       0x5c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000203d6     0x159e CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00021974      0x5a5 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00021f19      0x1b9 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000220d2      0x18b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002225d      0x2c4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00022521      0x27a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002279b      0x23d CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000229d8      0x241 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00022c19      0x37c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00022f95       0xd6 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002306b      0x22c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00023297       0x61 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000232f8       0xa5 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002339d      0x122 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000234bf      0x3ef CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000238ae      0xa98 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00024346      0x1e6 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002452c      0x5cf CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00024afb       0x44 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00024b3f      0x330 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00024e6f       0xf4 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00024f63       0x16 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00024f79      0x127 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000250a0       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000250c2      0x182 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00025244       0xee CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00025332       0x3a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002536c       0x1f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002538b       0x12 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002539d     0x10da CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026477       0x22 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026499      0x112 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000265ab       0xc3 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002666e      0x14f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000267bd       0x80 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002683d      0x19c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000269d9      0x18a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026b63       0x7b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026bde       0x2a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026c08       0x3c CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026c44       0x34 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026c78      0x364 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026fdc       0x16 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00026ff2       0x4a CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x0002703c       0x34 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00027070       0x10 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00027080       0x58 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000270d8      0x1e5 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x000272bd      0x19b CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_macro   0x00027458      0x1f7 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+ .debug_macro   0x0002764f      0x1e8 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+ .debug_macro   0x00027837      0x201 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+ .debug_macro   0x00027a38      0x1e8 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+ .debug_macro   0x00027c20      0x20f CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+ .debug_macro   0x00027e2f       0x84 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ .debug_macro   0x00027eb3       0x9a CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ .debug_macro   0x00027f4d       0x99 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_macro   0x00027fe6      0x196 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_macro   0x0002817c       0xa0 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_macro   0x0002821c      0x236 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+ .debug_macro   0x00028452      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+ .debug_macro   0x0002863a      0x1ef CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+ .debug_macro   0x00028829      0x2b4 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+ .debug_macro   0x00028add      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+ .debug_macro   0x00028cc5      0x20c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+ .debug_macro   0x00028ed1      0x22a CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+ .debug_macro   0x000290fb      0x21e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+ .debug_macro   0x00029319      0x1e9 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+ .debug_macro   0x00029502      0x1e8 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+ .debug_macro   0x000296ea      0x213 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+ .debug_macro   0x000298fd       0x78 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+ .debug_macro   0x00029975      0x193 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_macro   0x00029b08      0x11c CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_macro   0x00029c24       0x9b CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_macro   0x00029cbf      0x127 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_macro   0x00029de6      0x1cf CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_macro   0x00029fb5      0x223 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .debug_macro   0x0002a1d8       0x16 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .debug_macro   0x0002a1ee      0x2b2 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_macro   0x0002a4a0       0x98 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_macro   0x0002a538       0x17 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
 
-.debug_line     0x00000000    0x1a72d
- .debug_line    0x00000000     0x11dd CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
- .debug_line    0x000011dd      0x8d9 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
- .debug_line    0x00001ab6      0x6c2 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
- .debug_line    0x00002178      0x730 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
- .debug_line    0x000028a8      0x6e3 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
- .debug_line    0x00002f8b      0x9e7 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
- .debug_line    0x00003972      0x4bc CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
- .debug_line    0x00003e2e      0x61b CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
- .debug_line    0x00004449      0xa51 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
- .debug_line    0x00004e9a      0xbfa CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
- .debug_line    0x00005a94      0xaa1 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
- .debug_line    0x00006535     0x366c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
- .debug_line    0x00009ba1      0x7ad CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
- .debug_line    0x0000a34e      0xc33 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
- .debug_line    0x0000af81      0xfa2 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
- .debug_line    0x0000bf23     0x147f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
- .debug_line    0x0000d3a2     0x3dd5 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
- .debug_line    0x00011177     0x1a63 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
- .debug_line    0x00012bda     0x2c7e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
- .debug_line    0x00015858      0x71a CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
- .debug_line    0x00015f72      0x52f CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
- .debug_line    0x000164a1      0x6bc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
- .debug_line    0x00016b5d      0x8d0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
- .debug_line    0x0001742d     0x1421 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
- .debug_line    0x0001884e     0x1e65 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
- .debug_line    0x0001a6b3       0x7a CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+.debug_line     0x00000000    0x192be
+ .debug_line    0x00000000     0x118f CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+ .debug_line    0x0000118f      0x8d9 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+ .debug_line    0x00001a68      0x6c2 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+ .debug_line    0x0000212a      0x730 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+ .debug_line    0x0000285a      0x6e3 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+ .debug_line    0x00002f3d      0x9e7 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+ .debug_line    0x00003924      0x4bc CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ .debug_line    0x00003de0      0x61b CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_line    0x000043fb      0xa51 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+ .debug_line    0x00004e4c      0xbfa CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+ .debug_line    0x00005a46      0xaa1 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+ .debug_line    0x000064e7     0x366c CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+ .debug_line    0x00009b53      0x7ad CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+ .debug_line    0x0000a300      0xc33 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+ .debug_line    0x0000af33      0xfa2 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+ .debug_line    0x0000bed5     0x147f CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+ .debug_line    0x0000d354     0x3dd5 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+ .debug_line    0x00011129     0x1a63 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+ .debug_line    0x00012b8c     0x2c7e CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+ .debug_line    0x0001580a      0x71a CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+ .debug_line    0x00015f24      0x52f CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_line    0x00016453      0x6bc CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_line    0x00016b0f      0x8d0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .debug_line    0x000173df     0x1e65 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_line    0x00019244       0x7a CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
 
-.debug_str      0x00000000   0x109137
- .debug_str     0x00000000   0x109137 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
-                             0x10050c (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
+.debug_str      0x00000000   0x107f93
+ .debug_str     0x00000000   0x107f93 CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj
+                              0xffd61 (size before relaxing)
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_msp.c.obj
                               0xef389 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_hal_timebase_tim.c.obj
                               0xee7b1 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/stm32l4xx_it.c.obj
                               0xee530 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Core/Src/system_stm32l4xx.c.obj
                               0xedcef (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/INA219/INA219.c.obj
                               0xeeedc (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj
                                0x4eb0 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj
                                0x5aa5 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal.c.obj
                               0xee903 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_cortex.c.obj
                               0xee568 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_gpio.c.obj
                               0xede7a (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c.c.obj
                               0xeeef0 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_i2c_ex.c.obj
                               0xee1fc (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_pwr_ex.c.obj
                               0xee24a (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc.c.obj
                               0xee335 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_rcc_ex.c.obj
                               0xee4c0 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim.c.obj
                               0xef041 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_tim_ex.c.obj
                               0xee955 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_uart.c.obj
                               0xeea47 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj
                                0x48af (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/list.c.obj
                               0x10703 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
                                0xf7f6 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
                               0x12244 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
-                              0x12fb0 (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
                               0x13f9e (size before relaxing)
- .debug_str     0x00109137        0x0 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
+ .debug_str     0x00107f93        0x0 CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj
                                  0x70 (size before relaxing)
 
 .comment        0x00000000       0x45
@@ -6134,8 +6104,6 @@ LOAD C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/.
  .comment       0x00000045        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/GCC/ARM_CM4F/port.c.obj
                                  0x46 (size before relaxing)
  .comment       0x00000045        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/portable/MemMang/heap_4.c.obj
-                                 0x46 (size before relaxing)
- .comment       0x00000045        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/queue.c.obj
                                  0x46 (size before relaxing)
  .comment       0x00000045        0x0 CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj
                                  0x46 (size before relaxing)

@@ -38,11 +38,12 @@
 8533	9465	8140219867773062	CMakeFiles/Quadcopter_drone.dir/startup_stm32l476xx.s.obj	33f902246f02c79a
 8276	9716	8140219865213859	CMakeFiles/Quadcopter_drone.dir/FreeRTOS-KernelV11.2.0/tasks.c.obj	a6c85b82862d20c9
 1595	3923	8140218436224444	CMakeFiles/Quadcopter_drone.dir/Drivers/MPU6050/MPU6050.c.obj	19a8f7863e06c435
-8	1251	8140225124235046	CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj	1f0beb70ac7b5d39
-1212	4979	8127716341869551	Quadcopter_drone.elf	31cc4892633d2aa3
+7	1211	8140265612053341	CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj	1f0beb70ac7b5d39
+1212	5510	8140265624096699	Quadcopter_drone.elf	225350025ea8689e
 8	633	8140227339115918	CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/ak8963.c.obj	1345ba408ad7d95d
 5	569	8140240045380114	CMakeFiles/Quadcopter_drone.dir/Drivers/MPU9250/mpu9250.c.obj	eb250b554e6c041c
 9	869	8140242184026296	CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c1.c.obj	e51b4638010bc4a3
 139	895	8140242185308364	CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c2.c.obj	b70c7c7078a064d
 323	988	8140242187162756	CMakeFiles/Quadcopter_drone.dir/Drivers/I2C/i2c3.c.obj	27e92435630fded5
-988	4895	8140242193818011	Quadcopter_drone.elf	225350025ea8689e
+13	1349	8140266795144578	CMakeFiles/Quadcopter_drone.dir/Core/Src/main.c.obj	1f0beb70ac7b5d39
+1351	5748	8140266808555013	Quadcopter_drone.elf	225350025ea8689e
