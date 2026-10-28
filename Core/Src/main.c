@@ -2,7 +2,8 @@
 /**
   ******************************************************************************
   * @file           : main.c
-  * @brief          : Main program body
+  * @brief          : Main program body - Quadcopter flight controller
+  *                   STM32L476 + FreeRTOS + MPU9250, rate mode (acro)
   ******************************************************************************
   * @attention
   *
@@ -21,22 +22,137 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <math.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include "FreeRTOS.h"
-#include "INA219.h"
 #include "task.h"
-#include "queue.h"
 #include "mpu9250.h"
-#include<math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef enum { FLIGHT_DISARMED = 0, FLIGHT_ARMED = 1 } FlightState_t;
 
+typedef enum {
+  DISARM_NONE = 0,
+  DISARM_STICKS,        /* geste de desarmement */
+  DISARM_RC_LOST,       /* perte du signal radio */
+  DISARM_GYRO_LOST,     /* perte prolongee du gyroscope */
+  DISARM_IDLE_TIMEOUT   /* arme mais throttle bas trop longtemps */
+} DisarmReason_t;
+
+/* Etat d'un PID (un par axe) */
+typedef struct {
+  float kp, ki, kd;
+  float integral;
+  float prev_error;
+  float prev_meas;
+  float d_filt;
+  bool  primed;
+} PidAxis_t;
+
+typedef struct {
+  float roll, pitch, throttle, yaw;   /* largeurs d'impulsion en us */
+} RcFrame_t;
+
+/* Indices des axes */
+enum { AXIS_ROLL = 0, AXIS_PITCH = 1, AXIS_YAW = 2 };
+
+/* Indices des moteurs (= ordre des timers : TIM1, TIM2, TIM3, TIM4) */
+enum { MOTOR_FL = 0, MOTOR_FR = 1, MOTOR_RR = 2, MOTOR_RL = 3 };
+
+/* Indices des canaux radio (= timers de capture) */
+enum { RC_CH_THROTTLE = 0, RC_CH_ROLL = 1, RC_CH_PITCH = 2, RC_CH_YAW = 3 };
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define MPU9250_TIMEOUT_MS 20U
+
+/* ===================== CONVENTION DES SIGNES =====================
+ * Gyro (apres GYRO_SIGN_xxx) :
+ *   RateRoll  > 0 : cote DROIT qui descend
+ *   RatePitch > 0 : nez qui descend
+ *   RateYaw   > 0 : nez qui tourne vers la droite (sens horaire vu de dessus)
+ * Helices vues de dessus : FR et RL tournent en sens horaire (CW),
+ *                          FL et RR tournent en sens anti-horaire (CCW).
+ * Si ton MPU est monte autrement, change les GYRO_SIGN_xxx.
+ * Si tes sens de rotation moteurs sont inverses, change MIX_YAW_SIGN.
+ * ================================================================ */
+#define GYRO_SIGN_ROLL            (1.0f)
+#define GYRO_SIGN_PITCH           (1.0f)
+#define GYRO_SIGN_YAW             (1.0f)
+#define MIX_YAW_SIGN              (1.0f)
+
+/* ---- Boucle de vol ---- */
+#define FLIGHT_PERIOD_MS          4U          /* 250 Hz */
+#define FLIGHT_DT_MIN_S           0.001f
+#define FLIGHT_DT_MAX_S           0.012f
+#define GYRO_TIMEOUT_MS           20U         /* gyro invalide au-dela => desarmement */
+
+/* ---- Calibration gyro (drone immobile au demarrage) ---- */
+#define GYRO_CAL_SAMPLES          1000U
+#define GYRO_CAL_PERIOD_MS        2U
+#define GYRO_CAL_MAX_STD          0.5f        /* bruit max tolere (unites du gyro) */
+#define GYRO_CAL_MAX_BIAS         10.0f       /* biais max plausible */
+#define GYRO_CAL_MAX_FAILS        20U
+
+/* ---- Filtres ---- */
+#define GYRO_LPF_HZ               80.0f
+#define DTERM_LPF_HZ              40.0f
+
+/* ---- Radio ---- */
+#define RC_TIMEOUT_MS             100U
+#define RC_PULSE_MIN_US           900U
+#define RC_PULSE_MAX_US           2100U
+#define RC_CENTER_US              1500.0f
+#define RC_DEADBAND_US            8.0f
+#define RC_RATE_SCALE             0.15f       /* (us de stick) -> (unites/s) */
+#define RC_IRQ_PRIORITY           5U          /* >= configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY */
+
+/* ---- Armement ---- */
+#define THROTTLE_LOW_US           1040.0f     /* hysteresis : bas si < 1040 */
+#define THROTTLE_HIGH_US          1060.0f     /*              haut si > 1060 */
+#define ARM_YAW_HIGH_US           1900.0f
+#define DISARM_YAW_LOW_US         1100.0f
+#define ARM_HOLD_MS               1000U
+#define DISARM_HOLD_MS            1000U
+#define IDLE_DISARM_MS            10000U
+#define ARM_STICK_CENTER_TOL_US   250.0f
+#define SPIN_YAW_CENTER_TOL_US    150.0f
+#define ARM_HOLD_CYCLES           (ARM_HOLD_MS / FLIGHT_PERIOD_MS)
+#define DISARM_HOLD_CYCLES        (DISARM_HOLD_MS / FLIGHT_PERIOD_MS)
+#define IDLE_DISARM_CYCLES        (IDLE_DISARM_MS / FLIGHT_PERIOD_MS)
+
+/* ---- Moteurs (impulsions en us, timers a 1 MHz) ---- */
+#define MOTOR_STOP_US             1000U
+#define MOTOR_IDLE_US             1070U       /* ralenti mini quand ca tourne : a regler selon tes ESC */
+#define MOTOR_MAX_US              2000U
+#define MOTOR_PWM_PERIOD_US       2500U       /* 400 Hz */
+
+/* ---- PID (rate mode) ---- */
+#define PID_I_LIMIT               400.0f
+#define PID_OUT_LIMIT             400.0f
+#define PID_ROLL_KP               0.6f
+#define PID_ROLL_KI               3.5f
+#define PID_ROLL_KD               0.03f
+#define PID_PITCH_KP              0.6f
+#define PID_PITCH_KI              3.5f
+#define PID_PITCH_KD              0.03f
+#define PID_YAW_KP                2.0f
+#define PID_YAW_KI                12.0f
+#define PID_YAW_KD                0.0f
+
+/* ---- Supervision / watchdog ---- */
+#define IWDG_TIMEOUT_MS           250U
+#define SUPERVISOR_PERIOD_MS      20U
+#define SUPERVISOR_STALL_LIMIT    5U
+
+/* ---- Taches FreeRTOS ---- */
+#define FLIGHT_TASK_STACK_WORDS   512U
+#define FLIGHT_TASK_PRIORITY      (tskIDLE_PRIORITY + 3U)
+#define SUPERVISOR_TASK_STACK_WORDS 192U
+#define SUPERVISOR_TASK_PRIORITY  (tskIDLE_PRIORITY + 1U)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -56,16 +172,33 @@ TIM_HandleTypeDef htim4;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-//Les variables FreeRTOS
-TaskHandle_t receiver_rx_read_task_handle;
-TaskHandle_t battery_monitoring_task_handle;
-TaskHandle_t PID_stabilization_task_handle;
-TaskHandle_t motors_command_task_handle;
-TaskHandle_t MPU9250_task_handle;
+static TaskHandle_t flight_control_task_handle;
+static TaskHandle_t supervisor_task_handle;
 
-volatile uint8_t MPU9250_DataValid = 0;
-volatile uint32_t MPU9250_ConsecutiveErrors = 0;
-volatile uint32_t MPU9250_LastValidTick = 0;
+/* Variables observables au debugger */
+volatile FlightState_t Flight_State = FLIGHT_DISARMED;
+volatile DisarmReason_t Flight_LastDisarmReason = DISARM_NONE;
+volatile uint32_t Flight_Heartbeat = 0;
+volatile uint32_t Flight_GyroErrors = 0;
+
+/* Etat interne de la boucle de vol (un seul ecrivain : flight_control_task) */
+static PidAxis_t s_pid[3] = {
+  [AXIS_ROLL]  = { .kp = PID_ROLL_KP,  .ki = PID_ROLL_KI,  .kd = PID_ROLL_KD  },
+  [AXIS_PITCH] = { .kp = PID_PITCH_KP, .ki = PID_PITCH_KI, .kd = PID_PITCH_KD },
+  [AXIS_YAW]   = { .kp = PID_YAW_KP,   .ki = PID_YAW_KI,   .kd = PID_YAW_KD   },
+};
+static uint32_t s_arm_hold = 0;
+static uint32_t s_disarm_hold = 0;
+static uint32_t s_idle_cycles = 0;
+static bool     s_spin_inhibit = true;
+
+/* Radio : ecrites par l'ISR de capture, lues par la tache de vol */
+static volatile uint16_t   rc_pulse_us[4]    = {1500U, 1500U, 1000U, 1500U};
+static volatile TickType_t rc_last_update[4] = {0};
+static volatile uint8_t    rc_has_signal[4]  = {0};
+static volatile uint32_t   rc_glitch_count[4] = {0};
+static uint32_t rc_t_rising[4] = {0};
+static uint8_t  rc_edge[4]     = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -79,302 +212,597 @@ static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Motors_EmergencyStop(void);   /* appelable depuis HardFault_Handler */
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-INA219_t my_ina219;
-float RatePitch, RateRoll, RateYaw;
-float RateCalibrationPitch, RateCalibrationRoll, RateCalibrationYaw;
-int RateCalibrationNumber;
 
-//float ReceiverValue[]={0,0,0,0};
-//float pulse_ms[4]={0.0};
-volatile float ReceiverValue[4] = {1500.0f, 1500.0f, 1000.0f, 1500.0f};
-volatile float pulse_us[4] = {1500.0f, 1500.0f, 1000.0f, 1500.0f};
+/* ---------- Verifications de configuration FreeRTOS a la compilation ---------- */
+_Static_assert(configTICK_RATE_HZ >= 1000U,
+               "configTICK_RATE_HZ doit etre >= 1000 (sinon pdMS_TO_TICKS(4) = 0)");
+_Static_assert(sizeof(TickType_t) == 4U,
+               "TickType_t doit etre sur 32 bits (configUSE_16_BIT_TICKS = 0)");
+#if defined(configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY)
+_Static_assert(RC_IRQ_PRIORITY >= configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY,
+               "Priorite IRQ radio trop haute pour appeler l'API FreeRTOS FromISR");
+#endif
 
-int BatteryRemaining;
-int BatteryDefault=2200;
-uint16_t Qconsommee;
-int t_now,t_prev=0;
-
-uint32_t LoopTimer;
-
-// Variables for the PID ccontroler
-float DesiredRateRoll, DesiredRatePitch, DesiredRateYaw;
-float ErrorRateRoll, ErrorRatePitch, ErrorRateYaw;
-float InputRoll, InputPitch, InputYaw, InputThrottle;
-float PrevErrorRateRoll, PrevErrorRatePitch, PrevErrorRateYaw;
-float PrevItermRateRoll, PrevItermRatePitch, PrevItermRateYaw;
-float PIDReturn[]={0,0,0};
-// InputRoll=f(ErrorRoll, PRoll,IRoll,DRoll, PrevErrorRoll, PrevItermRoll)
-float PRateRoll=0.6; float PRatePitch=0.6; float PRateYaw=2;
-float IRateRoll=3.5; float IRatePitch=3.5; float IRateYaw=12;
-float DRateRoll=0.03; float DRatePitch=0.03; float DRateYaw=0;
-
-float Motor_front_left_Input, Motor_front_right_Input, Motor_rear_right_Input, Motor_rear_left_Input;
-
-// Qtotal représente ici batteryDefault, c'est la même chose
-int battery_capacity_monitoring(int Qtotal){
-  static int SOC;
-  t_now=__HAL_TIM_GET_COUNTER(&htim4);
-  Qconsommee=round(INA219_ReadCurrent(&my_ina219))*((t_now-t_prev)/3600000);
-  t_prev=t_now;
-  SOC=100-(Qconsommee/Qtotal)*100;
-  return SOC;
-}
-
-long map(int valeur,int a,int b,int c,int d){
-	return c+(valeur-a)*(d-c)/(b-a);
-}
-
-static float constrain_float(float value, float min, float max)
+/* ============================== Utilitaires ============================== */
+static inline float constrain_float(float value, float min, float max)
 {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
 }
 
-static void mix_and_limit_motors(float throttle, float roll, float pitch, float yaw, float motor[4])
+/* Coefficient d'un filtre passe-bas du 1er ordre (PT1) */
+static inline float lpf_alpha(float cutoff_hz, float dt)
 {
-  /* Corrections différentielles de chaque moteur */
-  motor[0] = -roll - pitch - yaw;  // Avant gauche
-  motor[1] = -roll + pitch + yaw;  // Avant droit
-  motor[2] =  roll + pitch - yaw;  // Arrière droit
-  motor[3] =  roll - pitch + yaw;  // Arrière gauche
-
-  float min_correction = motor[0];
-  float max_correction = motor[0];
-
-  for (int i = 1; i < 4; i++)
-  {
-    if (motor[i] < min_correction) min_correction = motor[i];
-    if (motor[i] > max_correction) max_correction = motor[i];
-  }
-
-  /* Réduire les corrections seulement si nécessaire */
-  float span = max_correction - min_correction;
-
-  if (span > 1000.0f)
-  {
-    float scale = 1000.0f / span;
-    for (int i = 0; i < 4; i++) motor[i] *= scale;
-  }
-
-  /* Recalculer les bornes des corrections */
-  min_correction = motor[0];
-  max_correction = motor[0];
-
-  for (int i = 1; i < 4; i++)
-  {
-      if (motor[i] < min_correction) min_correction = motor[i];
-      if (motor[i] > max_correction) max_correction = motor[i];
-  }
-
-  /* Déterminer le throttle admissible */
-  float min_throttle = 1000.0f - min_correction;
-  float max_throttle = 2000.0f - max_correction;
-
-  throttle = constrain_float(throttle, min_throttle, max_throttle);
-
-  /* Commandes finales des quatre moteurs */
-  for (int i = 0; i < 4; i++) motor[i] += throttle;
+  const float rc = 1.0f / (2.0f * 3.14159265f * cutoff_hz);
+  return dt / (rc + dt);
 }
 
-void read_receiver(void){
-	ReceiverValue[0]=pulse_us[1];		//Roll
-	ReceiverValue[1]=pulse_us[2];		//Pitch
-	ReceiverValue[2]=pulse_us[0];		//Throttle
-	ReceiverValue[3]=pulse_us[3];		//Yaw
-}
-
-I2C_Status gyro_signals(void) {
-  I2C_Status status;
-  status = MPU9250_GetGyroData(&RateRoll,&RatePitch,&RateYaw);
-  if(status != I2C_OK) return status;
-  else return I2C_OK;
-}
-
-// PID equation
-void pid_equation(float Error, float P, float I, float D, float PrevError, float PrevIterm){
-  float Pterm=P*Error;
-  float Iterm=PrevIterm+I*(Error+PrevError)*0.004/2;
-
-  // To avoid integral windup
-  if(Iterm>400) Iterm=400;
-  else if (Iterm<-400) Iterm=-400;
-
-  float Dterm=D*(Error-PrevError)/0.004;
-  float PIDOutput=Pterm+Iterm+Dterm;
-
-  // To avoid integral windup
-  if(PIDOutput>400) PIDOutput=400;
-  else if (PIDOutput<-400) PIDOutput=-400;
-
-  PIDReturn[0]=PIDOutput;
-  PIDReturn[1]=Error;
-  PIDReturn[2]=Iterm;
-}
-
-void reset_pid(void){
-  PrevErrorRateRoll=0; PrevErrorRatePitch=0; PrevErrorRateYaw=0;
-  PrevItermRateRoll=0; PrevItermRatePitch=0; PrevItermRateYaw=0;
-}
-
-void receiver_rx_read_task(void *params){
-  for(;;){
-    (void)params;
-    read_receiver();
-  }
-}
-
-void battery_monitoring_task(void *params){
-  for(;;){
-    (void)params;
-    //Power Switch
-    BatteryRemaining=battery_capacity_monitoring(BatteryDefault);
-    if(BatteryRemaining<=30) HAL_GPIO_WritePin(battery_led_GPIO_Port,battery_led_Pin,GPIO_PIN_SET);//digitalWrite(5,HIGH);
-    else HAL_GPIO_WritePin(battery_led_GPIO_Port,battery_led_Pin,GPIO_PIN_SET);;
-  }
-}
-
-void PID_stabilization_task(void *params)
+static inline void flight_heartbeat(void)
 {
-    (void)params;
-    TickType_t last_wake_time = xTaskGetTickCount();
-    TickType_t timeout_ticks = pdMS_TO_TICKS(MPU9250_TIMEOUT_MS);
-    for (;;)
+  Flight_Heartbeat++;
+}
+
+/* Compteur de cycles pour mesurer le vrai dt */
+static void dwt_init(void)
+{
+  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+  DWT->CYCCNT = 0U;
+  DWT->CTRL  |= DWT_CTRL_CYCCNTENA_Msk;
+}
+
+/* ================================ Moteurs ================================ */
+/* Ordre : FL = TIM1, FR = TIM2, RR = TIM3, RL = TIM4 (canal 2 = sortie PWM) */
+static TIM_HandleTypeDef * const motor_tim[4] = { &htim1, &htim2, &htim3, &htim4 };
+
+/* Passe les timers moteurs en PWM rapide (400 Hz) avec precharge du compare.
+ * A appeler AVANT HAL_TIM_PWM_Start (compteur a 0, donc pas de risque de
+ * debordement). Les capteurs radio (canal 1) gardent une base de 1 MHz. */
+static void motors_pwm_config(void)
+{
+  for (uint8_t i = 0; i < 4U; i++)
+  {
+    TIM_HandleTypeDef *h = motor_tim[i];
+    h->Init.Period = MOTOR_PWM_PERIOD_US - 1U;
+    __HAL_TIM_SET_AUTORELOAD(h, MOTOR_PWM_PERIOD_US - 1U);
+    __HAL_TIM_SET_COUNTER(h, 0U);
+    __HAL_TIM_SET_COMPARE(h, TIM_CHANNEL_2, MOTOR_STOP_US);
+    __HAL_TIM_ENABLE_OCxPRELOAD(h, TIM_CHANNEL_2);
+  }
+}
+
+static inline void motor_set_us(uint8_t i, uint32_t us)
+{
+  __HAL_TIM_SET_COMPARE(motor_tim[i], TIM_CHANNEL_2, us);
+}
+
+static void motors_write_all(uint32_t us)
+{
+  for (uint8_t i = 0; i < 4U; i++) motor_set_us(i, us);
+}
+
+/* Ecriture explicite : arrondi + saturation [1000 ; 2000] */
+static void motors_write(const float m[4])
+{
+  for (uint8_t i = 0; i < 4U; i++)
+  {
+    float v = constrain_float(m[i], (float)MOTOR_STOP_US, (float)MOTOR_MAX_US);
+    motor_set_us(i, (uint32_t)lroundf(v));
+  }
+}
+
+/* Coupure d'urgence : acces direct aux registres (utilisable dans un handler
+ * de faute, sans dependre de HAL ni de FreeRTOS). */
+void Motors_EmergencyStop(void)
+{
+  TIM1->CCR2 = MOTOR_STOP_US;
+  TIM2->CCR2 = MOTOR_STOP_US;
+  TIM3->CCR2 = MOTOR_STOP_US;
+  TIM4->CCR2 = MOTOR_STOP_US;
+}
+
+/* Mixage X-quad avec saturation sure :
+ *  - jamais de throttle "ajoute" pour compenser des corrections negatives
+ *  - si un moteur depasse le max, on baisse l'ensemble (on garde les differences)
+ *  - chaque moteur est ensuite borne a [ralenti ; max] */
+static void mix_motors(float throttle, float roll, float pitch, float yaw, float m[4])
+{
+  throttle = constrain_float(throttle, (float)MOTOR_STOP_US, (float)MOTOR_MAX_US);
+  yaw *= MIX_YAW_SIGN;
+
+  m[MOTOR_FL] = throttle + roll - pitch + yaw;
+  m[MOTOR_FR] = throttle - roll - pitch - yaw;
+  m[MOTOR_RR] = throttle - roll + pitch + yaw;
+  m[MOTOR_RL] = throttle + roll + pitch - yaw;
+
+  float max_v = m[0];
+  for (uint8_t i = 1; i < 4U; i++) if (m[i] > max_v) max_v = m[i];
+
+  if (max_v > (float)MOTOR_MAX_US)
+  {
+    const float excess = max_v - (float)MOTOR_MAX_US;
+    for (uint8_t i = 0; i < 4U; i++) m[i] -= excess;
+  }
+
+  for (uint8_t i = 0; i < 4U; i++)
+    m[i] = constrain_float(m[i], (float)MOTOR_IDLE_US, (float)MOTOR_MAX_US);
+}
+
+/* ================================= Radio ================================= */
+/* Appelee dans l'ISR de capture (canal 1 des timers 1 a 4) */
+static void rc_capture_isr(uint8_t idx, TIM_HandleTypeDef *htim)
+{
+  const uint32_t captured = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+
+  if (rc_edge[idx] == 0U)
+  {
+    /* Front montant : debut d'impulsion */
+    rc_t_rising[idx] = captured;
+    __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_FALLING);
+    rc_edge[idx] = 1U;
+  }
+  else
+  {
+    /* Front descendant : fin d'impulsion */
+    const uint32_t arr = __HAL_TIM_GET_AUTORELOAD(htim);
+    uint32_t width;
+
+    if (captured >= rc_t_rising[idx]) width = captured - rc_t_rising[idx];
+    else width = (arr + 1U - rc_t_rising[idx]) + captured;
+
+    __HAL_TIM_SET_CAPTUREPOLARITY(htim, TIM_CHANNEL_1, TIM_INPUTCHANNELPOLARITY_RISING);
+    rc_edge[idx] = 0U;
+
+    /* 1 tick = 1 us. On ignore les impulsions aberrantes (parasites). */
+    if ((width >= RC_PULSE_MIN_US) && (width <= RC_PULSE_MAX_US))
     {
-      TickType_t now = xTaskGetTickCount();
+      rc_pulse_us[idx]    = (uint16_t)width;
+      rc_last_update[idx] = xTaskGetTickCountFromISR();
+      rc_has_signal[idx]  = 1U;
+    }
+    else
+    {
+      rc_glitch_count[idx]++;
+    }
+  }
+}
 
-      /* 1. Vérifier la disponibilité des mesures */
-      if ((MPU9250_DataValid == 0U) && ((TickType_t)(now - MPU9250_LastValidTick) >= timeout_ticks))
+static int8_t rc_index_from_handle(const TIM_HandleTypeDef *htim)
+{
+  if (htim == &htim1) return 0;
+  if (htim == &htim2) return 1;
+  if (htim == &htim3) return 2;
+  if (htim == &htim4) return 3;
+  return -1;
+}
+
+static void rc_start(void)
+{
+  HAL_NVIC_SetPriority(TIM1_CC_IRQn, RC_IRQ_PRIORITY, 0);
+  HAL_NVIC_SetPriority(TIM2_IRQn,    RC_IRQ_PRIORITY, 0);
+  HAL_NVIC_SetPriority(TIM3_IRQn,    RC_IRQ_PRIORITY, 0);
+  HAL_NVIC_SetPriority(TIM4_IRQn,    RC_IRQ_PRIORITY, 0);
+  HAL_NVIC_EnableIRQ(TIM1_CC_IRQn);
+  HAL_NVIC_EnableIRQ(TIM2_IRQn);
+  HAL_NVIC_EnableIRQ(TIM3_IRQn);
+  HAL_NVIC_EnableIRQ(TIM4_IRQn);
+
+  HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_1);
+}
+
+/* Retourne true seulement si les 4 canaux sont frais (jamais lus = invalide) */
+static bool rc_read(RcFrame_t *rc)
+{
+  const TickType_t now = xTaskGetTickCount();
+  const int32_t timeout = (int32_t)pdMS_TO_TICKS(RC_TIMEOUT_MS);
+  bool ok = true;
+
+  for (uint8_t i = 0; i < 4U; i++)
+  {
+    /* Différence signée : une mise à jour ISR juste après notre lecture
+      du tick donne un âge négatif (= frais), pas un faux timeout. */
+    const int32_t age = (int32_t)(now - rc_last_update[i]);
+    if ((rc_has_signal[i] == 0U) || (age >= timeout)) ok = false;
+  }
+
+  rc->throttle = (float)rc_pulse_us[RC_CH_THROTTLE];
+  rc->roll = (float)rc_pulse_us[RC_CH_ROLL];
+  rc->pitch = (float)rc_pulse_us[RC_CH_PITCH];
+  rc->yaw = (float)rc_pulse_us[RC_CH_YAW];
+  return ok;
+}
+
+/* Stick centre, avec zone morte, dans [-500 ; +500] */
+static float rc_stick(float pulse_us)
+{
+  float v = constrain_float(pulse_us, 1000.0f, 2000.0f) - RC_CENTER_US;
+  if (v >  RC_DEADBAND_US) v -= RC_DEADBAND_US;
+  else if (v < -RC_DEADBAND_US) v += RC_DEADBAND_US;
+  else v  = 0.0f;
+  return v;
+}
+
+/* ================================= Gyro ================================== */
+/* Lecture dans des variables locales : rien n'est publie en cas d'erreur */
+static bool gyro_read(float g[3])
+{
+  float x, y, z;
+
+  if (MPU9250_GetGyroData(&x, &y, &z) != I2C_OK) return false;
+  if (!isfinite(x) || !isfinite(y) || !isfinite(z)) return false;
+
+  g[AXIS_ROLL] = GYRO_SIGN_ROLL*x;
+  g[AXIS_PITCH] = GYRO_SIGN_PITCH*y;
+  g[AXIS_YAW]= GYRO_SIGN_YAW*z;
+  return true;
+}
+
+/* Moyenne sur GYRO_CAL_SAMPLES echantillons, drone immobile.
+ * Echoue si le gyro bouge (ecart-type trop grand), si le biais est
+ * improbable ou si trop de lectures echouent. */
+static bool gyro_calibrate(float offset[3])
+{
+  float sum[3] = {0.0f, 0.0f, 0.0f};
+  float sum_sq[3] = {0.0f, 0.0f, 0.0f};
+  uint32_t n = 0U, fails = 0U;
+
+  while (n < GYRO_CAL_SAMPLES)
+  {
+    vTaskDelay(pdMS_TO_TICKS(GYRO_CAL_PERIOD_MS));
+    flight_heartbeat();
+
+    float g[3];
+    if (gyro_read(g))
+    {
+      for (uint8_t i = 0; i < 3U; i++)
       {
-        /*
-          * Perte prolongée du gyroscope.
-          * Ne pas calculer de nouvelles corrections PID.
-          * Signaler ce défaut au superviseur de sécurité.
-          */
-
-        vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(4));
-        continue;
+        sum[i] += g[i];
+        sum_sq[i] += g[i] * g[i];
       }
+      n++;
+    }
+    else if(++fails > GYRO_CAL_MAX_FAILS)
+    {
+      return false;
+    }
+  }
 
-      if (MPU9250_DataValid == 0U)
+  float result[3];
+  for (uint8_t i = 0; i < 3U; i++)
+  {
+    const float mean = sum[i] / (float)n;
+    float var = (sum_sq[i] / (float)n) - (mean * mean);
+    if (var < 0.0f) var = 0.0f;
+
+    if ((sqrtf(var) > GYRO_CAL_MAX_STD) || (fabsf(mean) > GYRO_CAL_MAX_BIAS)) return false;
+    result[i] = mean;
+  }
+
+  for (uint8_t i = 0; i < 3U; i++) offset[i] = result[i];
+  return true;
+}
+
+/* ================================== PID ================================== */
+static void pid_reset(PidAxis_t *p)
+{
+  p->integral   = 0.0f;
+  p->prev_error = 0.0f;
+  p->prev_meas  = 0.0f;
+  p->d_filt     = 0.0f;
+  p->primed     = false;
+}
+
+static void pids_reset(void)
+{
+  for (uint8_t i = 0; i < 3U; i++) pid_reset(&s_pid[i]);
+}
+
+/* PID avec dt mesure, integrale trapezoidale, anti-windup,
+ * D calcule sur la MESURE (pas de "derivative kick") puis filtre. */
+static float pid_update(PidAxis_t *p, float setpoint, float meas, float dt, float d_alpha)
+{
+  const float error = setpoint - meas;
+
+  if (!p->primed)
+  {
+    p->prev_error = error;
+    p->prev_meas = meas;
+    p->d_filt = 0.0f;
+    p->primed = true;
+  }
+
+  const float pterm = p->kp * error;
+
+  /* Trapezoidal Integration : I[k] = I[k-1]+ K_i*((e[k]+e[k-1])/2)*T_s */
+  p->integral += p->ki * 0.5f * (error + p->prev_error) * dt;
+  p->integral  = constrain_float(p->integral, -PID_I_LIMIT, PID_I_LIMIT);
+
+  /* d(erreur)/dt = d(consigne - mesure)/dt = d(consigne)/dt - d(mesure)/dt 
+  On ignore la consigne et on dérive seulement l'erreur de mesure pour éviter le derivative kick 
+  => d(erreur)/dt = - d(mesure)/dt */
+  const float d_raw = -(meas - p->prev_meas)/dt;
+  p->d_filt += d_alpha * (d_raw - p->d_filt);
+  const float dterm = p->kd * p->d_filt;
+
+  p->prev_error = error;
+  p->prev_meas  = meas;
+
+  return constrain_float(pterm + p->integral + dterm, -PID_OUT_LIMIT, PID_OUT_LIMIT);
+}
+
+/* =============================== Watchdog ================================ */
+/* IWDG pilote en registres (pas besoin du module HAL_IWDG).
+ * LSI ~32 kHz, prescaler /32 => ~1 kHz => RLR = timeout en ms. */
+static void watchdog_start(void)
+{
+  DBGMCU->APB1FZR1 |= DBGMCU_APB1FZR1_DBG_IWDG_STOP;   /* gele le watchdog en debug */
+
+  IWDG->KR  = 0x0000CCCCU;          /* demarrage */
+  IWDG->KR  = 0x00005555U;          /* acces aux registres */
+  IWDG->PR  = 3U;                   /* /32 */
+  IWDG->RLR = IWDG_TIMEOUT_MS;
+
+  uint32_t guard = 1000000U;
+  while ((IWDG->SR != 0U) && (--guard != 0U)) { }
+
+  IWDG->KR  = 0x0000AAAAU;          /* premier rechargement */
+}
+
+static inline void watchdog_feed(void)
+{
+  IWDG->KR = 0x0000AAAAU;
+}
+
+/* ============================ Armement / arret =========================== */
+static void flight_disarm(DisarmReason_t reason)
+{
+  Flight_State = FLIGHT_DISARMED;
+  Flight_LastDisarmReason = reason;
+  motors_write_all(MOTOR_STOP_US);
+  pids_reset();
+  s_arm_hold = 0U;
+  s_disarm_hold = 0U;
+  s_idle_cycles = 0U;
+  s_spin_inhibit = true;
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+}
+
+static void flight_arm(void)
+{
+  pids_reset();
+  s_arm_hold = 0U;
+  s_disarm_hold = 0U;
+  s_idle_cycles = 0U;
+  s_spin_inhibit = true;     /* pas de rotation tant que throttle bas + yaw recentre */
+  Flight_LastDisarmReason = DISARM_NONE;
+  Flight_State = FLIGHT_ARMED;
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);   /* LD2 = arme */
+}
+
+/* ================================= Taches ================================ */
+/* Tache unique et prioritaire : lecture gyro -> filtre -> PID -> mixage -> PWM.
+ * Tout est sequentiel et periodique (vTaskDelayUntil), donc le PID ne lit
+ * jamais une mesure perimee ni deux fois la meme, et un seul ecrivain
+ * touche aux sorties moteurs. */
+static void flight_control_task(void *params)
+{
+  (void)params;
+
+  float gyro_offset[3] = {0.0f, 0.0f, 0.0f};
+  float gyro_f[3] = {0.0f, 0.0f, 0.0f}; // Filtered gyro values
+  bool  filter_init = false;
+  bool  throttle_low = true;
+
+  motors_write_all(MOTOR_STOP_US);
+  pids_reset();
+
+  /* Phase 1 : calibration. Moteurs coupés, désarméq, on recommence tant
+    que le drone bouge ou que le gyro ne repond pas (LD2 clignote). 
+    tant que gyro_calibrate() renvoie false, elle inverse LD2, attend 100 ms (10 × 10 ms) puis recommence */
+  while (!gyro_calibrate(gyro_offset))
+  {
+    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    for (uint8_t k = 0; k < 10U; k++)
+    {
+      vTaskDelay(pdMS_TO_TICKS(10));
+      flight_heartbeat();
+    }
+  }
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+
+  /* Phase 2 : boucle de vol */
+  TickType_t gyro_last_valid = xTaskGetTickCount();
+  uint32_t last_cycle = DWT->CYCCNT;
+  TickType_t wake = xTaskGetTickCount();
+
+  for (;;)
+  {
+    vTaskDelayUntil(&wake, pdMS_TO_TICKS(FLIGHT_PERIOD_MS));
+    flight_heartbeat();
+
+    /* --- dt reel --- */
+    const uint32_t cyc = DWT->CYCCNT;
+    float dt = (float)(cyc - last_cycle) / (float)SystemCoreClock;
+    last_cycle = cyc;
+    dt = constrain_float(dt, FLIGHT_DT_MIN_S, FLIGHT_DT_MAX_S);
+
+    /* --- 1. Gyro : lecture, calibration, filtre --- */
+    float g[3];
+    const bool gyro_fresh = gyro_read(g);
+    const TickType_t now = xTaskGetTickCount();
+
+    if (gyro_fresh)
+    {
+      gyro_last_valid = now;
+      const float a = lpf_alpha(GYRO_LPF_HZ, dt);
+      for (uint8_t i = 0; i < 3U; i++)
       {
-        /*
-          * Échec ponctuel :
-          * ne pas recalculer le PID sur des mesures périmées.
-          * Les dernières corrections restent inchangées.
-          */
-
-        vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(4));
-        continue;
+        g[i] -= gyro_offset[i];
+        if (!filter_init) gyro_f[i] = g[i];
+        else gyro_f[i] += a * (g[i] - gyro_f[i]);
       }
-      /* Consignes de vitesse angulaire */
-      DesiredRateRoll  = 0.15f * (ReceiverValue[0] - 1500.0f);
-      DesiredRatePitch = 0.15f * (ReceiverValue[1] - 1500.0f);
-      DesiredRateYaw   = 0.15f * (ReceiverValue[3] - 1500.0f);
+      filter_init = true;
+    }
+    else
+    {
+      Flight_GyroErrors++;
+    }
 
-      /* Commande collective */
-      InputThrottle = ReceiverValue[2];
-      if (InputThrottle < 1050.0f)
+    /* Age mesuré a chaque tour : ne dépend d'aucun flag que la tache IMU
+      pourrait laisser à 1 en cas de blocage. */
+    const bool gyro_ok = filter_init && ((TickType_t)(now - gyro_last_valid) < pdMS_TO_TICKS(GYRO_TIMEOUT_MS));
+
+    /* --- 2. Radio --- */
+    RcFrame_t rc;
+    const bool rc_ok = rc_read(&rc);
+
+    if (rc_ok)
+    {
+      if (rc.throttle < THROTTLE_LOW_US)  throttle_low = true;
+      else if (rc.throttle > THROTTLE_HIGH_US) throttle_low = false;
+    }
+    else
+    {
+      throttle_low = true;
+    }
+
+    /* --- 3. Failsafes : perte gyro ou radio => coupure + désarmement --- */
+    if (Flight_State == FLIGHT_ARMED)
+    {
+      if (!gyro_ok) flight_disarm(DISARM_GYRO_LOST);
+      else if (!rc_ok)   flight_disarm(DISARM_RC_LOST);
+    }
+
+    /* --- 4. Desarme : moteurs coupés, attente du geste d'armement --- */
+    if (Flight_State == FLIGHT_DISARMED)
+    {
+      motors_write_all(MOTOR_STOP_US);
+
+      const bool sticks_centered = rc_ok &&
+          (fabsf(rc.roll - RC_CENTER_US) < ARM_STICK_CENTER_TOL_US) &&
+          (fabsf(rc.pitch - RC_CENTER_US) < ARM_STICK_CENTER_TOL_US);
+
+      /* Conditions : radio OK, gyro OK, throttle bas, sticks centres,
+       * yaw a fond a droite pendant 1 s. */
+      if (rc_ok && gyro_ok && gyro_fresh && throttle_low && sticks_centered && (rc.yaw > ARM_YAW_HIGH_US))
       {
-        /* Réinitialiser les états internes des PID */
-        reset_pid();
-        /* Annuler les corrections d'attitude */
-        InputRoll  = 0.0f;
-        InputPitch = 0.0f;
-        InputYaw   = 0.0f;
+        if (++s_arm_hold >= ARM_HOLD_CYCLES) flight_arm();
       }
       else
       {
-        /* Calcul des erreurs */
-        ErrorRateRoll  = DesiredRateRoll  - RateRoll;
-        ErrorRatePitch = DesiredRatePitch - RatePitch;
-        ErrorRateYaw   = DesiredRateYaw   - RateYaw;
-
-        /* PID Roll */
-        pid_equation(ErrorRateRoll, PRateRoll, IRateRoll, DRateRoll, PrevErrorRateRoll, PrevItermRateRoll);
-        InputRoll = PIDReturn[0];
-        PrevErrorRateRoll = PIDReturn[1];
-        PrevItermRateRoll = PIDReturn[2];
-
-        /* PID Pitch */
-        pid_equation(ErrorRatePitch, PRatePitch, IRatePitch, DRatePitch, PrevErrorRatePitch, PrevItermRatePitch);
-        InputPitch = PIDReturn[0];
-        PrevErrorRatePitch = PIDReturn[1];
-        PrevItermRatePitch = PIDReturn[2];
-
-        /* PID Yaw */
-        pid_equation(ErrorRateYaw, PRateYaw, IRateYaw, DRateYaw, PrevErrorRateYaw, PrevItermRateYaw);
-        InputYaw = PIDReturn[0];
-        PrevErrorRateYaw = PIDReturn[1];
-        PrevItermRateYaw = PIDReturn[2];
+        s_arm_hold = 0U;
       }
-      /* Période nominale : 4 ms, soit 250 Hz */
-      vTaskDelayUntil(&last_wake_time, pdMS_TO_TICKS(4));
+      continue;
     }
-}
 
-void motors_command_task(void *params){
-  (void)params;
+    /* --- 5. Arme --- */
+    /* Mesure ratée mais encore dans la tolérance : on ne recalcule pas le PID
+      sur du perimé, les dernières commandes restent en place. */
+    if (!gyro_fresh) continue;
 
-  float motor[4];
-  for(;;){
-    /* Sécurité : throttle minimal */
-    if (!RC_IsValid() || ReceiverValue[2] < 1050)
+    /* Geste de désarmement : throttle bas + yaw a fond a gauche pendant 1 s */
+    if (throttle_low && (rc.yaw < DISARM_YAW_LOW_US))
     {
-      InputThrottle = 1000.0f;
-      Motor_front_left_Input= 1000.0f;
-      Motor_front_right_Input= 1000.0f;
-      Motor_rear_right_Input = 1000.0f;
-      Motor_rear_left_Input= 1000.0f;
+      if (++s_disarm_hold >= DISARM_HOLD_CYCLES)
+      {
+        flight_disarm(DISARM_STICKS);
+        continue;
+      }
     }
     else
     {
-      /* Mixage et gestion de la saturation */
-      mix_and_limit_motors(InputThrottle, InputRoll, InputPitch, InputYaw, motor);
-
-      Motor_front_left_Input = motor[0];
-      Motor_front_right_Input = motor[1];
-      Motor_rear_right_Input = motor[2];
-      Motor_rear_left_Input = motor[3];
+      s_disarm_hold = 0U;
     }
 
-    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, Motor_front_left_Input);
-    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, Motor_front_right_Input);
-    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, Motor_rear_right_Input);
-    __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_2, Motor_rear_left_Input);
-
-    vTaskDelay(pdMS_TO_TICKS(2));
-  }
-}
-
-void MPU9250_task(void *params){
-  (void)params;
-  for(;;){
-    I2C_Status status = gyro_signals();
-    if (status == I2C_OK)
+    /* Désarmement automatique si on reste au ralenti trop longtemps */
+    if (throttle_low)
     {
-      RateRoll -= RateCalibrationRoll;
-      RatePitch -= RateCalibrationPitch;
-      RateYaw -= RateCalibrationYaw;
-
-      MPU9250_LastValidTick = xTaskGetTickCount();
-      MPU9250_ConsecutiveErrors = 0;
-      MPU9250_DataValid = 1;
+      if (++s_idle_cycles >= IDLE_DISARM_CYCLES)
+      {
+        flight_disarm(DISARM_IDLE_TIMEOUT);
+        continue;
+      }
     }
     else
     {
-      MPU9250_DataValid = 0;
-      MPU9250_ConsecutiveErrors++;
+      s_idle_cycles = 0U;
     }
 
-    vTaskDelay(pdMS_TO_TICKS(4));
+    /* Après armement : pas de rotation tant que throttle bas et yaw recentré */
+    if (s_spin_inhibit && throttle_low && (fabsf(rc.yaw - RC_CENTER_US) < SPIN_YAW_CENTER_TOL_US))
+    {
+      s_spin_inhibit = false;
+    }
+
+    /* Throttle bas ou rotation interdite : moteurs à l'arrêt, PID remis à zéro */
+    if (throttle_low || s_spin_inhibit)
+    {
+      pids_reset();
+      motors_write_all(MOTOR_STOP_US);
+      continue;
+    }
+
+    /* --- 6. Consignes, PID, mixage, sortie --- */
+    const float sp_roll = RC_RATE_SCALE * rc_stick(rc.roll);
+    const float sp_pitch = RC_RATE_SCALE * rc_stick(rc.pitch);
+    const float sp_yaw = RC_RATE_SCALE * rc_stick(rc.yaw);
+
+    const float d_alpha = lpf_alpha(DTERM_LPF_HZ, dt);
+    const float out_roll  = pid_update(&s_pid[AXIS_ROLL], sp_roll, gyro_f[AXIS_ROLL], dt, d_alpha);
+    const float out_pitch = pid_update(&s_pid[AXIS_PITCH], sp_pitch, gyro_f[AXIS_PITCH], dt, d_alpha);
+    const float out_yaw = pid_update(&s_pid[AXIS_YAW], sp_yaw, gyro_f[AXIS_YAW], dt, d_alpha);
+
+    float m[4];
+    mix_motors(rc.throttle, out_roll, out_pitch, out_yaw, m);
+    motors_write(m);
   }
 }
+
+/* Surveillance : alimente l'IWDG tant que la tache de vol avance.
+ * Si elle se bloque (I2C, boucle infinie...), on coupe les moteurs et on
+ * laisse le watchdog reinitialiser le MCU. */
+static void supervisor_task(void *params)
+{
+  (void)params;
+
+  uint32_t last_heartbeat = Flight_Heartbeat;
+  uint32_t stalled = 0U;
+  TickType_t wake = xTaskGetTickCount();
+
+  for (;;)
+  {
+    vTaskDelayUntil(&wake, pdMS_TO_TICKS(SUPERVISOR_PERIOD_MS));
+
+    const uint32_t hb = Flight_Heartbeat;
+    if (hb != last_heartbeat)
+    {
+      last_heartbeat = hb;
+      stalled = 0U;
+    }
+    else if (stalled < SUPERVISOR_STALL_LIMIT)
+    {
+      stalled++;
+    }
+
+    if (stalled >= SUPERVISOR_STALL_LIMIT)
+    {
+      Motors_EmergencyStop();   /* et on ne nourrit plus l'IWDG => reset */
+    }
+    else
+    {
+      watchdog_feed();
+    }
+  }
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -414,47 +842,41 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-  MPU9250_Init();
 
-  HAL_NVIC_SetPriority(TIM1_CC_IRQn, 5, 0);
-  HAL_NVIC_SetPriority(TIM2_IRQn,    5, 0);
-  HAL_NVIC_SetPriority(TIM3_IRQn,    5, 0);
-  HAL_NVIC_SetPriority(TIM4_IRQn,    5, 0);
-
-  HAL_TIM_IC_Start_IT(&htim1, TIM_CHANNEL_1);
-  HAL_TIM_IC_Start_IT(&htim2, TIM_CHANNEL_1);
-  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
-  HAL_TIM_IC_Start_IT(&htim4, TIM_CHANNEL_1);
-
+  /* Moteurs : PWM 400 Hz, signal d'arret (1000 us) des le depart pour que
+   * les ESC s'initialisent proprement. */
+  motors_pwm_config();
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
-  my_ina219.ina219_i2c = &hi2c2;
-  my_ina219.Address = 0x40;
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
 
-  // Tasks and semaphores creation
+  dwt_init();
 
+  /* Si l'init du MPU echoue, la calibration echouera aussi : le drone reste désarmé (LD2 clignote). */
+  (void)MPU9250_Init();
+
+  /* Radio : capture d'impulsions sur le canal 1 de TIM1..TIM4 */
+  rc_start();
+
+  /* Taches */
   BaseType_t status;
 
-  status = xTaskCreate(receiver_rx_read_task,"receiver_rx_read_task", 256, NULL, 3, &receiver_rx_read_task_handle);
-  if(status != pdPASS) {while (1);}
+  status = xTaskCreate(flight_control_task, "flight", FLIGHT_TASK_STACK_WORDS, NULL,
+                       FLIGHT_TASK_PRIORITY, &flight_control_task_handle);
+  if (status != pdPASS) { Error_Handler(); }
 
-  status = xTaskCreate(battery_monitoring_task,"battery_monitoring_task", 256, NULL, 3, &battery_monitoring_task_handle);
-  if(status != pdPASS) {while (1);}
+  status = xTaskCreate(supervisor_task, "supervisor", SUPERVISOR_TASK_STACK_WORDS, NULL,
+                       SUPERVISOR_TASK_PRIORITY, &supervisor_task_handle);
+  if (status != pdPASS) { Error_Handler(); }
 
-  status = xTaskCreate(PID_stabilization_task,"PID_stabilization_task", 256, NULL, 3, &PID_stabilization_task_handle);
-  if(status != pdPASS) {while (1);}
+  watchdog_start();
 
-  status = xTaskCreate(motors_command_task,"motors_command_task", 256, NULL, 3, &motors_command_task_handle);
-  if(status != pdPASS) {while (1);}
+  /* Demarrage de l'ordonnanceur : ne retourne jamais */
+  vTaskStartScheduler();
 
-  status = xTaskCreate(MPU9250_task,"MPU9250_task", 256, NULL, 3, &MPU9250_task_handle);
-  if(status != pdPASS) {while (1);}
-  {
-    /* code */
-  }
-  
+  /* Si on arrive ici, pas assez de memoire pour l'IDLE task / timers */
+  Error_Handler();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -966,85 +1388,36 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-#define RC_TIMEOUT_MS 100U
-static volatile TickType_t RC_LastUpdateTick[4] = {0};
 
-static uint32_t t_rising[4] = {0};
-static uint32_t t_falling[4] = {0};
-static uint8_t edge[4] = {0};
-
-void test(uint32_t *t_rising, uint32_t *t_falling, uint8_t *edge, volatile float* pulse,TIM_HandleTypeDef *htim, uint32_t channel){
-	uint32_t captured;
-
-  if(*edge == 0)
-	{
-		*t_rising = HAL_TIM_ReadCapturedValue(htim, channel);
-
-		__HAL_TIM_SET_CAPTUREPOLARITY(htim, channel, TIM_INPUTCHANNELPOLARITY_FALLING);
-
-		*edge = 1;
-	}
-	else
-  {
-    /* Front descendant : fin de l'impulsion */
-    *t_falling = HAL_TIM_ReadCapturedValue(htim, channel);
-
-    uint32_t arr = __HAL_TIM_GET_AUTORELOAD(htim);
-
-    /* Calcul de la largeur en ticks, avec gestion du débordement */
-    if (*t_falling >= *t_rising)
-    {
-      captured = *t_falling - *t_rising;
-    }
-    else
-    {
-      captured = (arr + 1U - *t_rising) + *t_falling;
-    }
-
-    /*
-      1 MHz counter means 1 tick = 1 us.
-    */
-    *pulse = (float)captured;
-    RC_LastUpdateTick[htim->Instance == TIM1 ? 0 : htim->Instance == TIM2 ? 1 : htim->Instance == TIM3 ? 2 : 3] = xTaskGetTickCountFromISR();
-
-    /* Revenir au front montant pour la prochaine impulsion */
-    __HAL_TIM_SET_CAPTUREPOLARITY(htim, channel, TIM_INPUTCHANNELPOLARITY_RISING);
-
-    *edge = 0U;
-  }
-}
-
-static uint8_t RC_IsValid(void)
-{
-  TickType_t now = xTaskGetTickCount();
-  TickType_t timeout = pdMS_TO_TICKS(RC_TIMEOUT_MS);
-
-  for (uint8_t i = 0; i < 4; i++)
-  {
-      if ((TickType_t)(now - RC_LastUpdateTick[i]) >= timeout) return 0;
-  }
-  return 1;
-}
-
+/* Callback de capture d'impulsions (canal 1 de TIM1..TIM4) */
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim1)
-    {
-    	test(&t_rising[0],&t_falling[0],&edge[0],&pulse_us[0],htim,TIM_CHANNEL_1);
-    }
-    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim2)
-    {
-       	test(&t_rising[1],&t_falling[1],&edge[1],&pulse_us[1],htim,TIM_CHANNEL_1);
-    }
-    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim3)
-    {
-    	test(&t_rising[2],&t_falling[2],&edge[2],&pulse_us[2],htim,TIM_CHANNEL_1);
-    }
-    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 && htim==&htim4)
-    {
-    	test(&t_rising[3],&t_falling[3],&edge[3],&pulse_us[3],htim,TIM_CHANNEL_1);
-    }
+  if (htim->Channel != HAL_TIM_ACTIVE_CHANNEL_1) return;
+
+  const int8_t idx = rc_index_from_handle(htim);
+  if (idx >= 0) rc_capture_isr((uint8_t)idx, htim);
 }
+
+#if (configCHECK_FOR_STACK_OVERFLOW > 0)
+/* Debordement de pile : on coupe les moteurs, le watchdog fera le reste */
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+{
+  (void)xTask;
+  (void)pcTaskName;
+  Motors_EmergencyStop();
+  __disable_irq();
+  for (;;) { }
+}
+#endif
+
+#if (configUSE_MALLOC_FAILED_HOOK == 1)
+void vApplicationMallocFailedHook(void)
+{
+  Motors_EmergencyStop();
+  __disable_irq();
+  for (;;) { }
+}
+#endif
 
 /* USER CODE END 4 */
 
@@ -1077,7 +1450,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+  /* Moteurs a l'arret AVANT de figer le MCU (les timers continuent de
+   * generer le dernier compare sinon). Si l'IWDG tourne, il fera un reset. */
+  Motors_EmergencyStop();
   __disable_irq();
   while (1)
   {

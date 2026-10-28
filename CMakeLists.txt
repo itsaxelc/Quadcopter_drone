@@ -24,6 +24,9 @@ project(${CMAKE_PROJECT_NAME})
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
+# Mask warnings by uncommenting this line
+# add_compile_options(-w)
+
 # ============================================================
 # Executable
 # ============================================================
@@ -158,8 +161,6 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE
     -Wall
     -Wextra
 )
-
-add_compile_options(-w)
 
 # ============================================================
 # Libraries
