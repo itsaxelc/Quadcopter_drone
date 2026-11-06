@@ -11,193 +11,147 @@
   <img src="https://img.shields.io/badge/RTOS-FreeRTOS-00979D?style=flat-square" alt="FreeRTOS">
 </p>
 
-## Overview
+# Quadcopter Drone --- STM32 Bare-Metal Drivers and Flight Control
 
-This project focuses on the development of an embedded flight-control system for a quadcopter UAV, based on the **STM32L476 microcontroller**.
+Embedded flight-control software for a quadcopter built around an STM32
+microcontroller. The project combines low-level peripheral drivers, an
+MPU9250 inertial sensor, and a real-time flight-control application.
 
-The objective is to develop and integrate the low-level software required for a multirotor flight controller, combining embedded programming, peripheral interfacing, real-time execution, and flight-control algorithms.
+> **Project status:** Hardware behavior and flight readiness must be
+> validated on the target board. Do not arm motors until sensor
+> initialization, calibration, motor outputs, failsafe behavior, and
+> control-loop timing have been tested safely.
 
-The project uses C for firmware development, CMake for build configuration, and FreeRTOS as the real-time operating system kernel.
+## Features
 
-The software is organized to support modular development, hardware integration, and the progressive implementation and validation of flight-control functions.
+-   Register-level STM32 peripheral access for selected custom drivers.
+-   A **single reusable I2C driver** for supported I2C peripherals,
+    rather than separate `i2c1.c`, `i2c2.c`, and similar
+    implementations.
+-   Per-bus configuration through an `I2C_Handle`.
+-   MPU9250 sensor driver for inertial measurements.
+-   Real-time flight-control tasks and PID-based control.
+-   PWM motor outputs and radio-control input capture.
+-   CMake-based build workflow using an ARM embedded toolchain.
 
-## Key Features
+## Hardware and software
 
-- **Embedded flight control:** Firmware development for an STM32-based quadcopter.
-- **Real-time software:** FreeRTOS kernel integration.
-- **Modular architecture:** Separation of application code, hardware drivers, and operating-system components.
-- **Build system:** CMake-based project configuration.
-- **ARM Cortex-M development:** Firmware targeting the STM32L476 microcontroller.
-- **Hardware interfacing:** Integration of microcontroller peripherals through the STM32 driver ecosystem.
-- **Extensible control architecture:** Foundation for sensor acquisition, attitude estimation, and closed-loop stabilization.
+The exact peripheral instances, pin assignments, MCU target, and build
+options are defined by the project source and configuration files. Check
+those files before adapting the project to another board.
 
-*The implementation status of individual flight-control functions should be confirmed against the source code and hardware tests.*
+  -----------------------------------------------------------------------
+  Component                           Role
+  ----------------------------------- -----------------------------------
+  STM32 MCU                           Runs the embedded application and
+                                      flight-control logic
 
-## System Architecture
+  MPU9250                             Gyroscope and accelerometer
+                                      measurements; includes an AK8963
+                                      magnetometer
 
-The firmware is organized around three principal software layers.
+  I2C                                 Communication with the sensor using
+                                      a shared driver API
 
-```mermaid
-flowchart TD
-    A[Flight Control Application] --> B[Control and Processing Modules]
-    B --> C[Hardware Drivers]
-    C --> D[STM32L476 Peripherals]
-    E[FreeRTOS Kernel] --> A
-    E --> B
-    D --> F[Sensors and Actuators]
+  PWM outputs                         Motor command generation
+
+  Radio input                         Pilot command acquisition
+
+  FreeRTOS / real-time tasks          Scheduling of application and
+                                      control activities, where enabled
+  -----------------------------------------------------------------------
+
+## I2C driver architecture
+
+The project uses one generic I2C driver instead of maintaining an
+independent implementation for each I2C peripheral.
+
+A typical application setup is:
+
+``` c
+static I2C_Handle hi2c2;
+
+if (I2C_Init(&hi2c2,
+             I2C_INSTANCE_2,
+             I2C2_PINS_PB10_PB11) != I2C_OK)
+{
+    Error_Handler();
+}
 ```
 
-### Application Layer
+Sensor functions receive the configured handle, allowing the sensor
+driver to use the selected bus without hard-coding its peripheral
+registers:
 
-Contains the application logic responsible for coordinating the flight-control functions.
-
-### Hardware Driver Layer
-
-Provides the interfaces required to interact with the STM32 peripherals and connected hardware.
-
-### Real-Time Operating System
-
-FreeRTOS provides task-management and synchronization facilities for applications that require concurrent execution.
-
-The final task structure, priorities, timing constraints, and synchronization mechanisms depend on the implemented firmware configuration.
-
-## Hardware Platform
-
-| Component | Description |
-|---|---|
-| Microcontroller | STM32L476 |
-| Processor architecture | Arm Cortex-M4 |
-| Firmware language | C |
-| Build system | CMake |
-| Real-time kernel | FreeRTOS Kernel V11.2.0 |
-| Development environment | VS Code / CMake-compatible toolchain |
-| Hardware development board | STM32L476-based board |
-
-The exact sensor models, electronic speed controllers (ESCs), motors, communication interfaces, and power system should be documented once the final hardware configuration is confirmed.
-
-## Repository Structure
-
-```text
-Quadcopter_drone/
-├── Core/                       # Core application and MCU support files
-├── Drivers/                    # Hardware drivers and supporting libraries
-├── FreeRTOS-KernelV11.2.0/     # FreeRTOS kernel source
-├── cmake/                      # CMake configuration files
-├── build/Debug/                # Debug build output
-├── CMakeLists.txt              # Main build configuration
-├── CMakePresets.json            # Build presets
-├── STM32L476RGTx_FLASH.ld      # Flash memory linker script
-├── startup_stm32l476xx.s       # Startup assembly
-└── README.md                    # Project documentation
+``` c
+MPU9250_Init(&hi2c2);
 ```
 
-## Development Environment
+The exact function signatures and supported instance/pin combinations
+are defined in `i2c.h`. Use only pin mappings supported by the target
+MCU and package.
 
-The following tools are suitable for working with this project:
+## MPU9250 integration
 
-- Visual Studio Code
-- CMake
-- Ninja or another compatible build generator
-- Arm GNU Toolchain (`arm-none-eabi-gcc`)
-- CMake Tools extension for VS Code
-- STM32CubeProgrammer or a compatible debugging and flashing tool
-- ST-Link debugger/programmer
+The MPU9250 driver provides access to inertial sensor data through the
+generic I2C interface. The device also contains an AK8963 magnetometer,
+whose operation depends on the MPU9250 auxiliary-I2C/bypass
+configuration and the implementation in the sensor driver.
 
-Ensure the installed toolchain matches the configuration specified in the project.
+Before relying on magnetometer readings, verify that startup explicitly
+configures the required access mode and initializes the AK8963. Also
+check and handle the return value of sensor initialization; do not
+assume the sensor is ready just because the I2C peripheral was
+initialized.
 
-## Build Instructions
+## Build
 
-### 1. Clone the repository
+The project uses CMake and an ARM embedded GCC toolchain. A typical
+build flow, from the repository root, is:
 
-```bash
-git clone https://github.com/itsaxelc/Quadcopter_drone.git
-cd Quadcopter_drone
+``` bash
+cmake -S . -B build -G Ninja
+cmake --build build
 ```
 
-### 2. Configure the project
+These commands assume that CMake, Ninja, and the appropriate ARM
+embedded toolchain are installed and that the repository's CMake
+configuration supports this generator. Follow the project's actual
+toolchain/configuration files if your setup differs.
 
-From the project root, configure a Debug build:
+## Repository layout
 
-```bash
-cmake --preset Debug
-```
+The source tree may evolve. The key files to locate are:
 
-If the preset requires additional tools or environment variables, configure those according to `CMakePresets.json`.
+-   `main.c` --- application startup and peripheral initialization.
+-   `i2c.h` / `i2c.c` --- generic I2C driver and public API.
+-   `mpu9250.h` / `mpu9250.c` --- MPU9250 sensor driver.
+-   The RTOS/task and flight-control source files --- scheduling, sensor
+    processing, control logic, and motor commands.
+-   `CMakeLists.txt` and toolchain configuration --- build targets and
+    compiler settings.
 
-### 3. Compile the firmware
+## Safety and validation checklist
 
-```bash
-cmake --build --preset Debug
-```
+Before powering motors or attempting a flight:
 
-The output location depends on the active CMake preset and generator.
+1.  Confirm the MCU clock configuration and the I2C timing register
+    value for the selected I2C kernel clock and target bus speed.
+2.  Check the I2C bus with the sensor connected and verify that
+    initialization and register reads succeed.
+3.  Verify accelerometer and gyroscope axes, units, offsets, and
+    calibration behavior.
+4.  If using the magnetometer, verify AK8963 initialization, data-ready
+    handling, and measurement validity.
+5.  Test receiver-loss and sensor-failure behavior.
+6.  Confirm motor order, rotation direction, PWM limits, and disarmed
+    output behavior with propellers removed.
+7.  Measure control-loop timing and check for missed deadlines before
+    any flight test.
 
-If these preset names are not available in your local configuration, inspect `CMakePresets.json` and use the corresponding configure and build preset names.
+## Contributing
 
-## Flashing and Debugging
-
-To deploy the firmware to the target board:
-
-1. Connect a compatible ST-Link debugger/programmer to the board's SWD interface.
-2. Verify the target voltage and MCU detection.
-3. Build the firmware successfully.
-4. Flash the generated firmware using the configured programming tool.
-5. Start a debug session and verify initialization and peripheral operation.
-
-The linker script `STM32L476RGTx_FLASH.ld` defines the target memory layout, while `startup_stm32l476xx.s` provides the startup code.
-
-Successful compilation and flashing do not establish flight readiness.
-
-## Flight-Control Development Roadmap
-
-The following areas are relevant to the progressive development and validation of the flight controller.
-
-- [ ] Verify MCU initialization and peripheral configuration.
-- [ ] Validate sensor communication and measurement acquisition.
-- [ ] Implement and validate attitude estimation.
-- [ ] Develop and tune attitude-stabilization control loops.
-- [ ] Implement motor command generation and ESC interfacing.
-- [ ] Define and verify real-time task periods and priorities.
-- [ ] Add sensor-fault handling and communication-loss failsafes.
-- [ ] Measure control-loop execution time and timing jitter.
-- [ ] Validate control logic through simulation and hardware-in-the-loop testing.
-- [ ] Perform controlled ground tests before any flight tests.
-
-These items represent a development checklist, not a claim that all functions are already implemented.
-
-## Safety Considerations
-
-A quadcopter flight controller directly influences motor commands and aircraft stability.
-
-Before operating the system:
-
-- Remove propellers during initial firmware and actuator tests.
-- Verify sensor orientation, motor order, and motor rotation direction.
-- Test emergency-stop and communication-loss behaviour.
-- Check battery voltage, power distribution, and electrical connections.
-- Validate control-loop timing and actuator limits.
-- Perform initial powered tests in a controlled environment.
-
-Do not attempt flight until the firmware, hardware integration, and failsafe mechanisms have been appropriately validated.
-
-## Author
-
-**Cédric Compaore**
-
-Aeronautical Engineering and Space Technologies
-
-Technical interests:
-- Embedded Systems and Real-Time Software
-- Avionics and Flight-Control Systems
-- UAV Guidance, Navigation, and Control
-- STM32 Firmware Development
-
-GitHub: [@itsaxelc](https://github.com/itsaxelc)
-
-Repository: [Quadcopter_drone](https://github.com/itsaxelc/Quadcopter_drone)
-
----
-
-<p align="center">
-  <i>Developing modular embedded software for reliable UAV flight-control systems.</i>
-</p>
+Keep hardware-specific register details inside the relevant peripheral
+driver where practical. Application and sensor code should use the
+public driver interfaces rather than duplicating register-level I2C
+transactions.
