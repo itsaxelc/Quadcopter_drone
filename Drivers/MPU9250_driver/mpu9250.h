@@ -1,7 +1,7 @@
 #ifndef MPU9250_H
 #define MPU9250_H
 
-#include "i2c1.h"
+#include "i2c.h"
 #include <stdint.h>
 
 #define MPU9250_I2C_ADDRESS                     0x68U
@@ -139,9 +139,9 @@ typedef struct
     @return I2C_OK if the I2C transaction succeeds, an error status otherwise.
     @note The expected WHO_AM_I value for an MPU9250 is 0x71.
 */
-I2C_Status MPU9250_ReadWhoAmI(uint8_t *id);
+I2C_Status MPU9250_ReadWhoAmI(I2C_Handle *hi2c, uint8_t *id);
 
-I2C_Status MPU9250_Init(void);
+I2C_Status MPU9250_Init(I2C_Handle *hi2c);
 
 /**
     @brief Converts raw MPU9250 measurements into physical units.
@@ -159,13 +159,13 @@ I2C_Status MPU9250_Init(void);
     @note The conversion factors must match the full-scale ranges configured in MPU9250_Init().
     @warning If either pointer is NULL, the function returns without performing any conversion.
  */
-I2C_Status MPU9250_GetData(MPU9250_Data *data);
+I2C_Status MPU9250_GetData(I2C_Handle *hi2c, MPU9250_Data *data);
 
-I2C_Status MPU9250_GetGyroData(float *gyroX, float *gyroY, float *gyroZ);
-I2C_Status MPU9250_GetAccelData(float *accelX, float *accelY, float *accelZ);
-I2C_Status MPU9250_GetMagData(float *magX, float *magY, float *magZ);
+I2C_Status MPU9250_GetGyroData(I2C_Handle *hi2c, float *gyroX, float *gyroY, float *gyroZ);
+I2C_Status MPU9250_GetAccelData(I2C_Handle *hi2c, float *accelX, float *accelY, float *accelZ);
+I2C_Status MPU9250_GetMagData(I2C_Handle *hi2c, float *magX, float *magY, float *magZ);
 
-I2C_Status MPU9250_EnableBypass(void);
+I2C_Status MPU9250_EnableBypass(I2C_Handle *hi2c);
 
 #endif
 

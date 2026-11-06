@@ -28,6 +28,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "mpu9250.h"
+#include "i2c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -161,15 +162,14 @@ enum { RC_CH_THROTTLE = 0, RC_CH_ROLL = 1, RC_CH_PITCH = 2, RC_CH_YAW = 3 };
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-I2C_HandleTypeDef hi2c2;
-I2C_HandleTypeDef hi2c3;
-
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
 UART_HandleTypeDef huart2;
+
+static I2C_Handle hi2c2;
 
 /* USER CODE BEGIN PV */
 static TaskHandle_t flight_control_task_handle;
@@ -205,8 +205,6 @@ static uint8_t  rc_edge[4]     = {0};
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-static void MX_I2C2_Init(void);
-static void MX_I2C3_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
@@ -432,11 +430,11 @@ static float rc_stick(float pulse_us)
 
 /* ================================= Gyro ================================== */
 /* Lecture dans des variables locales : rien n'est publie en cas d'erreur */
-static bool gyro_read(float g[3])
+static bool gyro_read(I2C_Handle *hi2c, float g[3])
 {
   float x, y, z;
 
-  if (MPU9250_GetGyroData(&x, &y, &z) != I2C_OK) return false;
+  if (MPU9250_GetGyroData(hi2c, &x, &y, &z) != I2C_OK) return false;
   if (!isfinite(x) || !isfinite(y) || !isfinite(z)) return false;
 
   g[AXIS_ROLL] = GYRO_SIGN_ROLL*x;
@@ -448,7 +446,7 @@ static bool gyro_read(float g[3])
 /* Moyenne sur GYRO_CAL_SAMPLES echantillons, drone immobile.
  * Echoue si le gyro bouge (ecart-type trop grand), si le biais est
  * improbable ou si trop de lectures echouent. */
-static bool gyro_calibrate(float offset[3])
+static bool gyro_calibrate(I2C_Handle *hi2c, float offset[3])
 {
   float sum[3] = {0.0f, 0.0f, 0.0f};
   float sum_sq[3] = {0.0f, 0.0f, 0.0f};
@@ -460,7 +458,7 @@ static bool gyro_calibrate(float offset[3])
     flight_heartbeat();
 
     float g[3];
-    if (gyro_read(g))
+    if (gyro_read(hi2c, g))
     {
       for (uint8_t i = 0; i < 3U; i++)
       {
@@ -493,11 +491,11 @@ static bool gyro_calibrate(float offset[3])
 /* ================================== PID ================================== */
 static void pid_reset(PidAxis_t *p)
 {
-  p->integral   = 0.0f;
+  p->integral = 0.0f;
   p->prev_error = 0.0f;
   p->prev_meas  = 0.0f;
-  p->d_filt     = 0.0f;
-  p->primed     = false;
+  p->d_filt = 0.0f;
+  p->primed = false;
 }
 
 static void pids_reset(void)
@@ -523,7 +521,7 @@ static float pid_update(PidAxis_t *p, float setpoint, float meas, float dt, floa
 
   /* Trapezoidal Integration : I[k] = I[k-1]+ K_i*((e[k]+e[k-1])/2)*T_s */
   p->integral += p->ki * 0.5f * (error + p->prev_error) * dt;
-  p->integral  = constrain_float(p->integral, -PID_I_LIMIT, PID_I_LIMIT);
+  p->integral = constrain_float(p->integral, -PID_I_LIMIT, PID_I_LIMIT);
 
   /* d(erreur)/dt = d(consigne - mesure)/dt = d(consigne)/dt - d(mesure)/dt 
   On ignore la consigne et on dérive seulement l'erreur de mesure pour éviter le derivative kick 
@@ -598,8 +596,8 @@ static void flight_control_task(void *params)
 
   float gyro_offset[3] = {0.0f, 0.0f, 0.0f};
   float gyro_f[3] = {0.0f, 0.0f, 0.0f}; // Filtered gyro values
-  bool  filter_init = false;
-  bool  throttle_low = true;
+  bool filter_init = false;
+  bool throttle_low = true;
 
   motors_write_all(MOTOR_STOP_US);
   pids_reset();
@@ -607,7 +605,7 @@ static void flight_control_task(void *params)
   /* Phase 1 : calibration. Moteurs coupés, désarméq, on recommence tant
     que le drone bouge ou que le gyro ne repond pas (LD2 clignote). 
     tant que gyro_calibrate() renvoie false, elle inverse LD2, attend 100 ms (10 × 10 ms) puis recommence */
-  while (!gyro_calibrate(gyro_offset))
+  while (!gyro_calibrate(&hi2c2, gyro_offset))
   {
     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     for (uint8_t k = 0; k < 10U; k++)
@@ -636,7 +634,7 @@ static void flight_control_task(void *params)
 
     /* --- 1. Gyro : lecture, calibration, filtre --- */
     float g[3];
-    const bool gyro_fresh = gyro_read(g);
+    const bool gyro_fresh = gyro_read(&hi2c2, g);
     const TickType_t now = xTaskGetTickCount();
 
     if (gyro_fresh)
@@ -678,7 +676,7 @@ static void flight_control_task(void *params)
     if (Flight_State == FLIGHT_ARMED)
     {
       if (!gyro_ok) flight_disarm(DISARM_GYRO_LOST);
-      else if (!rc_ok)   flight_disarm(DISARM_RC_LOST);
+      else if (!rc_ok) flight_disarm(DISARM_RC_LOST);
     }
 
     /* --- 4. Desarme : moteurs coupés, attente du geste d'armement --- */
@@ -835,8 +833,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-  MX_I2C2_Init();
-  MX_I2C3_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
@@ -854,7 +850,13 @@ int main(void)
   dwt_init();
 
   /* Si l'init du MPU echoue, la calibration echouera aussi : le drone reste désarmé (LD2 clignote). */
-  (void)MPU9250_Init();
+  /* Initialize I2C2 for MPU9250 */
+  if (I2C_Init(&hi2c2, I2C_INSTANCE_2, I2C2_PINS_PB10_PB11) != I2C_OK)
+  {
+      Error_Handler();
+  }
+  /* Initialize MPU9250. */
+  (void)MPU9250_Init(&hi2c2);
 
   /* Radio : capture d'impulsions sur le canal 1 de TIM1..TIM4 */
   rc_start();
@@ -938,101 +940,6 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief I2C2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C2_Init(void)
-{
-
-  /* USER CODE BEGIN I2C2_Init 0 */
-
-  /* USER CODE END I2C2_Init 0 */
-
-  /* USER CODE BEGIN I2C2_Init 1 */
-
-  /* USER CODE END I2C2_Init 1 */
-  hi2c2.Instance = I2C2;
-  hi2c2.Init.Timing = 0x10D19CE4;
-  hi2c2.Init.OwnAddress1 = 0;
-  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c2.Init.OwnAddress2 = 0;
-  hi2c2.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Analogue filter
-  */
-  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c2, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Digital filter
-  */
-  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c2, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C2_Init 2 */
-
-  /* USER CODE END I2C2_Init 2 */
-
-}
-
-/**
-  * @brief I2C3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_I2C3_Init(void)
-{
-
-  /* USER CODE BEGIN I2C3_Init 0 */
-
-  /* USER CODE END I2C3_Init 0 */
-
-  /* USER CODE BEGIN I2C3_Init 1 */
-
-  /* USER CODE END I2C3_Init 1 */
-  hi2c3.Instance = I2C3;
-  hi2c3.Init.Timing = 0x10D19CE4;
-  hi2c3.Init.OwnAddress1 = 0;
-  hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c3.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c3.Init.OwnAddress2 = 0;
-  hi2c3.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c3.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c3.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Analogue filter
-  */
-  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c3, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Digital filter
-  */
-  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c3, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C3_Init 2 */
-
-  /* USER CODE END I2C3_Init 2 */
-
-}
 
 /**
   * @brief TIM1 Initialization Function

@@ -1,58 +1,59 @@
 #include "mpu9250.h"
 #include "ak8963.h"
-#include <stddef.h>
+#include<stddef.h>
+
 #define MPU9250_GRAVITY            9.80665f
 
 /* Forward declaration of static functions */
-static I2C_Status MPU9250_WriteRegister(uint8_t reg, uint8_t value);
-static I2C_Status MPU9250_ReadRegister(uint8_t reg, uint8_t *value);
+static I2C_Status MPU9250_WriteRegister(I2C_Handle *hi2c, uint8_t reg, uint8_t value);
+static I2C_Status MPU9250_ReadRegister(I2C_Handle *hi2c, uint8_t reg, uint8_t *value);
 
-I2C_Status MPU9250_ReadWhoAmI(uint8_t *id)
+I2C_Status MPU9250_ReadWhoAmI(I2C_Handle *hi2c, uint8_t *id)
 {
+    if (hi2c == NULL || id == NULL) return I2C_ERROR;
     uint8_t reg = MPU9250_REG_WHO_AM_I;
-    if (id == 0) return I2C_ERROR;
-    return I2C1_WriteRead(MPU9250_I2C_ADDRESS, &reg, 1U, id, 1U);
+    return I2C_WriteRead(hi2c, MPU9250_I2C_ADDRESS, &reg, 1U, id, 1U);
 }
 
-static I2C_Status MPU9250_WriteRegister(uint8_t reg, uint8_t value)
+static I2C_Status MPU9250_WriteRegister(I2C_Handle *hi2c, uint8_t reg, uint8_t value)
 {
     uint8_t data[2] = {reg, value};
-    return I2C1_Write(MPU9250_I2C_ADDRESS, data, 2U);
+    return I2C_Write(hi2c, MPU9250_I2C_ADDRESS, data, 2U);
 }
 
-static I2C_Status MPU9250_ReadRegister(uint8_t reg, uint8_t *value)
+static I2C_Status MPU9250_ReadRegister(I2C_Handle *hi2c, uint8_t reg, uint8_t *value)
 {
     if (value == NULL)
     {
         return I2C_ERROR;
     }
-    return I2C1_WriteRead(MPU9250_I2C_ADDRESS, &reg, 1U,value, 1U);
+    return I2C_WriteRead(hi2c, MPU9250_I2C_ADDRESS, &reg, 1U,value, 1U);
 }
 
-I2C_Status MPU9250_Init(void)
+I2C_Status MPU9250_Init(I2C_Handle *hi2c)
 {
     I2C_Status status;
     uint8_t value;
     uint8_t id;
 
     /* Verify device identity */
-    status = MPU9250_ReadWhoAmI(&id);
+    status = MPU9250_ReadWhoAmI(hi2c, &id);
     if (status != I2C_OK) return status;
     if (id != MPU9250_WHO_AM_I_VALUE) return I2C_ERROR;
 
-    /* ------------------------------------------
+    /* 
        PWR_MGMT_1
-       SLEEP        = 0
-       CYCLE        = 0
+       SLEEP = 0
+       CYCLE = 0
        GYRO_STANDBY = 0
-       PD_PTAT      = 0
-       CLKSEL       = 1 Auto selects the best available clock source 
+       PD_PTAT = 0
+       CLKSEL = 1 Auto selects the best available clock source 
                       PLL if ready, else use the Internal oscillator
-       ------------------------------------------ */
+     */
 
     value = 0U;
     value |= (1U << MPU9250_PWR_MGMT_1_CLKSEL_Pos);
-    status = MPU9250_WriteRegister(MPU9250_REG_PWR_MGMT_1, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_PWR_MGMT_1, value);
 
     if (status != I2C_OK) return status;
 
@@ -63,21 +64,20 @@ I2C_Status MPU9250_Init(void)
        ------------------------------------------ */
 
     value = 0U;
-    status = MPU9250_WriteRegister(MPU9250_REG_PWR_MGMT_2, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_PWR_MGMT_2, value);
     if (status != I2C_OK) return status;
 
 
-    /* ------------------------------------------
+    /* 
        SMPLRT_DIV
        
        Fsample = Gyro Output Rate / (1 + DIV)
 
        Avec DIV = 0 :
-       Fsample = 1 kHz
-       ------------------------------------------ */
+       Fsample = 1 kHz */
 
     value = 0U;
-    status = MPU9250_WriteRegister(MPU9250_REG_SMPLRT_DIV, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_SMPLRT_DIV, value);
 
     if (status != I2C_OK)
         return status;
@@ -90,7 +90,7 @@ I2C_Status MPU9250_Init(void)
 
     value = 0U;
     value |= (1U << MPU9250_CONFIG_DLPF_CFG_Pos);
-    status = MPU9250_WriteRegister(MPU9250_REG_CONFIG, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_CONFIG, value);
 
     if (status != I2C_OK) return status;
 
@@ -103,7 +103,7 @@ I2C_Status MPU9250_Init(void)
 
     value = 0U;
     value &= ~MPU9250_GYRO_CONFIG_GYRO_FS_SEL_Msk;
-    status = MPU9250_WriteRegister(MPU9250_REG_GYRO_CONFIG, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_GYRO_CONFIG, value);
 
     if (status != I2C_OK)
         return status;
@@ -117,7 +117,7 @@ I2C_Status MPU9250_Init(void)
 
     value = 0U;
     value &= ~MPU9250_ACCEL_CONFIG_ACCEL_FS_SEL_Msk;
-    status = MPU9250_WriteRegister(MPU9250_REG_ACCEL_CONFIG, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_ACCEL_CONFIG, value);
 
     if (status != I2C_OK)
         return status;
@@ -131,7 +131,7 @@ I2C_Status MPU9250_Init(void)
     value = 0U;
     value &= ~MPU9250_ACCEL_CONFIG2_ACCEL_FCHOICE_B_Msk;
     value |= (1U << MPU9250_ACCEL_CONFIG2_A_DLPF_CFG_Pos);
-    status = MPU9250_WriteRegister(MPU9250_REG_ACCEL_CONFIG2, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_ACCEL_CONFIG2, value);
 
     if (status != I2C_OK) return status;
 
@@ -139,14 +139,14 @@ I2C_Status MPU9250_Init(void)
 }
 
 
-static I2C_Status MPU9250_GetRawData(MPU9250_RawData *data)
+static I2C_Status MPU9250_GetRawData(I2C_Handle *hi2c, MPU9250_RawData *data)
 {
     uint8_t buffer[14];
     uint8_t start_register = MPU9250_REG_ACCEL_XOUT_H;
 
     I2C_Status status;
 
-    status = I2C1_WriteRead(MPU9250_I2C_ADDRESS, &start_register, 1, buffer, 14);
+    status = I2C_WriteRead(hi2c, MPU9250_I2C_ADDRESS, &start_register, 1, buffer, 14);
 
     if (status != I2C_OK) return status;
 
@@ -163,7 +163,7 @@ static I2C_Status MPU9250_GetRawData(MPU9250_RawData *data)
     return I2C_OK;
 }
 
-I2C_Status MPU9250_GetData(MPU9250_Data *data)
+I2C_Status MPU9250_GetData(I2C_Handle *hi2c, MPU9250_Data *data)
 {
     if (data == NULL) return I2C_ERROR;
 
@@ -171,10 +171,10 @@ I2C_Status MPU9250_GetData(MPU9250_Data *data)
     MPU9250_RawData raw;
     AK8963_Data ak8963_data;
 
-    status = MPU9250_GetRawData(&raw);
+    status = MPU9250_GetRawData(hi2c, &raw);
     if (status != I2C_OK) return status;
 
-    status = AK8963_GetData(&ak8963_data);
+    status = AK8963_GetData(hi2c, &ak8963_data);
     if (status != I2C_OK) return status;
 
     /* ±2 g -> Sensitivity Scale Factor = 16384 LSB/g */
@@ -199,29 +199,29 @@ I2C_Status MPU9250_GetData(MPU9250_Data *data)
     return I2C_OK;
 }
 
-I2C_Status MPU9250_EnableBypass(void)
+I2C_Status MPU9250_EnableBypass(I2C_Handle *hi2c)
 {
     I2C_Status status;
     uint8_t value;
     /* Disable the MPU9250 internal I2C master */
-    status = MPU9250_WriteRegister(MPU9250_REG_USER_CTRL, 0x00U);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_USER_CTRL, 0x00U);
 
     if (status != I2C_OK) return status;
 
     /* Enable direct access to the AK8963 */
     value = MPU9250_INT_PIN_CFG_BYPASS_EN_Msk;
-    status = MPU9250_WriteRegister(MPU9250_REG_INT_PIN_CFG, value);
+    status = MPU9250_WriteRegister(hi2c, MPU9250_REG_INT_PIN_CFG, value);
 
     return status;
 }
 
-I2C_Status MPU9250_GetGyroData(float *gyroX, float *gyroY, float *gyroZ){
+I2C_Status MPU9250_GetGyroData(I2C_Handle *hi2c, float *gyroX, float *gyroY, float *gyroZ){
     if(gyroX ==NULL || gyroY == NULL || gyroZ == NULL) return I2C_ERROR;
 
     I2C_Status status;
     MPU9250_Data data;
 
-    status = MPU9250_GetData(&data);
+    status = MPU9250_GetData(hi2c, &data);
     if(status != I2C_OK) return status;
 
     *gyroX = data.gyroX;
@@ -231,13 +231,13 @@ I2C_Status MPU9250_GetGyroData(float *gyroX, float *gyroY, float *gyroZ){
     return I2C_OK;
 }
 
-I2C_Status MPU9250_GetAccelData(float *accelX, float *accelY, float *accelZ){
+I2C_Status MPU9250_GetAccelData(I2C_Handle *hi2c, float *accelX, float *accelY, float *accelZ){
     if(accelX ==NULL || accelY == NULL || accelZ == NULL) return I2C_ERROR;
 
     I2C_Status status;
     MPU9250_Data data;
 
-    status = MPU9250_GetData(&data);
+    status = MPU9250_GetData(hi2c, &data);
     if(status != I2C_OK) return status;
 
     *accelX = data.accelX;
@@ -247,13 +247,13 @@ I2C_Status MPU9250_GetAccelData(float *accelX, float *accelY, float *accelZ){
     return I2C_OK;
 }
 
-I2C_Status MPU9250_GetMagData(float *magX, float *magY, float *magZ){
+I2C_Status MPU9250_GetMagData(I2C_Handle *hi2c, float *magX, float *magY, float *magZ){
     if(magX ==NULL || magY == NULL || magZ == NULL) return I2C_ERROR;
 
     I2C_Status status;
     MPU9250_Data data;
 
-    status = MPU9250_GetData(&data);
+    status = MPU9250_GetData(hi2c, &data);
     if(status != I2C_OK) return status;
 
     *magX = data.magX;

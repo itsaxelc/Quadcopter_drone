@@ -43,12 +43,8 @@ file(GLOB_RECURSE CORE_SOURCES
     Core/Src/*.S
 )
 
-file(GLOB_RECURSE INA219_SOURCES
-    Drivers/INA219/*.c
-)
-
 file(GLOB_RECURSE MPU9250_SOURCES
-    Drivers/MPU9250/*.c
+    Drivers/MPU9250_driver/*.c
 )
 
 file(GLOB_RECURSE I2C_SOURCES
@@ -73,7 +69,6 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CORE_SOURCES}
 
     # Drivers
-    ${INA219_SOURCES}
     ${MPU9250_SOURCES}
     ${HAL_SOURCES}
     ${I2C_SOURCES}
@@ -103,8 +98,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     Drivers/STM32L4xx_HAL_Driver/Inc/Legacy
 
     # Sensors
-    Drivers/INA219
-    Drivers/MPU9250
+    Drivers/MPU9250_driver
     Drivers/I2C
 
     # FreeRTOS

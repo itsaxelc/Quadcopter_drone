@@ -2,19 +2,19 @@
 #define AK8963_H
 
 #include <stdint.h>
-#include "i2c1.h"
+#include "i2c.h"
 
 
 #define AK8963_I2C_ADDRESS                          0x0CU
 #define AK8963_REG_WHO_AM_I                         0x00U
 #define AK8963_WHO_AM_I_VALUE                       0x48U
 
-#define MPU9250_REG_MAG_HXL                         0x03
-#define MPU9250_REG_MAG_HXH                         0x04
-#define MPU9250_REG_MAG_HYL                         0x05
-#define MPU9250_REG_MAG_HYH                         0x06
-#define MPU9250_REG_MAG_HZL                         0x07
-#define MPU9250_REG_MAG_HZH                         0x08
+#define MPU9250_REG_MAG_HXL                         0x03U
+#define MPU9250_REG_MAG_HXH                         0x04U
+#define MPU9250_REG_MAG_HYL                         0x05U
+#define MPU9250_REG_MAG_HYH                         0x06U
+#define MPU9250_REG_MAG_HZL                         0x07U
+#define MPU9250_REG_MAG_HZH                         0x08U
 
 #define AK8963_REG_ST1                              0x02U
 #define AK8963_REG_ST2                              0x09U
@@ -53,8 +53,8 @@ typedef struct{
     float HZ;
 } AK8963_Data;
 
-I2C_Status AK8963_Init(void);
-I2C_Status AK8963_ReadWhoAmI(uint8_t *id);
-I2C_Status AK8963_GetData(AK8963_Data *data);
+I2C_Status AK8963_Init(I2C_Handle *hi2c);
+I2C_Status AK8963_ReadWhoAmI(I2C_Handle *hi2c, uint8_t *id);
+I2C_Status AK8963_GetData(I2C_Handle *hi2c, AK8963_Data *data);
 
 #endif
